@@ -106,7 +106,7 @@ if ($Functions)
 #region Protection
 # The mandatory checks. If you want to disable a warning message about whether the preset file was customized, remove the "-Warning" argument
 # Обязательные проверки. Чтобы выключить предупреждение о необходимости настройки пресет-файла, удалите аргумент "-Warning"
-InitialActions -Warning
+InitialActions
 
 # Enable script logging. Log will be recorded into the script folder. To stop logging just close console or type "Stop-Transcript"
 # Включить логирование работы скрипта. Лог будет записываться в папку скрипта. Чтобы остановить логгирование, закройте консоль или наберите "Stop-Transcript"
@@ -173,7 +173,7 @@ SigninInfo -Disable
 
 # Do not let websites provide locally relevant content by accessing language list
 # Не позволять веб-сайтам предоставлять местную информацию за счет доступа к списку языков
-LanguageListAccess -Disable
+#LanguageListAccess -Disable
 
 # Let websites provide locally relevant content by accessing language list (default value)
 # Позволить веб-сайтам предоставлять местную информацию за счет доступа к списку языков (значение по умолчанию)
@@ -181,7 +181,7 @@ LanguageListAccess -Disable
 
 # Do not let apps show me personalized ads by using my advertising ID
 # Не разрешать приложениям показывать персонализированную рекламу с помощью моего идентификатора рекламы
-AdvertisingID -Disable
+#AdvertisingID -Disable
 
 # Let apps show me personalized ads by using my advertising ID (default value)
 # Разрешить приложениям показывать персонализированную рекламу с помощью моего идентификатора рекламы (значение по умолчанию)
@@ -237,7 +237,7 @@ TailoredExperiences -Disable
 
 # Disable Bing search in the Start Menu
 # Отключить в меню "Пуск" поиск через Bing
-BingSearch -Disable
+#BingSearch -Disable
 
 # Enable Bing search in the Start Menu (default value)
 # Включить поиск через Bing в меню "Пуск" (значение по умолчанию)
@@ -255,7 +255,7 @@ BrowsingHistory -Hide
 #region UI & Personalization
 # Show the "This PC" icon on Desktop
 # Отобразить значок "Этот компьютер" на рабочем столе
-ThisPC -Show
+#ThisPC -Show
 
 # Hide the "This PC" icon on Desktop (default value)
 # Скрыть "Этот компьютер" на рабочем столе (значение по умолчанию)
@@ -263,7 +263,7 @@ ThisPC -Show
 
 # Do not use item check boxes
 # Не использовать флажки для выбора элементов
-CheckBoxes -Disable
+#CheckBoxes -Disable
 
 # Use check item check boxes (default value)
 # Использовать флажки для выбора элементов (значение по умолчанию)
@@ -319,7 +319,7 @@ OneDriveFileExplorerAd -Hide
 
 # When I snap a window, do not show what I can snap next to it
 # При прикреплении окна не показывать, что можно прикрепить рядом с ним
-SnapAssist -Disable
+#SnapAssist -Disable
 
 # When I snap a window, show what I can snap next to it (default value)
 # При прикреплении окна показывать, что можно прикрепить рядом с ним (значение по умолчанию)
@@ -343,7 +343,7 @@ RecycleBinDeleteConfirmation -Enable
 
 # Hide recently used files in Quick access
 # Скрыть недавно использовавшиеся файлы на панели быстрого доступа
-QuickAccessRecentFiles -Hide
+#QuickAccessRecentFiles -Hide
 
 # Show recently used files in Quick access (default value)
 # Показать недавно использовавшиеся файлы на панели быстрого доступа (значение по умолчанию)
@@ -351,7 +351,7 @@ QuickAccessRecentFiles -Hide
 
 # Hide frequently used folders in Quick access
 # Скрыть недавно используемые папки на панели быстрого доступа
-QuickAccessFrequentFolders -Hide
+#QuickAccessFrequentFolders -Hide
 
 # Show frequently used folders in Quick access (default value)
 # Показать часто используемые папки на панели быстрого доступа (значение по умолчанию)
@@ -359,11 +359,11 @@ QuickAccessFrequentFolders -Hide
 
 # Set the taskbar alignment to the center (default value)
 # Установить выравнивание панели задач по центру (значение по умолчанию)
-TaskbarAlignment -Center
+#TaskbarAlignment -Center
 
 # Set the taskbar alignment to the left
 # Установить выравнивание панели задач по левому краю
-# TaskbarAlignment -Left
+TaskbarAlignment -Left
 
 # Hide the widgets icon on the taskbar
 # Скрыть кнопку "Мини-приложения" с панели задач
@@ -399,7 +399,7 @@ CopilotButton -Hide
 
 # Hide the Task view button from the taskbar
 # Скрыть кнопку "Представление задач" с панели задач
-TaskViewButton -Hide
+#TaskViewButton -Hide
 
 # Show the Task view button on the taskbar (default value)
 # Отобразить кнопку "Представление задач" на панели задач (значение по умолчанию)
@@ -435,7 +435,7 @@ TaskbarCombine -Always
 
 # Unpin the "Microsoft Edge", "Microsoft Store" shortcuts from the taskbar
 # Открепить ярлыки "Microsoft Edge", "Microsoft Store" от панели задач
-UnpinTaskbarShortcuts -Shortcuts Edge, Store
+UnpinTaskbarShortcuts -Shortcuts Store
 
 # View the Control Panel icons by large icons
 # Просмотр иконок Панели управления как: крупные значки
@@ -491,6 +491,7 @@ ShortcutsSuffix -Disable
 
 # Use the Print screen button to open screen snipping
 # Использовать кнопку PRINT SCREEN, чтобы запустить функцию создания фрагмента экрана
+# TIAGO-PC
 PrtScnSnippingTool -Enable
 
 # Do not use the Print screen button to open screen snipping (default value)
@@ -499,7 +500,7 @@ PrtScnSnippingTool -Enable
 
 # Let me use a different input method for each app window
 # Позволить выбирать метод ввода для каждого окна
-AppsLanguageSwitch -Enable
+#AppsLanguageSwitch -Enable
 
 # Do not use a different input method for each app window (default value)
 # Не использовать метод ввода для каждого окна (значение по умолчанию)
@@ -515,7 +516,7 @@ AeroShaking -Enable
 
 # Download and install free dark "Windows 11 Cursors Concept v2" cursors from Jepri Creations
 # Скачать и установить бесплатные темные курсоры "Windows 11 Cursors Concept v2" от Jepri Creations
-Cursors -Dark
+#Cursors -Dark
 
 # Download and install free light "Windows 11 Cursors Concept v2" cursors from Jepri Creations
 # Скачать и установить бесплатные светлые курсоры "Windows 11 Cursors Concept v2" от Jepri Creations
@@ -585,7 +586,7 @@ StorageSenseTempFiles -Enable
 
 # Disable hibernation. It isn't recommended to turn off for laptops
 # Отключить режим гибернации. Не рекомендуется выключать на ноутбуках
-Hibernation -Disable
+#Hibernation -Disable
 
 # Enable hibernate (default value)
 # Включить режим гибернации (значение по умолчанию)
@@ -601,7 +602,7 @@ Hibernation -Disable
 
 # Disable the Windows 260 characters path limit
 # Отключить ограничение Windows на 260 символов в пути
-Win32LongPathLimit -Disable
+#Win32LongPathLimit -Disable
 
 # Enable the Windows 260 character path limit (default value)
 # Включить ограничение Windows на 260 символов в пути (значение по умолчанию)
@@ -617,7 +618,7 @@ BSoDStopError -Enable
 
 # Choose when to be notified about changes to your computer: never notify
 # Настройка уведомления об изменении параметров компьютера: никогда не уведомлять
-AdminApprovalMode -Never
+#AdminApprovalMode -Never
 
 # Choose when to be notified about changes to your computer: notify me only when apps try to make changes to my computer (default value)
 # Настройка уведомления об изменении параметров компьютера: уведомлять меня только при попытках приложений внести изменения в компьютер (значение по умолчанию)
@@ -654,7 +655,7 @@ WindowsManageDefaultPrinter -Disable
 	Если вы хотите оставить параметр "Параметры мультимедиа" в дополнительных параметрах схемы управления питанием, не отключайте "Компоненты для работы с медиа"
 	Отключить компоненты Windows, используя всплывающее диалоговое окно
 #>
-WindowsFeatures -Disable
+#WindowsFeatures -Disable
 
 # Enable the Windows features using the pop-up dialog box
 # Включить компоненты Windows, используя всплывающее диалоговое окно
@@ -667,7 +668,7 @@ WindowsFeatures -Disable
 	Удалить дополнительные компоненты, используя всплывающее диалоговое окно
 	Если вы хотите оставить параметр "Параметры мультимедиа" в дополнительных параметрах схемы управления питанием, не удаляйте компонент "Компоненты для работы с медиа"
 #>
-WindowsCapabilities -Uninstall
+#WindowsCapabilities -Uninstall
 
 # Install optional features using the pop-up dialog box
 # Установить дополнительные компоненты, используя всплывающее диалоговое окно
@@ -683,7 +684,7 @@ UpdateMicrosoftProducts -Enable
 
 # Set power plan on "High performance". It isn't recommended to turn on for laptops
 # Установить схему управления питанием на "Высокая производительность". Не рекомендуется включать на ноутбуках
-PowerPlan -High
+#PowerPlan -High
 
 # Set power plan on "Balanced" (default value)
 # Установить схему управления питанием на "Сбалансированная" (значение по умолчанию)
@@ -691,7 +692,7 @@ PowerPlan -High
 
 # Do not allow the computer to turn off the network adapters to save power. It isn't recommended to turn off for laptops
 # Запретить отключение всех сетевых адаптеров для экономии энергии. Не рекомендуется выключать на ноутбуках
-NetworkAdaptersSavePower -Disable
+#NetworkAdaptersSavePower -Disable
 
 # Allow the computer to turn off the network adapters to save power (default value)
 # Разрешить отключение всех сетевых адаптеров для экономии энергии (значение по умолчанию)
@@ -704,7 +705,7 @@ NetworkAdaptersSavePower -Disable
 	Выключить IP версии 6 (TCP/IPv6)
 	Перед выполнением функции будет проведена проверка: поддерживает ли ваш провайдер IPv6, используя ресурс https://ipify.org
 #>
-IPv6Component -Disable
+#IPv6Component -Disable
 
 <#
 	Enable the Internet Protocol Version 6 (TCP/IPv6) component for all network connections (default value)
@@ -726,7 +727,7 @@ IPv6Component -Disable
 
 # Override for default input method: English
 # Переопределить метод ввода по умолчанию: английский
-InputMethod -English
+#InputMethod -English
 
 # Override for default input method: use language list (default value)
 # Переопределить метод ввода по умолчанию: использовать список языков (значение по умолчанию)
@@ -741,7 +742,7 @@ InputMethod -English
 	Пользовательские файлы и папки не будут перемещены в новое расположение. Переместите их вручную
 	По умолчанию они располагаются в папке %USERPROFILE%
 #>
-Set-UserShellFolderLocation -Root
+#Set-UserShellFolderLocation -Root
 
 <#
 	Select folders for user folders location manually using a folder browser dialog
@@ -767,7 +768,7 @@ Set-UserShellFolderLocation -Root
 
 # Use the latest installed .NET runtime for all apps
 # Использовать последнюю установленную среду выполнения .NET для всех приложений
-LatestInstalled.NET -Enable
+#LatestInstalled.NET -Enable
 
 # Do not use the latest installed .NET runtime for all apps (default value)
 # Не использовать последнюю установленную версию .NET для всех приложений (значение по умолчанию)
@@ -795,7 +796,7 @@ WinPrtScrFolder -Desktop
 	Автоматически запускать средства устранения неполадок, а затем уведомлять
 	Чтобы заработала данная функция, уровень сбора диагностических данных ОС будет установлен на "Необязательные диагностические данные" и включится создание отчетов об ошибках Windows
 #>
-RecommendedTroubleshooting -Automatically
+#RecommendedTroubleshooting -Automatically
 
 <#
 	Ask me before running troubleshooter (default value)
@@ -816,7 +817,7 @@ FoldersLaunchSeparateProcess -Enable
 
 # Disable and delete reserved storage after the next update installation
 # Отключить и удалить зарезервированное хранилище после следующей установки обновлений
-ReservedStorage -Disable
+#ReservedStorage -Disable
 
 # Enable reserved storage (default value)
 # Включить зарезервированное хранилище (значение по умолчанию)
@@ -824,7 +825,7 @@ ReservedStorage -Disable
 
 # Disable help lookup via F1
 # Отключить открытие справки по нажатию F1
-F1HelpPage -Disable
+#F1HelpPage -Disable
 
 # Enable help lookup via F1 (default value)
 # Включить открытие справки по нажатию F1 (значение по умолчанию)
@@ -864,7 +865,7 @@ Autoplay -Disable
 
 # Disable thumbnail cache removal
 # Отключить удаление кэша миниатюр
-ThumbnailCacheRemoval -Disable
+#ThumbnailCacheRemoval -Disable
 
 # Enable thumbnail cache removal (default value)
 # Включить удаление кэша миниатюр (значение по умолчанию)
@@ -872,7 +873,7 @@ ThumbnailCacheRemoval -Disable
 
 # Automatically saving my restartable apps and restart them when I sign back in
 # Автоматически сохранять мои перезапускаемые приложения из системы и перезапускать их при повторном входе
-SaveRestartableApps -Enable
+#SaveRestartableApps -Enable
 
 # Turn off automatically saving my restartable apps and restart them when I sign back in (default value)
 # Выключить автоматическое сохранение моих перезапускаемых приложений из системы и перезапускать их при повторном входе (значение по умолчанию)
@@ -896,7 +897,7 @@ RestartNotification -Show
 
 # Restart as soon as possible to finish updating
 # Перезапустить устройство как можно быстрее, чтобы завершить обновление
-RestartDeviceAfterUpdate -Enable
+#RestartDeviceAfterUpdate -Enable
 
 # Don't restart as soon as possible to finish updating (default value)
 # Не перезапускать устройство как можно быстрее, чтобы завершить обновление (значение по умолчанию)
@@ -926,7 +927,7 @@ WindowsLatestUpdate -Disable
 	Set-Association -ProgramPath "%ProgramFiles%\Notepad++\notepad++.exe" -Extension .txt -Icon "%ProgramFiles%\Notepad++\notepad++.exe,0"
 	Set-Association -ProgramPath MSEdgeMHT -Extension .html
 #>
-# Set-Association -ProgramPath "%ProgramFiles%\Notepad++\notepad++.exe" -Extension .txt -Icon "%ProgramFiles%\Notepad++\notepad++.exe,0"
+Set-Association -ProgramPath "%ProgramFiles%\Notepad++\notepad++.exe" -Extension .txt -Icon "%ProgramFiles%\Notepad++\notepad++.exe,0"
 
 # Экспортировать все ассоциации в Windows в корень папки в виде файла Application_Associations.json
 # Export all Windows associations into Application_Associations.json file to script root folder
@@ -955,7 +956,7 @@ DefaultTerminalApp -WindowsTerminal
 
 	https://docs.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist
 #>
-InstallVCRedist
+#InstallVCRedist
 
 <#
 	Install the latest .NET Desktop Runtime 6, 7 (x86/x64)
@@ -963,12 +964,12 @@ InstallVCRedist
 
 	https://dotnet.microsoft.com/en-us/download/dotnet
 #>
-InstallDotNetRuntimes
+#InstallDotNetRuntimes
 
 # Enable proxying only blocked sites from the unified registry of Roskomnadzor. The function is applicable for Russia only
 # Включить проксирование только заблокированных сайтов из единого реестра Роскомнадзора. Функция применима только для России
 # https://antizapret.prostovpn.org
-RKNBypass -Enable
+#RKNBypass -Enable
 
 # Disable proxying only blocked sites from the unified registry of Roskomnadzor (default value)
 # Выключить проксирование только заблокированных сайтов из единого реестра Роскомнадзора (значение по умолчанию)
@@ -1018,7 +1019,7 @@ SATADrivesRemovableMedia -Disable
 
 # Show more pins on Start
 # Отображать больше закреплений на начальном экране
-StartLayout -ShowMorePins
+#StartLayout -ShowMorePins
 
 # Show more recommendations on Start
 # Отображать больше рекомендаций на начальном экране
@@ -1071,7 +1072,7 @@ TeamsAutostart -Disable
 	Отключить Xbox Game Bar
 	Чтобы предотвратить появление предупреждения "Вам понадобится новое приложение, чтобы открыть этот ms-gamingoverlay", вам необходимо отключить приложение Xbox Game Bar, даже если вы удалили его раньше
 #>
-XboxGameBar -Disable
+#XboxGameBar -Disable
 
 # Enable Xbox Game Bar (default value)
 # Включить Xbox Game Bar (значение по умолчанию)
@@ -1087,7 +1088,7 @@ XboxGameTips -Disable
 
 # Choose an app and set the "High performance" graphics performance for it. Only if you have a dedicated GPU
 # Выбрать приложение и установить для него параметры производительности графики на "Высокая производительность". Только при наличии внешней видеокарты
-Set-AppGraphicsPerformance
+#Set-AppGraphicsPerformance
 
 <#
 	Turn on hardware-accelerated GPU scheduling. Restart needed
@@ -1167,7 +1168,7 @@ DismissMSAccount
 
 # Dismiss Microsoft Defender offer in the Windows Security about turning on the SmartScreen filter for Microsoft Edge
 # Отклонить предложение Microsoft Defender в "Безопасность Windows" включить фильтр SmartScreen для Microsoft Edge
-DismissSmartScreenFilter
+#DismissSmartScreenFilter
 
 # Enable events auditing generated when a process is created (starts)
 # Включить аудит событий, возникающих при создании или запуске процесса
@@ -1258,6 +1259,7 @@ SaveZoneInformation -Disable
 	Включить DNS-over-HTTPS для IPv4
 	Действительные IPv4-адреса: 1.0.0.1, 1.1.1.1, 149.112.112.112, 8.8.4.4, 8.8.8.8, 9.9.9.9
 #>
+#TIAGO-PC
 DNSoverHTTPS -Enable -PrimaryDNS 1.0.0.1 -SecondaryDNS 1.1.1.1
 
 # Disable DNS-over-HTTPS for IPv4 (default value)
@@ -1296,7 +1298,7 @@ CABInstallContext -Show
 
 # Show the "Run as different user" item to the .exe filename extensions context menu
 # Отобразить пункт "Запуск от имени другого пользователя" в контекстное меню .exe файлов
-RunAsDifferentUserContext -Show
+#RunAsDifferentUserContext -Show
 
 # Hide the "Run as different user" item from the .exe filename extensions context menu (default value)
 # Скрыть пункт "Запуск от имени другого пользователя" из контекстное меню .exe файлов (значение по умолчанию)
@@ -1304,7 +1306,7 @@ RunAsDifferentUserContext -Show
 
 # Hide the "Cast to Device" item from the media files and folders context menu
 # Скрыть пункт "Передать на устройство" из контекстного меню медиа-файлов и папок
-CastToDeviceContext -Hide
+#CastToDeviceContext -Hide
 
 # Show the "Cast to Device" item in the media files and folders context menu (default value)
 # Отобразить пункт "Передать на устройство" в контекстном меню медиа-файлов и папок (значение по умолчанию)
@@ -1312,7 +1314,7 @@ CastToDeviceContext -Hide
 
 # Hide the "Share" item from the context menu
 # Скрыть пункт "Отправить" (поделиться) из контекстного меню
-ShareContext -Hide
+#ShareContext -Hide
 
 # Show the "Share" item in the context menu (default value)
 # Отобразить пункт "Отправить" (поделиться) в контекстном меню (значение по умолчанию)
@@ -1320,7 +1322,7 @@ ShareContext -Hide
 
 # Hide the "Edit with Clipchamp" item from the media files context menu
 # Скрыть пункт "Редактировать в Climpchamp" из контекстного меню
-EditWithClipchampContext -Hide
+#EditWithClipchampContext -Hide
 
 # Show the "Edit with Clipchamp" item in the media files context menu (default value)
 # Отобразить пункт "Редактировать в Climpchamp" в контекстном меню (значение по умолчанию)
@@ -1336,7 +1338,7 @@ PrintCMDContext -Hide
 
 # Hide the "Include in Library" item from the folders and drives context menu
 # Скрыть пункт "Добавить в библиотеку" из контекстного меню папок и дисков
-IncludeInLibraryContext -Hide
+#IncludeInLibraryContext -Hide
 
 # Show the "Include in Library" item in the folders and drives context menu (default value)
 # Отобразить пункт "Добавить в библиотеку" в контекстном меню папок и дисков (значение по умолчанию)
@@ -1344,7 +1346,7 @@ IncludeInLibraryContext -Hide
 
 # Hide the "Send to" item from the folders context menu
 # Скрыть пункт "Отправить" из контекстного меню папок
-SendToContext -Hide
+#SendToContext -Hide
 
 # Show the "Send to" item in the folders context menu (default value)
 # Отобразить пункт "Отправить" в контекстном меню папок (значение по умолчанию)
@@ -1392,11 +1394,11 @@ OpenWindowsTerminalAdminContext -Enable
 
 # Disable the Windows 10 context menu style (default value)
 # Отключить стиль контекстного меню из Windows 10 (значение по умолчанию)
-Windows10ContextMenu -Disable
+#Windows10ContextMenu -Disable
 
 # Enable the Windows 10 context menu style
 # Включить стиль контекстного меню из Windows 10
-# Windows10ContextMenu -Enable
+Windows10ContextMenu -Enable
 #endregion Context menu
 
 #region Update Policies
