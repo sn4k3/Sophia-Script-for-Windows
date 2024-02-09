@@ -2,8 +2,8 @@
 	.SYNOPSIS
 	Default preset file for "Sophia Script for Windows 11"
 
-	Version: v6.5.9
-	Date: 26.12.2023
+	Version: v6.6.0
+	Date: 02.02.2024
 
 	Copyright (c) 2014—2024 farag
 	Copyright (c) 2019—2024 farag & Inestic
@@ -27,7 +27,7 @@
 	.NOTES
 	Supported Windows 11 versions
 	Version: 23H2+
-	Builds: 22631.2861+
+	Builds: 22631.3085+
 	Editions: Home/Pro/Enterprise
 
 	.NOTES
@@ -69,12 +69,25 @@ param
 
 Clear-Host
 
-$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 11 v6.5.9 | Made with $([System.Char]::ConvertFromUtf32(0x1F497)) of Windows | $([System.Char]0x00A9) farag & Inestic, 2014$([System.Char]0x2013)2024"
+$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 11 v6.6.0 | Made with $([System.Char]::ConvertFromUtf32(0x1F497)) of Windows | $([System.Char]0x00A9) farag & Inestic, 2014$([System.Char]0x2013)2024"
 
 Remove-Module -Name Sophia -Force -ErrorAction Ignore
-Import-Module -Name $PSScriptRoot\Manifest\Sophia.psd1 -PassThru -Force
-
 Import-LocalizedData -BindingVariable Global:Localization -BaseDirectory $PSScriptRoot\Localizations -FileName Sophia
+
+# Check whether script is not running via PowerShell (x86)
+try
+{
+	Import-Module -Name $PSScriptRoot\Manifest\Sophia.psd1 -PassThru -Force -ErrorAction Stop
+}
+catch [System.InvalidOperationException]
+{
+	Write-Warning -Message $Localization.PowerShellx86Warning
+
+	Start-Process -FilePath "https://t.me/sophia_chat"
+	Start-Process -FilePath "https://discord.gg/sSryhaEv79"
+
+	exit
+}
 
 <#
 	.SYNOPSIS
@@ -791,7 +804,7 @@ WinPrtScrFolder -Desktop
 
 <#
 	Run troubleshooter automatically, then notify me
-	In order this feature to work the OS level of diagnostic data gathering will be set to "Optional diagnostic data", and the error reporting feature will be turned on
+	In order this feature to work Windows level of diagnostic data gathering will be set to "Optional diagnostic data", and the error reporting feature will be turned on
 
 	Автоматически запускать средства устранения неполадок, а затем уведомлять
 	Чтобы заработала данная функция, уровень сбора диагностических данных ОС будет установлен на "Необязательные диагностические данные" и включится создание отчетов об ошибках Windows
@@ -800,7 +813,7 @@ WinPrtScrFolder -Desktop
 
 <#
 	Ask me before running troubleshooter (default value)
-	In order this feature to work the OS level of diagnostic data gathering will be set to "Optional diagnostic data"
+	In order this feature to work Windows level of diagnostic data gathering will be set to "Optional diagnostic data"
 
 	Спрашивать перед запуском средств устранения неполадок (значение по умолчанию)
 	Чтобы заработала данная функция, уровень сбора диагностических данных ОС будет установлен на "Необязательные диагностические данные" и включится создание отчетов об ошибках Windows
@@ -995,6 +1008,14 @@ SATADrivesRemovableMedia -Disable
 # Show up all internal SATA drives as removeable media in the taskbar notification area (default value)
 # Отображать все внутренние SATA-диски как съемные носители в области уведомлений на панели задач (значение по умолчанию)
 # SATADrivesRemovableMedia -Default
+
+# Back up the system registry to %SystemRoot%\System32\config\RegBack folder when PC restarts and create a RegIdleBackup in the Task Scheduler task to manage subsequent backups
+# Создавать копии реестра при перезагрузки ПК и создавать задание RegIdleBackup в Планировщике задания для управления последующими резервными копиями
+# RegistryBackup -Enable
+
+# Do not back up the system registry to %SystemRoot%\System32\config\RegBack folder (default value)
+# Не создавать копии реестра при перезагрузки ПК (значение по умолчанию)
+# RegistryBackup -Disable
 #endregion System
 
 #region WSL

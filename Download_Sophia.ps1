@@ -204,7 +204,14 @@ public static extern bool SetForegroundWindow(IntPtr hWnd);
 }
 if (-not ("WinAPI.ForegroundWindow" -as [type]))
 {
-	Add-Type @SetForegroundWindow
+	try
+	{
+		Add-Type @SetForegroundWindow
+	}
+	catch [System.ComponentModel.Win32Exception]
+	{
+		Write-Warning -Message "PowerShell 5.1 does not compile code if the username contains non-Latin characters (including emoji) and is written in lowercase. Ignore this error message. Open background folder manually."
+	}
 }
 
 Start-Sleep -Seconds 1

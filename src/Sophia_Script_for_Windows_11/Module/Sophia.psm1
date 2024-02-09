@@ -2,8 +2,8 @@
 	.SYNOPSIS
 	Sophia Script is a PowerShell module for Windows 10 & Windows 11 fine-tuning and automating the routine tasks
 
-	Version: v6.5.9
-	Date: 26.12.2023
+	Version: v6.6.0
+	Date: 02.02.2024
 
 	Copyright (c) 2014—2024 farag
 	Copyright (c) 2019—2024 farag & Inestic
@@ -13,7 +13,7 @@
 	.NOTES
 	Supported Windows 11 versions
 	Version: 23H2+
-	Builds: 22631.2861+
+	Builds: 22631.3085+
 	Editions: Home/Pro/Enterprise
 
 	.LINK GitHub
@@ -85,10 +85,25 @@ public static string GetString(uint strId)
 	}
 	if (-not ("WinAPI.GetStr" -as [type]))
 	{
-		Add-Type @Signature
+		try
+		{
+			Add-Type @Signature
+		}
+		catch [System.ComponentModel.Win32Exception]
+		{
+			Write-Warning -Message $Localization.NonLatinUsernameWarning
+
+			Start-Process -FilePath "https://t.me/sophia_chat"
+			Start-Process -FilePath "https://discord.gg/sSryhaEv79"
+
+			Start-Process -FilePath "https://github.com/PowerShell/PowerShell/releases/latest"
+			Start-Process -FilePath "https://github.com/farag2/Sophia-Script-for-Windows/releases/latest"
+
+			exit
+		}
 	}
 
-	# Check if Microsoft Edge as being a system component was removed by harmful tweakers
+	# Check whether Microsoft Edge as being a system component was removed by harmful tweakers
 	if (-not (Test-Path -Path "${env:ProgramFiles(x86)}\Microsoft\Edge\Application\msedge.exe"))
 	{
 		Write-Information -MessageData "" -InformationAction Continue
@@ -145,8 +160,8 @@ public static string GetString(uint strId)
 				{
 					Write-Warning -Message ($Localization.WindowsComponentBroken -f "Microsoft Edge")
 
-					"https://t.me/sophia_chat"
-					"https://discord.gg/sSryhaEv79"
+					Start-Process -FilePath "https://t.me/sophia_chat"
+					Start-Process -FilePath "https://discord.gg/sSryhaEv79"
 
 					exit
 				}
@@ -154,8 +169,8 @@ public static string GetString(uint strId)
 				{
 					Write-Warning -Message ($Localization.WindowsComponentBroken -f "Microsoft Edge")
 
-					"https://t.me/sophia_chat"
-					"https://discord.gg/sSryhaEv79"
+					Start-Process -FilePath "https://t.me/sophia_chat"
+					Start-Process -FilePath "https://discord.gg/sSryhaEv79"
 
 					exit
 				}
@@ -175,17 +190,6 @@ public static string GetString(uint strId)
 			Write-Warning -Message $Localization.NoInternetConnection
 			Write-Error -Message $Localization.NoInternetConnection -ErrorAction SilentlyContinue
 		}
-	}
-
-	# Check if Get-WindowsEdition cmdlet is working
-	try
-	{
-		[void](Get-WindowsEdition -Online)
-	}
-	catch [System.Runtime.InteropServices.COMException]
-	{
-		Write-Warning -Message ($Localization.WindowsComponentBroken -f "Get-WindowsEdition")
-		exit
 	}
 
 	# Check the language mode
@@ -229,7 +233,7 @@ public static string GetString(uint strId)
 	# Check whether the script was run in PowerShell ISE or VS Code
 	if (($Host.Name -match "ISE") -or ($env:TERM_PROGRAM -eq "vscode"))
 	{
-		Write-Warning -Message ($Localization.UnsupportedHost -f $Host.Name.replace("Host", ""))
+		Write-Warning -Message ($Localization.UnsupportedHost -f $Host.Name.Replace("Host", ""))
 
 		Start-Process -FilePath "https://t.me/sophia_chat"
 		Start-Process -FilePath "https://discord.gg/sSryhaEv79"
@@ -267,6 +271,8 @@ public static string GetString(uint strId)
 		WinCry              = "$env:SystemRoot\TempCleaner.exe"
 		# https://hone.gg
 		Hone                = "$env:LOCALAPPDATA\Programs\Hone\Hone.exe"
+		# https://github.com/ChrisTitusTech/winutil
+		winutil             = "$env:TEMP\Winutil.log"
 	}
 	foreach ($Tweaker in $Tweakers.Keys)
 	{
@@ -293,14 +299,34 @@ public static string GetString(uint strId)
 		}
 	}
 
-	# Flibustier custom Windows image
-	if (Get-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\Services\.NETFramework\Performance -Name *flibustier)
+	# Check whether Windows was broken by 3rd party harmful tweakers and trojans
+	$Tweakers = @{
+		# https://forum.ru-board.com/topic.cgi?forum=62&topic=30617&start=1600#14
+		AutoSettingsPS = "$(Get-Item -Path `"HKLM:\SOFTWARE\Microsoft\Windows Defender\Exclusions\Paths`" | Where-Object -FilterScript {$_.Property -match `"AutoSettingsPS`"})"
+		# Flibustier custom Windows image
+		Flibustier     = "$(Get-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\Services\.NETFramework\Performance -Name *flibustier)"
+	}
+	foreach ($Tweaker in $Tweakers.Keys)
 	{
-		Write-Warning -Message ($Localization.TweakerWarning -f "flblauncher")
+		if ($Tweakers[$Tweaker])
+		{
+			Write-Warning -Message ($Localization.TweakerWarning -f $Tweaker)
 
-		Start-Process -FilePath "https://t.me/sophia_chat"
-		Start-Process -FilePath "https://discord.gg/sSryhaEv79"
+			Start-Process -FilePath "https://t.me/sophia_chat"
+			Start-Process -FilePath "https://discord.gg/sSryhaEv79"
 
+			exit
+		}
+	}
+
+	# Check whether Get-WindowsEdition cmdlet is working
+	try
+	{
+		Get-WindowsEdition -Online
+	}
+	catch [System.Runtime.InteropServices.COMException]
+	{
+		Write-Warning -Message ($Localization.WindowsComponentBroken -f "Get-WindowsEdition")
 		exit
 	}
 
@@ -315,31 +341,11 @@ public static string GetString(uint strId)
 		exit
 	}
 
-	# Check whether LGPO.exe exists in the bin folder
-	if (-not (Test-Path -Path "$PSScriptRoot\..\bin\LGPO.exe"))
+	# Check whether EventLog service is running in order to be sire that Event Logger is enabled
+	if ((Get-Service -Name EventLog).Status -eq "Stopped")
 	{
-		Write-Warning -Message $Localization.Bin
-
-		Start-Process -FilePath "https://github.com/farag2/Sophia-Script-for-Windows/releases/latest"
-		Start-Process -FilePath "https://t.me/sophia_chat"
-		Start-Process -FilePath "https://discord.gg/sSryhaEv79"
-
-		exit
-	}
-
-	# Check for a pending reboot
-	$PendingActions = @(
-		# CBS pending
-		"HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\RebootPending",
-		"HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\RebootInProgress",
-		"HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\PackagesPending",
-		# Windows Update pending
-		"HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update\PostRebootReporting",
-		"HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update\RebootRequired"
-	)
-	if (($PendingActions | Test-Path) -contains $true)
-	{
-		Write-Warning -Message $Localization.RebootPending
+		# Extract the localized "Event Viewer" string from shell32.dll
+		Write-Warning -Message ($Localization.WindowsComponentBroken -f $([WinAPI.GetStr]::GetString(22029)))
 
 		Start-Process -FilePath "https://t.me/sophia_chat"
 		Start-Process -FilePath "https://discord.gg/sSryhaEv79"
@@ -347,7 +353,7 @@ public static string GetString(uint strId)
 		exit
 	}
 
-	# Check if Microsoft Store being an important system component was removed
+	# Check whether Microsoft Store being an important system component was removed
 	if (-not (Get-AppxPackage -Name Microsoft.WindowsStore))
 	{
 		Write-Warning -Message ($Localization.WindowsComponentBroken -f "Microsoft Store")
@@ -356,55 +362,6 @@ public static string GetString(uint strId)
 		Start-Process -FilePath "https://discord.gg/sSryhaEv79"
 
 		exit
-	}
-
-	# Check if the current module version is the latest one
-	try
-	{
-		# Check the internet connection
-		$Parameters = @{
-			Name        = "dns.msftncsi.com"
-			Server      = "1.1.1.1"
-			DnsOnly     = $true
-			ErrorAction = "Stop"
-		}
-		if ((Resolve-DnsName @Parameters).IPAddress -notcontains "131.107.255.255")
-		{
-			return
-		}
-
-		try
-		{
-			# https://github.com/farag2/Sophia-Script-for-Windows/blob/master/sophia_script_versions.json
-			$Parameters = @{
-				Uri             = "https://raw.githubusercontent.com/farag2/Sophia-Script-for-Windows/master/sophia_script_versions.json"
-				Verbose         = $true
-				UseBasicParsing = $true
-			}
-			$LatestRelease = (Invoke-RestMethod @Parameters).Sophia_Script_Windows_11_PowerShell_5_1
-			$CurrentRelease = (Get-Module -Name Sophia).Version.ToString()
-
-			if ([System.Version]$LatestRelease -gt [System.Version]$CurrentRelease)
-			{
-				Write-Warning -Message $Localization.UnsupportedRelease
-
-				Start-Process -FilePath "https://github.com/farag2/Sophia-Script-for-Windows/releases/latest"
-				Start-Process -FilePath "https://t.me/sophia_chat"
-				Start-Process -FilePath "https://discord.gg/sSryhaEv79"
-
-				exit
-			}
-		}
-		catch [System.Net.WebException]
-		{
-			Write-Warning -Message ($Localization.NoResponse -f "https://github.com")
-			Write-Error -Message ($Localization.NoResponse -f "https://github.com") -ErrorAction SilentlyContinue
-		}
-	}
-	catch [System.ComponentModel.Win32Exception]
-	{
-		Write-Warning -Message $Localization.NoInternetConnection
-		Write-Error -Message $Localization.NoInternetConnection -ErrorAction SilentlyContinue
 	}
 
 	#region Defender checks
@@ -555,14 +512,93 @@ public static string GetString(uint strId)
 	}
 	#endregion Defender checks
 
-	# Detect the OS build version
+	# Check for a pending reboot
+	$PendingActions = @(
+		# CBS pending
+		"HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\RebootPending",
+		"HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\RebootInProgress",
+		"HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Component Based Servicing\PackagesPending",
+		# Windows Update pending
+		"HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update\PostRebootReporting",
+		"HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdate\Auto Update\RebootRequired"
+	)
+	if (($PendingActions | Test-Path) -contains $true)
+	{
+		Write-Warning -Message $Localization.RebootPending
+
+		Start-Process -FilePath "https://t.me/sophia_chat"
+		Start-Process -FilePath "https://discord.gg/sSryhaEv79"
+
+		exit
+	}
+
+	# Check whether the current module version is the latest one
+	try
+	{
+		# Check the internet connection
+		$Parameters = @{
+			Name        = "dns.msftncsi.com"
+			Server      = "1.1.1.1"
+			DnsOnly     = $true
+			ErrorAction = "Stop"
+		}
+		if ((Resolve-DnsName @Parameters).IPAddress -notcontains "131.107.255.255")
+		{
+			return
+		}
+
+		try
+		{
+			# https://github.com/farag2/Sophia-Script-for-Windows/blob/master/sophia_script_versions.json
+			$Parameters = @{
+				Uri             = "https://raw.githubusercontent.com/farag2/Sophia-Script-for-Windows/master/sophia_script_versions.json"
+				Verbose         = $true
+				UseBasicParsing = $true
+			}
+			$LatestRelease = (Invoke-RestMethod @Parameters).Sophia_Script_Windows_11_PowerShell_5_1
+			$CurrentRelease = (Get-Module -Name Sophia).Version.ToString()
+
+			if ([System.Version]$LatestRelease -gt [System.Version]$CurrentRelease)
+			{
+				Write-Warning -Message $Localization.UnsupportedRelease
+
+				Start-Process -FilePath "https://github.com/farag2/Sophia-Script-for-Windows/releases/latest"
+				Start-Process -FilePath "https://t.me/sophia_chat"
+				Start-Process -FilePath "https://discord.gg/sSryhaEv79"
+
+				exit
+			}
+		}
+		catch [System.Net.WebException]
+		{
+			Write-Warning -Message ($Localization.NoResponse -f "https://github.com")
+			Write-Error -Message ($Localization.NoResponse -f "https://github.com") -ErrorAction SilentlyContinue
+		}
+	}
+	catch [System.ComponentModel.Win32Exception]
+	{
+		Write-Warning -Message $Localization.NoInternetConnection
+		Write-Error -Message $Localization.NoInternetConnection -ErrorAction SilentlyContinue
+	}
+
+	# Check whether LGPO.exe exists in the bin folder
+	if (-not (Test-Path -Path "$PSScriptRoot\..\bin\LGPO.exe"))
+	{
+		Write-Warning -Message $Localization.Bin
+
+		Start-Process -FilePath "https://github.com/farag2/Sophia-Script-for-Windows/releases/latest"
+		Start-Process -FilePath "https://t.me/sophia_chat"
+		Start-Process -FilePath "https://discord.gg/sSryhaEv79"
+
+		exit
+	}
+
+	# Detect Windows build version
 	switch ((Get-CimInstance -ClassName CIM_OperatingSystem).BuildNumber)
 	{
 		{$_ -lt 22631}
 		{
-			$CurrentBuild = Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows nt\CurrentVersion" -Name CurrentBuild
-			$UBR = Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows nt\CurrentVersion" -Name UBR
-			Write-Warning -Message ($Localization.UpdateWarning -f $CurrentBuild.CurrentBuild, $UBR.UBR)
+			Write-Warning -Message $Localization.UnsupportedOSBuild
 
 			Start-Process -FilePath "https://t.me/sophia_chat"
 			Start-Process -FilePath "https://discord.gg/sSryhaEv79"
@@ -584,9 +620,9 @@ public static string GetString(uint strId)
 		}
 		"22631"
 		{
-			if ((Get-ItemPropertyValue -Path "HKLM:\SOFTWARE\Microsoft\Windows nt\CurrentVersion" -Name UBR) -lt 2861)
+			if ((Get-ItemPropertyValue -Path "HKLM:\SOFTWARE\Microsoft\Windows nt\CurrentVersion" -Name UBR) -lt 3085)
 			{
-				# Check whether the OS minor build version is 2861 minimum
+				# Check whether Windows minor build version is 3085 minimum
 				# https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information#windows-11-current-versions
 				$CurrentBuild = Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows nt\CurrentVersion" -Name CurrentBuild
 				$UBR = Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows nt\CurrentVersion" -Name UBR
@@ -635,6 +671,7 @@ public static string GetString(uint strId)
 	Write-Information -MessageData "" -InformationAction Continue
 	# Extract the localized "Please wait..." string from shell32.dll
 	Write-Verbose -Message ([WinAPI.GetStr]::GetString(12612)) -Verbose
+	Write-Information -MessageData "" -InformationAction Continue
 
 	# Remove IP addresses from hosts file that block Microsoft recourses added by WindowsSpyBlocker
 	# https://github.com/crazy-max/WindowsSpyBlocker
@@ -718,8 +755,9 @@ public static string GetString(uint strId)
 			Write-Information -MessageData "" -InformationAction Continue
 			# Extract the localized "Please wait..." string from shell32.dll
 			Write-Verbose -Message ([WinAPI.GetStr]::GetString(12612)) -Verbose
+			Write-Information -MessageData "" -InformationAction Continue
 
-			# Check if hosts contains any of string from $IPArray array
+			# Check whether hosts contains any of string from $IPArray array
 			if ((Get-Content -Path "$env:SystemRoot\System32\drivers\etc\hosts" -Encoding Default -Force | ForEach-Object -Process {$_.Trim()} | ForEach-Object -Process {
 				($_ -ne "") -and ($_ -ne " ") -and (-not $_.StartsWith("#")) -and ($IPArray -split "`r?`n" | Select-String -Pattern $_)
 			}) -contains $true)
@@ -756,7 +794,7 @@ public static string GetString(uint strId)
 		Write-Error -Message ($Localization.RestartFunction -f $MyInvocation.Line.Trim()) -ErrorAction SilentlyContinue
 	}
 
-	# PowerShell 5.1 (7.3 too) interprets 8.3 file name literally, if an environment variable contains a non-latin word
+	# PowerShell 5.1 (7.5 too) interprets 8.3 file name literally, if an environment variable contains a non-Latin word
 	Get-ChildItem -Path "$env:TEMP\Computer.txt", "$env:TEMP\User.txt" -Force -ErrorAction Ignore | Remove-Item -Recurse -Force -ErrorAction Ignore
 
 	# Save all opened folders in order to restore them after File Explorer restart
@@ -868,8 +906,6 @@ public static string GetString(uint strId)
 	# Extract the localized "&Yes" string from shell32.dll
 	$Script:Yes = [WinAPI.GetStr]::GetString(33224).Replace("&", "")
 	$Script:KeyboardArrows = $Localization.KeyboardArrows -f [System.Char]::ConvertFromUtf32(0x2191), [System.Char]::ConvertFromUtf32(0x2193)
-	# Extract the localized "Skip" string from shell32.dll
-	$Script:Skip = [WinAPI.GetStr]::GetString(16956)
 
 	# Display a warning message about whether a user has customized the preset file
 	if ($Warning)
@@ -4504,7 +4540,7 @@ function OneDrive
 				return
 			}
 
-			# Check if user is logged into OneDrive (Microsoft account)
+			# Check whether user is logged into OneDrive (Microsoft account)
 			$UserEmail = Get-ItemProperty -Path HKCU:\Software\Microsoft\OneDrive\Accounts\Personal -Name UserEmail -ErrorAction Ignore
 			if ($UserEmail)
 			{
@@ -5006,7 +5042,7 @@ function TempFolder
 				return
 			}
 
-			# PowerShell 5.1 (7.3 too) interprets 8.3 file name literally, if an environment variable contains a non-latin word
+			# PowerShell 5.1 (7.5 too) interprets 8.3 file name literally, if an environment variable contains a non-Latin word
 			if ((Get-Item -Path $env:TEMP).FullName -eq "$env:SystemDrive\Temp")
 			{
 				return
@@ -5118,7 +5154,7 @@ Unregister-ScheduledTask -TaskName SymbolicLink -Confirm:`$false
 		}
 		"Default"
 		{
-			# PowerShell 5.1 (7.3 too) interprets 8.3 file name literally, if an environment variable contains a non-latin word
+			# PowerShell 5.1 (7.5 too) interprets 8.3 file name literally, if an environment variable contains a non-Latin word
 			if ((Get-Item -Path $env:TEMP).FullName -eq "$env:LOCALAPPDATA\Temp")
 			{
 				return
@@ -5146,7 +5182,7 @@ Unregister-ScheduledTask -TaskName SymbolicLink -Confirm:`$false
 			}
 
 			# Removing folders
-			# PowerShell 5.1 (7.3 too) interprets 8.3 file name literally, if an environment variable contains a non-latin word
+			# PowerShell 5.1 (7.5 too) interprets 8.3 file name literally, if an environment variable contains a non-Latin word
 			Remove-Item -Path $((Get-Item -Path $env:TEMP).FullName) -Recurse -Force -ErrorAction Ignore
 
 			if ((Get-ChildItem -Path $env:TEMP -Force -ErrorAction Ignore | Measure-Object).Count -ne 0)
@@ -5181,7 +5217,7 @@ public static bool MarkFileDelete (string sourcefile)
 
 				try
 				{
-					# PowerShell 5.1 (7.3 too) interprets 8.3 file name literally, if an environment variable contains a non-latin word
+					# PowerShell 5.1 (7.5 too) interprets 8.3 file name literally, if an environment variable contains a non-Latin word
 					Remove-Item -Path $((Get-Item -Path $env:TEMP).FullName) -Recurse -Force -ErrorAction Stop
 				}
 				catch
@@ -5190,7 +5226,7 @@ public static bool MarkFileDelete (string sourcefile)
 					Get-ChildItem -Path $env:TEMP -Recurse -Force | ForEach-Object -Process {[WinAPI.DeleteFiles]::MarkFileDelete($_.FullName)}
 				}
 
-				# PowerShell 5.1 (7.3 too) interprets 8.3 file name literally, if an environment variable contains a non-latin word
+				# PowerShell 5.1 (7.5 too) interprets 8.3 file name literally, if an environment variable contains a non-Latin word
 				$TempFolder = (Get-Item -Path $env:TEMP).FullName
 				$TempFolderCleanupTask = @"
 Remove-Item -Path "$TempFolder" -Recurse -Force
@@ -7245,7 +7281,7 @@ public extern static int SHSetKnownFolderPath(ref Guid folderId, uint flags, Int
 
 			do
 			{
-				$Choice = Show-Menu -Menu @($Browse, $Skip) -Default 2
+				$Choice = Show-Menu -Menu $Browse -Default 1 -AddSkip
 
 				switch ($Choice)
 				{
@@ -7285,7 +7321,7 @@ public extern static int SHSetKnownFolderPath(ref Guid folderId, uint flags, Int
 
 			do
 			{
-				$Choice = Show-Menu -Menu @($Browse, $Skip) -Default 2
+				$Choice = Show-Menu -Menu $Browse -Default 1 -AddSkip
 
 				switch ($Choice)
 				{
@@ -7325,7 +7361,7 @@ public extern static int SHSetKnownFolderPath(ref Guid folderId, uint flags, Int
 
 			do
 			{
-				$Choice = Show-Menu -Menu @($Browse, $Skip) -Default 2
+				$Choice = Show-Menu -Menu $Browse -Default 1 -AddSkip
 
 				switch ($Choice)
 				{
@@ -7365,7 +7401,7 @@ public extern static int SHSetKnownFolderPath(ref Guid folderId, uint flags, Int
 
 			do
 			{
-				$Choice = Show-Menu -Menu @($Browse, $Skip) -Default 2
+				$Choice = Show-Menu -Menu $Browse -Default 1 -AddSkip
 
 				switch ($Choice)
 				{
@@ -7405,7 +7441,7 @@ public extern static int SHSetKnownFolderPath(ref Guid folderId, uint flags, Int
 
 			do
 			{
-				$Choice = Show-Menu -Menu @($Browse, $Skip) -Default 2
+				$Choice = Show-Menu -Menu $Browse -Default 1 -AddSkip
 
 				switch ($Choice)
 				{
@@ -7445,7 +7481,7 @@ public extern static int SHSetKnownFolderPath(ref Guid folderId, uint flags, Int
 
 			do
 			{
-				$Choice = Show-Menu -Menu @($Browse, $Skip) -Default 2
+				$Choice = Show-Menu -Menu $Browse -Default 1 -AddSkip
 
 				switch ($Choice)
 				{
@@ -7483,12 +7519,12 @@ public extern static int SHSetKnownFolderPath(ref Guid folderId, uint flags, Int
 
 			# Extract the localized "Desktop" string from shell32.dll
 			$CurrentUserFolderLocation = Get-ItemPropertyValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name Desktop
-			Write-Verbose -Message ($Localization.CurrentUserFolderLocation -f [WinAPI.GetStr]::GetString(21790), $CurrentUserFolderLocation) -Verbose
+			Write-Verbose -Message ($Localization.CurrentUserFolderLocation -f [WinAPI.GetStr]::GetString(21769), $CurrentUserFolderLocation) -Verbose
 			Write-Warning -Message $Localization.FilesWontBeMoved
 
 			do
 			{
-				$Choice = Show-Menu -Menu @($Yes, $Skip) -Default 2
+				$Choice = Show-Menu -Menu $Yes -Default 1 -AddSkip
 
 				switch ($Choice)
 				{
@@ -7517,7 +7553,7 @@ public extern static int SHSetKnownFolderPath(ref Guid folderId, uint flags, Int
 
 			do
 			{
-				$Choice = Show-Menu -Menu @($Yes, $Skip) -Default 2
+				$Choice = Show-Menu -Menu $Yes -Default 1 -AddSkip
 
 				switch ($Choice)
 				{
@@ -7546,7 +7582,7 @@ public extern static int SHSetKnownFolderPath(ref Guid folderId, uint flags, Int
 
 			do
 			{
-				$Choice = Show-Menu -Menu @($Yes, $Skip) -Default 2
+				$Choice = Show-Menu -Menu $Yes -Default 1 -AddSkip
 
 				switch ($Choice)
 				{
@@ -7575,7 +7611,7 @@ public extern static int SHSetKnownFolderPath(ref Guid folderId, uint flags, Int
 
 			do
 			{
-				$Choice = Show-Menu -Menu @($Yes, $Skip) -Default 2
+				$Choice = Show-Menu -Menu $Yes -Default 1 -AddSkip
 
 				switch ($Choice)
 				{
@@ -7604,7 +7640,7 @@ public extern static int SHSetKnownFolderPath(ref Guid folderId, uint flags, Int
 
 			do
 			{
-				$Choice = Show-Menu -Menu @($Yes, $Skip) -Default 2
+				$Choice = Show-Menu -Menu $Yes -Default 1 -AddSkip
 
 				switch ($Choice)
 				{
@@ -7633,7 +7669,7 @@ public extern static int SHSetKnownFolderPath(ref Guid folderId, uint flags, Int
 
 			do
 			{
-				$Choice = Show-Menu -Menu @($Yes, $Skip) -Default 2
+				$Choice = Show-Menu -Menu $Yes -Default 1 -AddSkip
 
 				switch ($Choice)
 				{
@@ -7749,7 +7785,7 @@ function WinPrtScrFolder
 		$Default
 	)
 
-	# Check if user is logged into OneDrive (Microsoft account)
+	# Check whether user is logged into OneDrive (Microsoft account)
 	$UserEmail = Get-ItemProperty -Path HKCU:\Software\Microsoft\OneDrive\Accounts\Personal -Name UserEmail -ErrorAction Ignore
 	if ($UserEmail)
 	{
@@ -7831,7 +7867,7 @@ function WinPrtScrFolder
 	RecommendedTroubleshooting -Default
 
 	.NOTES
-	In order this feature to work the OS level of diagnostic data gathering will be set to "Optional diagnostic data" and the error reporting feature will be turned on
+	In order this feature to work Windows level of diagnostic data gathering will be set to "Optional diagnostic data" and the error reporting feature will be turned on
 
 	.NOTES
 	Machine-wide
@@ -7875,7 +7911,7 @@ function RecommendedTroubleshooting
 		}
 	}
 
-	# Set the OS level of diagnostic data gathering to "Optional diagnostic data"
+	# Set Windows level of diagnostic data gathering to "Optional diagnostic data"
 	if (-not (Test-Path -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Diagnostics\DiagTrack))
 	{
 		New-Item -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Diagnostics\DiagTrack -Force
@@ -8403,11 +8439,6 @@ function NetworkDiscovery
 		[switch]
 		$Disable
 	)
-
-	if ((Get-CimInstance -ClassName CIM_ComputerSystem).PartOfDomain)
-	{
-		return
-	}
 
 	$FirewallRules = @(
 		# File and printer sharing
@@ -9645,7 +9676,7 @@ function InstallVCRedist
 			winget install --id=Microsoft.VCRedist.2015+.x86 --exact --force --accept-source-agreements
 			winget install --id=Microsoft.VCRedist.2015+.x64 --exact --force --accept-source-agreements
 
-			# PowerShell 5.1 (7.3 too) interprets 8.3 file name literally, if an environment variable contains a non-latin word
+			# PowerShell 5.1 (7.5 too) interprets 8.3 file name literally, if an environment variable contains a non-Latin word
 			Get-ChildItem -Path "$env:TEMP\WinGet" -Force -ErrorAction Ignore | Remove-Item -Recurse -Force -ErrorAction Ignore
 		}
 		else
@@ -9671,7 +9702,7 @@ function InstallVCRedist
 
 			Start-Process -FilePath "$DownloadsFolder\VC_redist.x64.exe" -ArgumentList "/install /passive /norestart" -Wait
 
-			# PowerShell 5.1 (7.3 too) interprets 8.3 file name literally, if an environment variable contains a non-latin word
+			# PowerShell 5.1 (7.5 too) interprets 8.3 file name literally, if an environment variable contains a non-Latin word
 			$Paths = @(
 				"$DownloadsFolder\VC_redist.x86.exe",
 				"$DownloadsFolder\VC_redist.x64.exe",
@@ -9733,7 +9764,7 @@ function InstallDotNetRuntimes
 			# .NET Desktop Runtime 7 x64
 			winget install --id=Microsoft.DotNet.DesktopRuntime.7 --architecture x64 --exact --force --accept-source-agreements
 
-			# PowerShell 5.1 (7.3 too) interprets 8.3 file name literally, if an environment variable contains a non-latin word
+			# PowerShell 5.1 (7.5 too) interprets 8.3 file name literally, if an environment variable contains a non-Latin word
 			Get-ChildItem -Path "$env:TEMP\WinGet" -Force -ErrorAction Ignore | Remove-Item -Recurse -Force -ErrorAction Ignore
 		}
 		else
@@ -9770,7 +9801,7 @@ function InstallDotNetRuntimes
 
 			Start-Process -FilePath "$DownloadsFolder\dotnet-runtime-$LatestRelease-win-x64.exe" -ArgumentList "/install /passive /norestart" -Wait
 
-			# PowerShell 5.1 (7.3 too) interprets 8.3 file name literally, if an environment variable contains a non-latin word
+			# PowerShell 5.1 (7.5 too) interprets 8.3 file name literally, if an environment variable contains a non-Latin word
 			$Paths = @(
 				"$DownloadsFolder\dotnet-runtime-$LatestRelease-win-x86.exe",
 				"$DownloadsFolder\dotnet-runtime-$LatestRelease-win-x64.exe",
@@ -9810,7 +9841,7 @@ function InstallDotNetRuntimes
 
 			Start-Process -FilePath "$DownloadsFolder\dotnet-runtime-$LatestRelease-win-x64.exe" -ArgumentList "/install /passive /norestart" -Wait
 
-			# PowerShell 5.1 (7.3 too) interprets 8.3 file name literally, if an environment variable contains a non-latin word
+			# PowerShell 5.1 (7.5 too) interprets 8.3 file name literally, if an environment variable contains a non-Latin word
 			$Paths = @(
 				"$DownloadsFolder\dotnet-runtime-$LatestRelease-win-x86.exe",
 				"$DownloadsFolder\dotnet-runtime-$LatestRelease-win-x64.exe",
@@ -9920,7 +9951,7 @@ function Install-WSA
 		return
 	}
 
-	# Check if Windows 11 is installed on an SSD
+	# Check whether Windows 11 is installed on an SSD
 	$DiskNumber = (Get-Disk | Where-Object -FilterScript {$_.Isboot -and $_.IsSystem -and ($_.OperationalStatus -eq "Online")}).Number
 	if (Get-PhysicalDisk -DeviceNumber $DiskNumber | Where-Object -FilterScript {$_.MediaType -ne "SSD"})
 	{
@@ -10119,6 +10150,57 @@ function SATADrivesRemovableMedia
 		"Default"
 		{
 			Remove-ItemProperty -Path HKLM:\SYSTEM\CurrentControlSet\Services\storahci\Parameters\Device -Name TreatAsInternalPort -Force -ErrorAction Ignore
+		}
+	}
+}
+
+<#
+	.SYNOPSIS
+	Back up the system registry to %SystemRoot%\System32\config\RegBack folder when PC restarts and create a RegIdleBackup in the Task Scheduler task to manage subsequent backups
+
+	.PARAMETER Enable
+	Back up the system registry to %SystemRoot%\System32\config\RegBack folder
+
+	.PARAMETER Disable
+	Do not back up the system registry to %SystemRoot%\System32\config\RegBack folder
+
+	.EXAMPLE
+	RegistryBackup -Enable
+
+	.EXAMPLE
+	RegistryBackup -Disable
+
+	.NOTES
+	Machine-wide
+#>
+function RegistryBackup
+{
+	param
+	(
+		[Parameter(
+			Mandatory = $true,
+			ParameterSetName = "Enable"
+		)]
+		[switch]
+		$Enable,
+
+		[Parameter(
+			Mandatory = $true,
+			ParameterSetName = "Disable"
+		)]
+		[switch]
+		$Disable
+	)
+
+	switch ($PSCmdlet.ParameterSetName)
+	{
+		"Enable"
+		{
+			New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Configuration Manager" -Name EnablePeriodicBackup -Type DWord -Value 1 -Force
+		}
+		"Disable"
+		{
+			Remove-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Configuration Manager" -Name EnablePeriodicBackup -Force -ErrorAction Ignore
 		}
 	}
 }
@@ -10379,7 +10461,7 @@ FEA494190BF3446DCC8C8AAF62BA01F0BFB18E15503C27558DB70C48EFB0AEA0B600F985C904E9F2
 2EEEF7B09850D29B2F412DEF3D0BD9194CAE8113B3B38085C77C238CB8D15BF6D6AB42C193F4E2F27F8BEDABB2D6ADE9E486B6AFAFD8D5DBE3B7D7305790F96ECDCC2DD016C5B9B200CB72E6CF54D71
 F69A01CDE4E3A0A4C5A03627DECD491F215C1420EB07AB8FD2763FCFF5211EB964C82E69DA208BDFA76306D54642B117DCB9A92927CE2E633338D4EEA63B571349B8DA1D4B5523C4CA10308769E4F46
 1ADD16DD5DFDB0E705187593DEF5CCCF659E48366462CC21D7930E1064234157A7A08E9C90927A37C5CF23D54C755002E4E657BB6E70D9B4BE7C468C19D6969FAE138EBF2C20DD3F5A0BC4C0E97D5BF
-DB8744A21396C44549286117BEAD5AE14FF602E69E75B87784DE5F30BE14106E8D8A081DC8CCCFBF93896E622F755F27E82A596DDCA3469A93ECB9E2E897BF0FCC063426DACDC3B1D81E1EFE6B63932
+DB8744A21396C44549308517BEAD5AE14FF602E69E75B87784DE5F30BE14106E8D8A081DC8CCCFBF93896E622F755F27E82A596DDCA3469A93ECB9E2E897BF0FCC063426DACDC3B1D81E1EFE6B63932
 6CA43526CFAEDF9922EAC3204FEB84AAED781EE5516FA5B4DCAB85DB5FF33CEC454DAA375BDA5EEA7C871C310AEDC5BD6B220B59B901D377E22FFFE95FEDA28CE2CE33CAEB8541EE05E1B5650D776C4
 B2A246DB4613E2CC5D96A44D24AE662D848A7C9E3E922AFF0632B7B40505402956FABC5C3AAB55EEE29085046C127E8776CEFC1690B76EE99371AF9B1D7EF6F79E78325DD3BD8377E9B73B936C6F261
 1D0A1223A4D7C6CF3037922DD0686A701FF86761993F294D26E13A7BB8B1C61ACAF38D50334A88DABB3FA412B4FC79F6FBFD0D0A92301484FF1BD1CF3DC67780E4562E05CCA329CABA7CB2B77D9A707
@@ -11745,7 +11827,7 @@ function CleanupTask
 			# Checking if we're trying to create the task when it was already created as another user
 			if (Get-ScheduledTask -TaskPath "\Sophia\" -TaskName "Windows Cleanup" -ErrorAction Ignore)
 			{
-				# Also we can parse "$env:SystemRoot\System32\Tasks\Sophia\Windows Cleanup" to check if the task was created
+				# Also we can parse "$env:SystemRoot\System32\Tasks\Sophia\Windows Cleanup" to Check whether the task was created
 				$ScheduleService = New-Object -ComObject Schedule.Service
 				$ScheduleService.Connect()
 				$ScheduleService.GetFolder("\Sophia").GetTasks(0) | Where-Object -FilterScript {$_.Name -eq "Windows Cleanup"} | Foreach-Object {
@@ -12170,7 +12252,7 @@ function SoftwareDistributionTask
 			# Checking if we're trying to create the task when it was already created as another user
 			if (Get-ScheduledTask -TaskPath "\Sophia\" -TaskName SoftwareDistribution -ErrorAction Ignore)
 			{
-				# Also we can parse $env:SystemRoot\System32\Tasks\Sophia\SoftwareDistribution to check if the task was created
+				# Also we can parse $env:SystemRoot\System32\Tasks\Sophia\SoftwareDistribution to Check whether the task was created
 				$ScheduleService = New-Object -ComObject Schedule.Service
 				$ScheduleService.Connect()
 				$ScheduleService.GetFolder("\Sophia").GetTasks(0) | Where-Object -FilterScript {$_.Name -eq "SoftwareDistribution"} | Foreach-Object {
@@ -12474,7 +12556,7 @@ function TempTask
 			# Checking if we're trying to create the task when it was already created as another user
 			if (Get-ScheduledTask -TaskPath "\Sophia\" -TaskName Temp -ErrorAction Ignore)
 			{
-				# Also we can parse $env:SystemRoot\System32\Tasks\Sophia\Temp to check if the task was created
+				# Also we can parse $env:SystemRoot\System32\Tasks\Sophia\Temp to Check whether the task was created
 				$ScheduleService = New-Object -ComObject Schedule.Service
 				$ScheduleService.Connect()
 				$ScheduleService.GetFolder("\Sophia").GetTasks(0) | Where-Object -FilterScript {$_.Name -eq "Temp"} | Foreach-Object {
@@ -12626,9 +12708,9 @@ Get-ChildItem -Path `$env:TEMP -Recurse -Force | Where-Object -FilterScript {`$_
 	"`$env:SystemDrive\PerfLogs"
 )
 
-if ((Get-Item -Path `$env:SystemDrive\Recovery -Force | Where-Object -FilterScript {`$_.Attributes -match "Hidden"}).FullName)
+if ((Get-ChildItem -Path `$env:SystemDrive\Recovery -Force | Where-Object -FilterScript {`$_.Name -eq "ReAgentOld.xml"}).FullName)
 {
-	`$Paths += (Get-Item -Path `$env:SystemDrive\Recovery -Force | Where-Object -FilterScript {`$_.Attributes -match "Hidden"}).FullName
+	`$Paths += "$env:SystemDrive\Recovery"
 }
 Remove-Item -Path `$Paths -Recurse -Force
 
@@ -14444,11 +14526,11 @@ function OpenWindowsTerminalAdminContext
 
 	if
 	(
-		# Check if it is not blocked by policy
+		# Check whether it is not blocked by policy
 		(-not (Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked" -Name "{9F156763-7844-4DC4-B2B1-901F640F5155}" -ErrorAction Ignore)) -and
-		# Check if the package installed
+		# Check whether the package installed
 		(Get-AppxPackage -Name Microsoft.WindowsTerminal) -and
-		# Check if Windows Terminal version is greater or equal than 1.11
+		# Check whether Windows Terminal version is greater or equal than 1.11
 		([System.Version](Get-AppxPackage -Name Microsoft.WindowsTerminal).Version -ge [System.Version]"1.11")
 	)
 	{
@@ -14500,7 +14582,7 @@ function OpenWindowsTerminalAdminContext
 			}
 		}
 
-		# Save in UTF-8 with BOM despite JSON must not has the BOM: https://datatracker.ietf.org/doc/html/rfc8259#section-8.1. Unless Terminal profile names which contains non-latin characters will have "?" instead of titles
+		# Save in UTF-8 with BOM despite JSON must not has the BOM: https://datatracker.ietf.org/doc/html/rfc8259#section-8.1. Unless Terminal profile names which contains non-Latin characters will have "?" instead of titles
 		ConvertTo-Json -InputObject $Terminal -Depth 4 | Set-Content -Path "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json" -Encoding UTF8 -Force
 	}
 }
@@ -14605,7 +14687,7 @@ function UpdateLGPEPolicies
 	{
 		foreach ($Item in $Path.Property)
 		{
-			# Check if property isn't equal to "(default)" and exists
+			# Check whether property isn't equal to "(default)" and exists
 			if (($null -ne $Item) -and ($Item -ne "(default)"))
 			{
 				# Where all ADMX templates are located to compare with
@@ -14663,7 +14745,7 @@ function UpdateLGPEPolicies
 	{
 		foreach ($Item in $Path.Property)
 		{
-			# Check if property isn't equal to "(default)" and exists
+			# Check whether property isn't equal to "(default)" and exists
 			if (($null -ne $Item) -and ($Item -ne "(default)"))
 			{
 				# Where all ADMX templates are located to compare with
@@ -14808,7 +14890,7 @@ public static void PostMessage()
 		gpupdate /force
 	}
 
-	# PowerShell 5.1 (7.3 too) interprets 8.3 file name literally, if an environment variable contains a non-latin word
+	# PowerShell 5.1 (7.5 too) interprets 8.3 file name literally, if an environment variable contains a non-Latin word
 	Get-ChildItem -Path "$env:TEMP\Computer.txt", "$env:TEMP\User.txt" -Force -ErrorAction Ignore | Remove-Item -Recurse -Force -ErrorAction Ignore
 
 	Stop-Process -Name explorer -Force
@@ -14823,7 +14905,7 @@ public static void PostMessage()
 		}
 	}
 
-	# Check if any of scheduled tasks were created. Unless open Task Scheduler
+	# Check whether any of scheduled tasks were created. Unless open Task Scheduler
 	if ($Script:ScheduledTasks)
 	{
 		# Find and close taskschd.msc by its' argument
