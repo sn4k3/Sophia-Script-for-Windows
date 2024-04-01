@@ -1,7 +1,7 @@
 ﻿ConvertFrom-StringData -StringData @'
 UnsupportedOSBitness                      = 该脚本仅支持64位Windows。
 UnsupportedOSBuild                        = 该脚本支持Windows 10版本22H2和更高版本。
-UpdateWarning                             = 您的Windows 10构建: {0}.{1}。支持的构建: 19045.3996+。运行Windows Update并再次尝试。
+UpdateWarning                             = 您的Windows 10构建: {0}.{1}。支持的构建: {2}+。运行Windows Update并再次尝试。
 UnsupportedLanguageMode                   = PowerShell会话在有限的语言模式下运行。
 LoggedInUserNotAdmin                      = 登录的用户没有管理员的权利。
 UnsupportedPowerShell                     = 你想通过PowerShell {0}.{1}运行脚本。在适当的PowerShell版本中运行该脚本。
@@ -27,6 +27,7 @@ WindowsFeaturesTitle                      = Windows功能
 OptionalFeaturesTitle                     = 可选功能
 EnableHardwareVT                          = UEFI中开启虚拟化。
 UserShellFolderNotEmpty                   = 一些文件留在了"{0}"文件夹。请手动将它们移到一个新位置。
+UserFolderLocationMove                    = 不应将用户文件夹位置更改为 C 盘根目录。
 RetrievingDrivesList                      = 取得驱动器列表.....
 DriveSelect                               = 选择将在其根目录中创建"{0}"文件夹的驱动器。
 CurrentUserFolderLocation                 = 当前"{0}"文件夹的位置:"{1}"。

@@ -491,6 +491,20 @@
   },
   {
     "Region": "UI & Personalization",
+    "Function": "SearchHighlights",
+    "Arg": {
+      "Zero": {
+        "Tag": "Hide",
+        "ToolTip": "Скрыть главное в поиске."
+      },
+      "One": {
+        "Tag": "Show",
+        "ToolTip": "Показать главное в поиске (значение по умолчанию)."
+      }
+    }
+  },
+  {
+    "Region": "UI & Personalization",
     "Function": "CopilotButton",
     "Arg": {
       "Zero": {
@@ -1298,18 +1312,18 @@
         "Tag": "",
         "ToolTip": "Зарегистрируйте приложение, рассчитайте хэш и свяжите его с расширением со скрытым всплывающим окном 'Как вы хотите открыть это'."
       },
-      "One":  {
-		"Tag": "ProgramPath",
-		"ToolTip":  "Путь до исполняемого файла."
-	  },
-	  "Two":  {
-	    "Tag": "Extension",
-		"ToolTip":  "Расширение."
-	  },	
-	  "Three": {
-		"Tag": "Icon",
-		"ToolTip":  "Путь до значка."
-	  }	
+      "One": {
+        "Tag": "ProgramPath",
+        "ToolTip": "Путь до исполняемого файла."
+      },
+      "Two": {
+        "Tag": "Extension",
+        "ToolTip": "Расширение."
+      },
+      "Three": {
+        "Tag": "Icon",
+        "ToolTip": "Путь до значка."
+      }
     }
   },
   {
@@ -1358,11 +1372,16 @@
   },
   {
     "Region": "System",
-    "Function": "InstallDotNetRuntimes",
+    "Function": "InstallDotNetRuntimes -Runtimes",
+    "ToolTip": "Установить последнюю версию .NET Desktop Runtime 6, 8 x64.",
     "Arg": {
       "Zero": {
-        "Tag": "",
-        "ToolTip": "Установить последнюю версию .NET Desktop Runtime 6, 7 (x86/x64)."
+        "Tag": "NET6x64",
+        "ToolTip": ".NET Desktop Runtime 6 x64."
+      },
+      "One": {
+        "Tag": "NET8x64",
+        "ToolTip": ".NET Desktop Runtime 8 x64."
       }
     }
   },
@@ -1849,20 +1868,6 @@
       "One": {
         "Tag": "Hide",
         "ToolTip": "Скрыть пункт \"Установить\" из контекстного меню .cab архивов (значение по умолчанию)."
-      }
-    }
-  },
-  {
-    "Region": "Context menu",
-    "Function": "RunAsDifferentUserContext",
-    "Arg": {
-      "Zero": {
-        "Tag": "Show",
-        "ToolTip": "Отобразить пункт \"Запуск от имени другого пользователя\" в контекстное меню .exe файлов."
-      },
-      "One": {
-        "Tag": "Hide",
-        "ToolTip": "Скрыть пункт \"Запуск от имени другого пользователя\" из контекстное меню .exe файлов (значение по умолчанию)."
       }
     }
   },

@@ -2,11 +2,10 @@
 	.SYNOPSIS
 	The TAB completion for functions and their arguments
 
-	Version: v5.18.0
-	Date: 02.02.2024
+	Version: v5.18.3
+	Date: 01.04.2024
 
-	Copyright (c) 2014—2024 farag
-	Copyright (c) 2019—2024 farag & Inestic
+	Copyright (c) 2014—2024 farag, Inestic & lowl1f3
 
 	Thanks to all https://forum.ru-board.com members involved
 
@@ -50,7 +49,7 @@ function Sophia
 
 Clear-Host
 
-$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 10 v5.18.0 | Made with $([System.Char]::ConvertFromUtf32(0x1F497)) of Windows | $([System.Char]0x00A9) farag & Inestic, 2014$([System.Char]0x2013)2024"
+$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 10 v5.18.3 | Made with $([System.Char]::ConvertFromUtf32(0x1F497)) of Windows | $([System.Char]0x00A9) farag, Inestic & lowl1f3, 2014$([System.Char]0x2013)2024"
 
 Remove-Module -Name Sophia -Force -ErrorAction Ignore
 Import-Module -Name $PSScriptRoot\Manifest\Sophia.psd1 -PassThru -Force
@@ -159,6 +158,30 @@ $Parameters = @{
 					{
 						# The "UninstallUWPApps -ForAllUsers" construction
 						"UninstallUWPApps" + " " + "-" + $ParameterSet | Where-Object -FilterScript {$_ -like "*$wordToComplete*"} | ForEach-Object -Process {"`"$_`""}
+					}
+
+					continue
+				}
+			}
+
+			# If a module command is InstallDotNetRuntimes
+			if ($Command -eq "InstallDotNetRuntimes")
+			{
+				# Get all command arguments, excluding defaults
+				foreach ($ParameterSet in $ParameterSets.Name)
+				{
+					# If an argument is Runtimes
+					if ($ParameterSet -eq "Runtimes")
+					{
+						$ValidValues = ((Get-Command -Name InstallDotNetRuntimes).Parametersets.Parameters | Where-Object -FilterScript {$null -eq $_.Attributes.AliasNames}).Attributes.ValidValues
+						foreach ($ValidValue in $ValidValues)
+						{
+							# The "InstallDotNetRuntimes -Runtimes <function>" construction
+							"InstallDotNetRuntimes" + " " + "-" + $ParameterSet + " " + $ValidValue | Where-Object -FilterScript {$_ -like "*$wordToComplete*"} | ForEach-Object -Process {"`"$_`""}
+						}
+
+						# The "InstallDotNetRuntimes -Runtimes <functions>" construction
+						"InstallDotNetRuntimes" + " " + "-" + $ParameterSet + " " + ($ValidValues -join ", ") | Where-Object -FilterScript {$_ -like "*$wordToComplete*"} | ForEach-Object -Process {"`"$_`""}
 					}
 
 					continue

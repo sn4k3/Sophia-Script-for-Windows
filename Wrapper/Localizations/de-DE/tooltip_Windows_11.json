@@ -491,6 +491,20 @@
   },
   {
     "Region": "UI & Personalization",
+    "Function": "SearchHighlights",
+    "Arg": {
+      "Zero": {
+        "Tag": "Hide",
+        "ToolTip": "Suchhighlights ausblenden."
+      },
+      "One": {
+        "Tag": "Show",
+        "ToolTip": "Suchhighlights anzeigen (Standardeinstellung)."
+      }
+    }
+  },
+  {
+    "Region": "UI & Personalization",
     "Function": "CopilotButton",
     "Arg": {
       "Zero": {
@@ -1282,11 +1296,11 @@
     "Arg": {
       "Zero": {
         "Tag": "Disable",
-        "ToolTip": "Holen Sie sich keine Windows-Updates, sobald sie für Ihr Gerät verfügbar sind (Standardeinstellung)."
+        "ToolTip": "Sie erhalten die neuesten Updates nicht, sobald sie verfügbar sind (Standardeinstellung)."
       },
       "One": {
         "Tag": "Enable",
-        "ToolTip": "Holen Sie sich Windows-Updates, sobald sie für Ihr Gerät verfügbar sind."
+        "ToolTip": "Erhalten Sie die neuesten Updates, sobald sie verfügbar sind."
       }
     }
   },
@@ -1298,18 +1312,18 @@
         "Tag": "",
         "ToolTip": "Registrieren Sie die App, berechnen Sie den Hash und verknüpfen Sie sie mit einer Erweiterung, wobei das Popup 'Wie möchten Sie diese öffnen?' ausgeblendet ist."
       },
-      "One":  {
-		"Tag": "ProgramPath",
-		"ToolTip":  "Pfad zur ausführbaren Datei."
-	  },
-	  "Two":  {
-	    "Tag": "Extension",
-		"ToolTip":  "Erweiterung."
-	  },	
-	  "Three": {
-		"Tag": "Icon",
-		"ToolTip":  "Pfad zum Symbol."
-	  }	
+      "One": {
+        "Tag": "ProgramPath",
+        "ToolTip": "Pfad zur ausführbaren Datei."
+      },
+      "Two": {
+        "Tag": "Extension",
+        "ToolTip": "Erweiterung."
+      },
+      "Three": {
+        "Tag": "Icon",
+        "ToolTip": "Pfad zum Symbol."
+      }
     }
   },
   {
@@ -1358,11 +1372,16 @@
   },
   {
     "Region": "System",
-    "Function": "InstallDotNetRuntimes",
+    "Function": "InstallDotNetRuntimes -Runtimes",
+    "ToolTip": "Installieren Sie die neueste .NET Desktop Runtime 6, 8 x64.",
     "Arg": {
       "Zero": {
-        "Tag": "",
-        "ToolTip": "Installieren der neuesten .NET Desktop Runtime 6, 7 (x86/x64)."
+        "Tag": "NET6x64",
+        "ToolTip": ".NET Desktop Runtime 6 x64."
+      },
+      "One": {
+        "Tag": "NET8x64",
+        "ToolTip": ".NET Desktop Runtime 8 x64."
       }
     }
   },
@@ -1849,20 +1868,6 @@
       "One": {
         "Tag": "Hide",
         "ToolTip": "Eintrag \"Installieren\" im Kontextmenü der Cabinet (.cab)-Dateinamenerweiterungen ausblenden (Standardeinstellung)."
-      }
-    }
-  },
-  {
-    "Region": "Context menu",
-    "Function": "RunAsDifferentUserContext",
-    "Arg": {
-      "Zero": {
-        "Tag": "Show",
-        "ToolTip": "\"Als anderer Benutzer ausführen\" im Kontextmenü der .exe-Dateien anzeigen."
-      },
-      "One": {
-        "Tag": "Hide",
-        "ToolTip": "\"Als anderer Benutzer ausführen\" im Kontextmenü der .exe-Dateien ausblenden (Standardeinstellung)."
       }
     }
   },

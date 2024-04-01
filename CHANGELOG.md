@@ -5,11 +5,64 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 5.18.3 | 6.6.3 — 01.04.2024
+
+* Removed `RunAsDifferentUserContext`, `EditWithPhotosContext`, `ImagesEditContext` for Windows 10 as unnecessary ones.
+* Fixed `UserFolders` function;
+  * Fixes #561.
+* Removed `NET7x64` argument from `InstallDotNetRuntimes` function as .NET 7 will have EOF status in May;
+* Fixed and improved `Cursors` function;
+* Now it's possible to create any scheduled task even computer name is equal to user name (what's prohibited in Windows);
+  * Removes warning that Task Scheduler is removed or broken;
+  * Fixes #561.
+* Minor changes.
+
+Thanks to @lowl1f3 for bug reporting.
+
+### Wrapper 2.6.20
+
+* Code refactoring
+  * Proper variable naming, removed experimental code, removed extras, added regions.
+
+## 5.18.2 | 6.6.2 — 06.03.2024
+
+* Initial checks simplified;
+  * Script now relies on parsing <https://github.com/farag2/Sophia-Script-for-Windows/blob/master/supported_windows_builds.json> to check the actual supported Windows build;
+    * If there's no Internet connection established, the check will be skipped.
+  * In anticipation of providing an ability to remove Edge from Microsoft, the Edge check was removed.
+* `InstallDotNetRuntimes` function has now only `NET6x64, NET7x64, NET8x64` supported arguments
+* Minor changes.
+
+### Wrapper 2.6.18
+
+* Fixed Set-Association;
+  * Can include spaces in filepath.
+* More organized output console 2.6.18.
+
+## 5.18.1 | 6.6.1 — 03.03.2024
+
+* Code refactoring;
+* Improved initial checks;
+* Fixed small bug when explorer process didn't load back after restating in `OneDrive -Uninstall` function;
+* Closed #554;
+* Added `SearchHighlights` function to show or hide hightlights in the search on the taskbar;
+* Fixed bug in all creating scheduled tasks where a wrong encoding were used that cased mojibake;
+  * You may re-create them if you've encountered such bug.
+  * Thanks to @lowl1f3.
+* Fixed typos;
+* Minor changes.
+
+### Wrapper 2.6.17
+
+* Added `InstallDotNetRuntimes -Runtimes` function to install latest `.NET 6, 7, 8 frameworks`
+* Fixed bug crash when searching in Windows 10 src.
+
 ## 5.18.0 | 6.6.0 — 02.02.2024
 
 * Improved initial checks;
 * Extended harmful tweakers list checks;
 * Improved HEVC package downloading function;
+* Added `RegistryBackup` function to back up the system registry to %SystemRoot%\System32\config\RegBack folder when PC restarts and create a RegIdleBackup in the Task Scheduler task to manage subsequent backups;
 * Fixed typos;
 * Minor changes.
 

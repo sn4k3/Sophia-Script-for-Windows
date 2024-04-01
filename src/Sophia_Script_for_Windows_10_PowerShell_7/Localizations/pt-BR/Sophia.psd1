@@ -1,7 +1,7 @@
 ﻿ConvertFrom-StringData -StringData @'
 UnsupportedOSBitness                      = O guião suporta apenas Windows de 64 bits.
 UnsupportedOSBuild                        = O script suporta versões Windows 10 22H2.
-UpdateWarning                             = La tua build di Windows 10: {0}.{1}. Build suportadas: 19045.3996+. Execute o Windows Update e tente novamente.
+UpdateWarning                             = La tua build di Windows 10: {0}.{1}. Build suportadas: {2}+. Execute o Windows Update e tente novamente.
 UnsupportedLanguageMode                   = A sessão PowerShell em funcionamento em um modo de linguagem limitada.
 LoggedInUserNotAdmin                      = O usuário logado não tem direitos de administrador.
 UnsupportedPowerShell                     = Você está tentando executar o script via PowerShell {0}.{1}. Execute o script na versão apropriada do PowerShell.
@@ -27,6 +27,7 @@ WindowsFeaturesTitle                      = Recursos do Windows
 OptionalFeaturesTitle                     = Recursos opcionais
 EnableHardwareVT                          = Habilitar virtualização em UEFI.
 UserShellFolderNotEmpty                   = Alguns arquivos deixados na pasta "{0}". Movê-los manualmente para um novo local.
+UserFolderLocationMove                    = Você não deve alterar o local da pasta do usuário para a raiz da unidade C.
 RetrievingDrivesList                      = Recuperando lista de unidades...
 DriveSelect                               = Selecione a unidade dentro da raiz da qual a pasta "{0}" será criada.
 CurrentUserFolderLocation                 = A localização actual da pasta "{0}": "{1}".

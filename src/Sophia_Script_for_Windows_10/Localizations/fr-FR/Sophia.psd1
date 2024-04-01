@@ -2,7 +2,7 @@
 UnsupportedOSBitness                      = Le script n'est compatible qu'avec Windows 64 bits.
 UnsupportedOSBuild                        = Le script supporte les versions Windows 10 22H2.
 NonLatinUsernameWarning                   = PowerShell 5.1 ne compile pas le code si le nom d'utilisateur contient des caractères non latins (y compris emoji) et est écrit en minuscules. Veuillez utiliser PowerShell 7.
-UpdateWarning                             = Votre version de Windows 10: {0}.{1}. Versions prises en charge: 19045.3996+. Exécutez Windows Update et réessayez.
+UpdateWarning                             = Votre version de Windows 10: {0}.{1}. Versions prises en charge: {2}+. Exécutez Windows Update et réessayez.
 UnsupportedLanguageMode                   = La session PowerShell s'exécute dans un mode de langue limité.
 LoggedInUserNotAdmin                      = L'utilisateur connecté n'a pas de droits d'administrateur.
 UnsupportedPowerShell                     = Vous essayez d'exécuter le script via PowerShell {0}.{1}. Exécutez le script dans la version appropriée de PowerShell.
@@ -28,6 +28,7 @@ WindowsFeaturesTitle                      = Fonctionnalités
 OptionalFeaturesTitle                     = Fonctionnalités optionnelles
 EnableHardwareVT                          = Activer la virtualisation dans UEFI.
 UserShellFolderNotEmpty                   = Certains fichiers laissés dans le dossier "{0}". Déplacer les manuellement vers un nouvel emplacement.
+UserFolderLocationMove                    = Vous ne devez pas changer l'emplacement du dossier de l'utilisateur pour la racine du lecteur C.
 RetrievingDrivesList                      = Récupération de la liste des lecteurs...
 DriveSelect                               = Sélectionnez le disque à la racine dans lequel le dossier "{0}" sera créé.
 CurrentUserFolderLocation                 = L'emplacement actuel du dossier "{0}": "{1}".

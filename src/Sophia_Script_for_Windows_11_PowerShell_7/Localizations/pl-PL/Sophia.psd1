@@ -1,6 +1,6 @@
 ﻿ConvertFrom-StringData -StringData @'
 UnsupportedOSBuild                        = Skrypt obsługuje system Windows 11 23H2+.
-UpdateWarning                             = Twoja wersja systemu Windows 11: {0}.{1}. Obsługiwane kompilacje: 22631.3085+. Uruchom aktualizację systemu Windows i spróbuj ponownie.
+UpdateWarning                             = Twoja wersja systemu Windows 11: {0}.{1}. Obsługiwane kompilacje: {2}+. Uruchom aktualizację systemu Windows i spróbuj ponownie.
 UnsupportedLanguageMode                   = Sesja PowerShell działa w trybie ograniczonego języka.
 LoggedInUserNotAdmin                      = Zalogowany użytkownik nie posiada uprawnień administratora.
 UnsupportedPowerShell                     = Próbujesz uruchomić skrypt przy użyciu PowerShell {0}.{1}. Uruchom skrypt używając odpowiedniej wersji PowerShell.
@@ -26,6 +26,7 @@ WindowsFeaturesTitle                      = Funkcje Windows
 OptionalFeaturesTitle                     = Funkcje opcjonalne
 EnableHardwareVT                          = Włącz wirtualizację w UEFI.
 UserShellFolderNotEmpty                   = Niektóre pliki pozostały w folderze "{0}". Przenieś je ręcznie w nowe miejsce.
+UserFolderLocationMove                    = Nie należy zmieniać lokalizacji folderu użytkownika na katalog główny dysku C.
 RetrievingDrivesList                      = Pobieranie listy dysków...
 DriveSelect                               = Wybierz dysk w katalogu głównym, w którym zostanie utworzony folder "{0}".
 CurrentUserFolderLocation                 = Lokalizacja folderu "{0}": "{1}".

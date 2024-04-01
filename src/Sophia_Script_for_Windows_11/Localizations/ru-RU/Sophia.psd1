@@ -1,7 +1,7 @@
 ﻿ConvertFrom-StringData -StringData @'
 UnsupportedOSBuild                        = Скрипт поддерживает Windows 11 23H2+.
 NonLatinUsernameWarning                   = PowerShell 5.1 не компилирует код, если имя пользователя содержит нелатинские символы (включая эмодзи) и написано со строчной буквы. Пожалуйста, используйте PowerShell 7.
-UpdateWarning                             = Ваш билд Windows 11: {0}.{1}. Поддерживаемые сборки: 22631.3085+. Запустите обновление Windows и попробуйте заново.
+UpdateWarning                             = Ваш билд Windows 11: {0}.{1}. Поддерживаемые сборки: {2}+. Запустите обновление Windows и попробуйте заново.
 UnsupportedLanguageMode                   = Сессия PowerShell работает в ограниченном режиме.
 LoggedInUserNotAdmin                      = Текущий вошедший пользователь не обладает правами администратора.
 UnsupportedPowerShell                     = Вы пытаетесь запустить скрипт в PowerShell {0}.{1}. Запустите скрипт в соответствующей версии PowerShell.
@@ -27,6 +27,7 @@ WindowsFeaturesTitle                      = Компоненты Windows
 OptionalFeaturesTitle                     = Дополнительные компоненты
 EnableHardwareVT                          = Включите виртуализацию в UEFI.
 UserShellFolderNotEmpty                   = В папке "{0}" остались файлы. Переместите их вручную в новое расположение.
+UserFolderLocationMove                    = Не следует перемещать пользовательские папки в корень диска C.
 RetrievingDrivesList                      = Получение списка дисков...
 DriveSelect                               = Выберите диск, в корне которого будет создана папка "{0}".
 CurrentUserFolderLocation                 = Текущее расположение папки "{0}": "{1}".

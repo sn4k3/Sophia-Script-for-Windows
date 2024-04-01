@@ -1,7 +1,7 @@
 ﻿ConvertFrom-StringData -StringData @'
 UnsupportedOSBitness                      = Скрипт поддерживает только 64-битную версию Windows.
 UnsupportedOSBuild                        = Скрипт поддерживает Windows 10 22H2.
-UpdateWarning                             = Ваш билд Windows 10: {0}.{1}. Поддерживаемые сборки: 19045.3996+. Запустите обновление Windows и попробуйте заново.
+UpdateWarning                             = Ваш билд Windows 10: {0}.{1}. Поддерживаемые сборки: {2}+. Запустите обновление Windows и попробуйте заново.
 UnsupportedLanguageMode                   = Сессия PowerShell работает в ограниченном режиме.
 LoggedInUserNotAdmin                      = Текущий вошедший пользователь не обладает правами администратора.
 UnsupportedPowerShell                     = Вы пытаетесь запустить скрипт в PowerShell {0}.{1}. Запустите скрипт в соответствующей версии PowerShell.
@@ -27,6 +27,7 @@ WindowsFeaturesTitle                      = Компоненты Windows
 OptionalFeaturesTitle                     = Дополнительные компоненты
 EnableHardwareVT                          = Включите виртуализацию в UEFI.
 UserShellFolderNotEmpty                   = В папке "{0}" остались файлы. Переместите их вручную в новое расположение.
+UserFolderLocationMove                    = Не следует перемещать пользовательские папки в корень диска C.
 RetrievingDrivesList                      = Получение списка дисков...
 DriveSelect                               = Выберите диск, в корне которого будет создана папка "{0}".
 CurrentUserFolderLocation                 = Текущее расположение папки "{0}": "{1}".

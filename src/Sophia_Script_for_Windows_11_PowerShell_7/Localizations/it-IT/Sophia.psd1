@@ -1,6 +1,6 @@
 ﻿ConvertFrom-StringData -StringData @'
 UnsupportedOSBuild                        = Lo script supporta Windows 11 23H2+.
-UpdateWarning                             = La tua build di Windows 11 {0}.{1} non è supportata. Build supportate: 22631.3085+. Eseguire Windows Update e riprovare.
+UpdateWarning                             = La tua build di Windows 11 {0}.{1} non è supportata. Build supportate: {2}+. Eseguire Windows Update e riprovare.
 UnsupportedLanguageMode                   = La sessione PowerShell è in esecuzione in modalità lingua limitata.
 LoggedInUserNotAdmin                      = L'utente in suo non ha i diritti di amministratore.
 UnsupportedPowerShell                     = Stai cercando di eseguire lo script tramite PowerShell {0}.{1}. Esegui lo script nella versione di PowerShell appropriata.
@@ -26,6 +26,7 @@ WindowsFeaturesTitle                      = Funzionalità di Windows
 OptionalFeaturesTitle                     = Caratteristiche opzionali
 EnableHardwareVT                          = Abilita virtualizzazione in UEFI.
 UserShellFolderNotEmpty                   = Alcuni file rimasti nella cartella "{0}". Spostali manualmente in una nuova posizione.
+UserFolderLocationMove                    = Non si dovrebbe modificare la posizione della cartella utente nella radice dell'unità C.
 RetrievingDrivesList                      = Recupero lista unità...
 DriveSelect                               = Selezionare l'unità all'interno della radice del quale verrà creato la cartella "{0}" .
 CurrentUserFolderLocation                 = La posizione attuale della cartella "{0}": "{1}".

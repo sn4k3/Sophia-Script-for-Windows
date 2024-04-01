@@ -2,11 +2,10 @@
 	.SYNOPSIS
 	Default preset file for "Sophia Script for Windows 10 LTSC 2021"
 
-	Version: v5.18.0
-	Date: 02.02.2024
+	Version: v5.18.3
+	Date: 01.04.2024
 
-	Copyright (c) 2014—2024 farag
-	Copyright (c) 2019—2024 farag & Inestic
+	Copyright (c) 2014—2024 farag, Inestic & lowl1f3
 
 	Thanks to all https://forum.ru-board.com members involved
 
@@ -27,7 +26,7 @@
 	.NOTES
 	Supported Windows 10 version
 	Version: 21H2
-	Build: 19044.3930+
+	Build: 19044.4046+
 	Edition: Enterprise LTSC 2021
 	Architecture: x64
 
@@ -55,6 +54,7 @@
 	.LINK Authors
 	https://github.com/farag2
 	https://github.com/Inestic
+	https://github.com/lowl1f3
 #>
 
 #Requires -RunAsAdministrator
@@ -70,7 +70,7 @@ param
 
 Clear-Host
 
-$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 10 LTSC 2021 v5.18.0 | Made with $([System.Char]::ConvertFromUtf32(0x1F497)) of Windows | $([System.Char]0x00A9) farag & Inestic, 2014$([System.Char]0x2013)2024"
+$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 10 LTSC 2021 v5.18.3 | Made with $([System.Char]::ConvertFromUtf32(0x1F497)) of Windows | $([System.Char]0x00A9) farag, Inestic & lowl1f3, 2014$([System.Char]0x2013)2024"
 
 Remove-Module -Name Sophia -Force -ErrorAction Ignore
 Import-LocalizedData -BindingVariable Global:Localization -BaseDirectory $PSScriptRoot\Localizations -FileName Sophia
@@ -886,12 +886,12 @@ ActiveHours -Automatically
 InstallVCRedist
 
 <#
-	Install the latest .NET Desktop Runtime 6, 7 (x86/x64)
-	Установить последнюю версию .NET Desktop Runtime 6, 7 (x86/x64)
+	Install the latest .NET Desktop Runtime 6, 8 x64
+	Установить последнюю версию .NET Desktop Runtime 6, 8 x64
 
 	https://dotnet.microsoft.com/en-us/download/dotnet
 #>
-InstallDotNetRuntimes
+InstallDotNetRuntimes -Runtimes NET6x64, NET8x64
 
 # Enable proxying only blocked sites from the unified registry of Roskomnadzor. The function is applicable for Russia only
 # Включить проксирование только заблокированных сайтов из единого реестра Роскомнадзора. Функция применима только для России
@@ -1171,14 +1171,6 @@ CABInstallContext -Show
 # Hide the "Install" item from the Cabinet (.cab) filenames extensions context menu (default value)
 # Скрыть пункт "Установить" из контекстного меню .cab архивов (значение по умолчанию)
 # CABInstallContext -Hide
-
-# Show the "Run as different user" item to the .exe filename extensions context menu
-# Отобразить пункт "Запуск от имени другого пользователя" в контекстное меню .exe файлов
-RunAsDifferentUserContext -Show
-
-# Hide the "Run as different user" item from the .exe filename extensions context menu (default value)
-# Скрыть пункт "Запуск от имени другого пользователя" из контекстное меню .exe файлов (значение по умолчанию)
-# RunAsDifferentUserContext -Hide
 
 # Hide the "Cast to Device" item from the media files and folders context menu
 # Скрыть пункт "Передать на устройство" из контекстного меню медиа-файлов и папок

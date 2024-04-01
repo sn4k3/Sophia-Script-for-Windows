@@ -1379,17 +1379,17 @@
         "ToolTip": "Registrieren Sie die App, berechnen Sie den Hash und verknüpfen Sie sie mit einer Erweiterung, wobei das Popup 'Wie möchten Sie diese öffnen?' ausgeblendet ist."
       },
       "One":  {
-		"Tag": "ProgramPath",
-		"ToolTip":  "Pfad zur ausführbaren Datei."
-	  },
-	  "Two":  {
-	    "Tag": "Extension",
-		"ToolTip":  "Erweiterung."
-	  },	
-	  "Three": {
-		"Tag": "Icon",
-		"ToolTip":  "Pfad zum Symbol."
-	  }	
+        "Tag": "ProgramPath",
+        "ToolTip": "Pfad zur ausführbaren Datei."
+      },
+      "Two":  {
+        "Tag": "Extension",
+        "ToolTip": "Erweiterung."
+      }
+      "Three": {
+        "Tag": "Icon",
+        "ToolTip": "Pfad zum Symbol."
+      }
     }
   },
   {
@@ -1434,11 +1434,16 @@
   },
   {
     "Region": "System",
-    "Function": "InstallDotNetRuntimes",
+    "Function": "InstallDotNetRuntimes -Runtimes",
+    "ToolTip": "Installieren Sie die neueste .NET Desktop Runtime 6, 8 x64.",
     "Arg": {
       "Zero": {
-        "Tag": "",
-        "ToolTip": "Installieren Sie die neueste .NET Desktop Runtime 6, 7 (x86/x64)."
+        "Tag": "NET6x64",
+        "ToolTip": ".NET Desktop Runtime 6 x64."
+      },
+      "One": {
+        "Tag": "NET8x64",
+        "ToolTip": ".NET Desktop Runtime 8 x64."
       }
     }
   },
@@ -1949,20 +1954,6 @@
   },
   {
     "Region": "Context menu",
-    "Function": "RunAsDifferentUserContext",
-    "Arg": {
-      "Zero": {
-        "Tag": "Show",
-        "ToolTip": "Anzeige von \"Als anderer Benutzer ausführen\" im Kontextmenü der .exe-Dateien."
-      },
-      "One": {
-        "Tag": "Hide",
-        "ToolTip": "Die Option \"Als anderer Benutzer ausführen\" im Kontextmenü der .exe-Dateien ausblenden (Standardeinstellung)."
-      }
-    }
-  },
-  {
-    "Region": "Context menu",
     "Function": "CastToDeviceContext",
     "Arg": {
       "Zero": {
@@ -2000,34 +1991,6 @@
       "One": {
         "Tag": "Show",
         "ToolTip": "Den Eintrag \"Mit Paint 3D bearbeiten\" im Kontextmenü der Mediendateien anzeigen (Standardeinstellung)."
-      }
-    }
-  },
-  {
-    "Region": "Context menu",
-    "Function": "EditWithPhotosContext",
-    "Arg": {
-      "Zero": {
-        "Tag": "Hide",
-        "ToolTip": "Ausblenden des Eintrags \"Mit Fotos bearbeiten\" im Kontextmenü von Mediendateien."
-      },
-      "One": {
-        "Tag": "Show",
-        "ToolTip": "Den Eintrag \"Mit Fotos bearbeiten\" im Kontextmenü der Mediendateien anzeigen (Standardeinstellung)."
-      }
-    }
-  },
-  {
-    "Region": "Context menu",
-    "Function": "CreateANewVideoContext",
-    "Arg": {
-      "Zero": {
-        "Tag": "Hide",
-        "ToolTip": "Ausblenden des Eintrags \"Neues Video erstellen\" im Kontextmenü der Mediendateien."
-      },
-      "One": {
-        "Tag": "Show",
-        "ToolTip": "Den Eintrag \"Ein neues Video erstellen\" im Kontextmenü der Mediendateien anzeigen (Standardeinstellung)."
       }
     }
   },

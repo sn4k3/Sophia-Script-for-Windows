@@ -1629,10 +1629,13 @@
     "Region": "System",
     "Control": "chk",
     "Required": "false",
-    "Function": "InstallDotNetRuntimes",
+    "Function": "InstallDotNetRuntimes -Runtimes",
     "Arg": {
       "Zero": {
-        "Tag": ""
+        "Tag": "NET6x64"
+      },
+      "One": {
+        "Tag": "NET8x64"
       }
     },
     "Preset": "",
@@ -2229,22 +2232,6 @@
     "Region": "Context menu",
     "Control": "cmb",
     "Required": "false",
-    "Function": "RunAsDifferentUserContext",
-    "Arg": {
-      "Zero": {
-        "Tag": "Show"
-      },
-      "One": {
-        "Tag": "Hide"
-      }
-    },
-    "Preset": "Zero",
-    "WindowsDefault": "One"
-  },
-  {
-    "Region": "Context menu",
-    "Control": "cmb",
-    "Required": "false",
     "Function": "CastToDeviceContext",
     "Arg": {
       "Zero": {
@@ -2287,54 +2274,6 @@
       }
     },
     "Preset": "",
-    "WindowsDefault": "One"
-  },
-  {
-    "Region": "Context menu",
-    "Control": "cmb",
-    "Required": "false",
-    "Function": "EditWithPhotosContext",
-    "Arg": {
-      "Zero": {
-        "Tag": "Hide"
-      },
-      "One": {
-        "Tag": "Show"
-      }
-    },
-    "Preset": "Zero",
-    "WindowsDefault": "One"
-  },
-  {
-    "Region": "Context menu",
-    "Control": "cmb",
-    "Required": "false",
-    "Function": "CreateANewVideoContext",
-    "Arg": {
-      "Zero": {
-        "Tag": "Hide"
-      },
-      "One": {
-        "Tag": "Show"
-      }
-    },
-    "Preset": "Zero",
-    "WindowsDefault": "One"
-  },
-  {
-    "Region": "Context menu",
-    "Control": "cmb",
-    "Required": "false",
-    "Function": "ImagesEditContext",
-    "Arg": {
-      "Zero": {
-        "Tag": "Hide"
-      },
-      "One": {
-        "Tag": "Show"
-      }
-    },
-    "Preset": "Zero",
     "WindowsDefault": "One"
   },
   {

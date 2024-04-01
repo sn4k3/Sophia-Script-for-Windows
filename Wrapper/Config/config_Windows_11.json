@@ -563,6 +563,22 @@
     "Region": "UI & Personalization",
     "Control": "cmb",
     "Required": "false",
+    "Function": "SearchHighlights",
+    "Arg": {
+      "Zero": {
+        "Tag": "Hide"
+      },
+      "One": {
+        "Tag": "Show"
+      }
+    },
+    "Preset": "Zero",
+    "WindowsDefault": "One"
+  },
+  {
+    "Region": "UI & Personalization",
+    "Control": "cmb",
+    "Required": "false",
     "Function": "CopilotButton",
     "Arg": {
       "Zero": {
@@ -1539,10 +1555,13 @@
     "Region": "System",
     "Control": "chk",
     "Required": "false",
-    "Function": "InstallDotNetRuntimes",
+    "Function": "InstallDotNetRuntimes -Runtimes",
     "Arg": {
       "Zero": {
-        "Tag": ""
+        "Tag": "NET6x64"
+      },
+      "One": {
+        "Tag": "NET8x64"
       }
     },
     "Preset": "",
@@ -2105,22 +2124,6 @@
     "Control": "cmb",
     "Required": "false",
     "Function": "CABInstallContext",
-    "Arg": {
-      "Zero": {
-        "Tag": "Show"
-      },
-      "One": {
-        "Tag": "Hide"
-      }
-    },
-    "Preset": "Zero",
-    "WindowsDefault": "One"
-  },
-  {
-    "Region": "Context menu",
-    "Control": "cmb",
-    "Required": "false",
-    "Function": "RunAsDifferentUserContext",
     "Arg": {
       "Zero": {
         "Tag": "Show"

@@ -2,7 +2,7 @@
 UnsupportedOSBitness                      = The script supports 64-bit Windows only.
 UnsupportedOSBuild                        = The script supports Windows 10 Enterprise LTSC 2019.
 NonLatinUsernameWarning                   = PowerShell 5.1 does not compile code if the username contains non-Latin characters (including emoji) and is written in lowercase. Please, use PowerShell 7.
-UpdateWarning                             = Your Windows 10 build: {0}.{1}. Supported builds: 17763.5329+. Run Windows Update and try again.
+UpdateWarning                             = Your Windows 10 build: {0}.{1}. Supported builds: {2}+. Run Windows Update and try again.
 UnsupportedLanguageMode                   = The PowerShell session in running in a limited language mode.
 LoggedInUserNotAdmin                      = The logged-on user doesn't have admin rights.
 UnsupportedPowerShell                     = You're trying to run script via PowerShell {0}.{1}. Run the script in the appropriate PowerShell version.
@@ -24,6 +24,7 @@ WindowsFeaturesTitle                      = Windows features
 OptionalFeaturesTitle                     = Optional features
 EnableHardwareVT                          = Enable Virtualization in UEFI.
 UserShellFolderNotEmpty                   = Some files left in the "{0}" folder. Move them manually to a new location.
+UserFolderLocationMove                    = You shouldn't change user folder location to C drive root.
 RetrievingDrivesList                      = Retrieving drives list...
 DriveSelect                               = Select the drive within the root of which the "{0}" folder will be created.
 CurrentUserFolderLocation                 = The current "{0}" folder location: "{1}".

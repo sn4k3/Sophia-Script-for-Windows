@@ -491,6 +491,20 @@
   },
   {
     "Region": "UI & Personalization",
+    "Function": "SearchHighlights",
+    "Arg": {
+      "Zero": {
+        "Tag": "Hide",
+        "ToolTip": "Hide search highlights."
+      },
+      "One": {
+        "Tag": "Show",
+        "ToolTip": "Show search highlights (default value)."
+      }
+    }
+  },
+  {
+    "Region": "UI & Personalization",
     "Function": "CopilotButton",
     "Arg": {
       "Zero": {
@@ -1282,11 +1296,11 @@
     "Arg": {
       "Zero": {
         "Tag": "Disable",
-        "ToolTip": "Do not get Windows updates as soon as they're available for your device (default value)."
+        "ToolTip": "Do not get the latest updates as soon as they're available (default value)."
       },
       "One": {
         "Tag": "Enable",
-        "ToolTip": "Get Windows updates as soon as they're available for your device."
+        "ToolTip": "Get the latest updates as soon as they're available."
       }
     }
   },
@@ -1298,18 +1312,18 @@
         "Tag": "",
         "ToolTip": "Register app, calculate hash, and associate with an extension with the 'How do you want to open this' pop-up hidden."
       },
-      "One":  {
-		"Tag": "ProgramPath",
-		"ToolTip":  "Path to executable file."
-	  },
-	  "Two":  {
-	    "Tag": "Extension",
-		"ToolTip":  "Extension."
-	  },	
-	  "Three": {
-		"Tag": "Icon",
-		"ToolTip":  "Path to icon."
-	  }	
+      "One": {
+        "Tag": "ProgramPath",
+        "ToolTip": "Path to executable file."
+      },
+      "Two": {
+        "Tag": "Extension",
+        "ToolTip": "Extension."
+      },
+      "Three": {
+        "Tag": "Icon",
+        "ToolTip": "Path to icon."
+      }
     }
   },
   {
@@ -1358,11 +1372,16 @@
   },
   {
     "Region": "System",
-    "Function": "InstallDotNetRuntimes",
+    "Function": "InstallDotNetRuntimes -Runtimes",
+    "ToolTip": "Install the latest .NET Desktop Runtime 6, 8 x64.",
     "Arg": {
       "Zero": {
-        "Tag": "",
-        "ToolTip": "Install the latest .NET Desktop Runtime 6, 7 (x86/x64)."
+        "Tag": "NET6x64",
+        "ToolTip": ".NET Desktop Runtime 6 x64."
+      },
+      "One": {
+        "Tag": "NET8x64",
+        "ToolTip": ".NET Desktop Runtime 8 x64."
       }
     }
   },
@@ -1849,20 +1868,6 @@
       "One": {
         "Tag": "Hide",
         "ToolTip": "Hide the \"Install\" item from the Cabinet (.cab) filenames extensions context menu (default value)."
-      }
-    }
-  },
-  {
-    "Region": "Context menu",
-    "Function": "RunAsDifferentUserContext",
-    "Arg": {
-      "Zero": {
-        "Tag": "Show",
-        "ToolTip": "Show the \"Run as different user\" item to the .exe filename extensions context menu."
-      },
-      "One": {
-        "Tag": "Hide",
-        "ToolTip": "Hide the \"Run as different user\" item from the .exe filename extensions context menu (default value)."
       }
     }
   },

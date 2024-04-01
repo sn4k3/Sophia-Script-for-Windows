@@ -1,7 +1,7 @@
 ﻿ConvertFrom-StringData -StringData @'
 UnsupportedOSBitness                      = Das Skript unterstützt nur 64-Bit-Windows.
 UnsupportedOSBuild                        = Das Skript unterstützt Windows 10 22H2.
-UpdateWarning                             = Ihr Windows 10-Build: {0}.{1}. Unterstützter Builds: 19045.3996+. Führen Sie Windows Update aus und versuchen Sie es erneut.
+UpdateWarning                             = Ihr Windows 10-Build: {0}.{1}. Unterstützter Builds: {2}+. Führen Sie Windows Update aus und versuchen Sie es erneut.
 UnsupportedLanguageMode                   = Die PowerShell-Sitzung wird in einem eingeschränkten Sprachmodus ausgeführt.
 LoggedInUserNotAdmin                      = Der angemeldete Benutzer hat keine Administratorrechte.
 UnsupportedPowerShell                     = Sie versuchen ein Skript über PowerShell {0}.{1} auszuführen. Das Skript in der entsprechenden PowerShell-Version ausführen.
@@ -27,6 +27,7 @@ WindowsFeaturesTitle                      = Windows-Features
 OptionalFeaturesTitle                     = Optionale Features
 EnableHardwareVT                          = Virtualisierung in UEFI aktivieren.
 UserShellFolderNotEmpty                   = Im Ordner "{0}" befinden sich noch Dateien \nVerschieben Sie sie manuell an einen neuen Ort.
+UserFolderLocationMove                    = Sie sollten den Speicherort des Benutzerordners nicht in das Stammverzeichnis des Laufwerks C ändern.
 RetrievingDrivesList                      = Laufwerksliste abrufen...
 DriveSelect                               = Wählen Sie das Laufwerk aus, in dessen Stammverzeichnis der Ordner "{0}" erstellt werden soll.
 CurrentUserFolderLocation                 = Der aktuelle Speicherort des Ordners "{0}" lautet: "{1}".

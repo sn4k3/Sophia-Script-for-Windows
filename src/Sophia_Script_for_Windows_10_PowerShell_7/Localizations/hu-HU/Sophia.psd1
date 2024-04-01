@@ -1,7 +1,7 @@
 ﻿ConvertFrom-StringData -StringData @'
 UnsupportedOSBitness                      = A szkript csak a 64 bites Windows-t támogatja.
 UnsupportedOSBuild                        = A szkript támogatja a Windows 10 22H2 verzióját.
-UpdateWarning                             = Az Ön Windows 10 építése: {0}.{1}. Támogatott buildek: 19045.3996+. Futtassa a Windows Update programot, és próbálja meg újra.
+UpdateWarning                             = Az Ön Windows 10 építése: {0}.{1}. Támogatott buildek: {2}+. Futtassa a Windows Update programot, és próbálja meg újra.
 UnsupportedLanguageMode                   = A PowerShell munkamenet korlátozott nyelvi üzemmódban fut.
 LoggedInUserNotAdmin                      = A bejelentkezett felhasználó nem rendelkezik admin jogokkal.
 UnsupportedPowerShell                     = A PowerShell {0}.{1} segítségével próbálja futtatni a szkriptet. Futtassa a szkriptet a megfelelő PowerShell-verzióban.
@@ -27,6 +27,7 @@ WindowsFeaturesTitle                      = Windows szolgáltatások
 OptionalFeaturesTitle                     = Opcionális szolgáltatások
 EnableHardwareVT                          = Virtualizáció engedélyezése UEFI-ben.
 UserShellFolderNotEmpty                   = Néhány fájl maradt a "{0}" könyvtárban. Kérem helyezze át ezeket egy új helyre.
+UserFolderLocationMove                    = Nem szabad megváltoztatni a felhasználói mappa helyét a C meghajtó gyökerére.
 RetrievingDrivesList                      = A meghajtók listájának lekérése...
 DriveSelect                               = Válassza ki a meghajtó jelét a gyökérkönyvtárban ahol a "{0}" könyvtár létre lesz hozva.
 CurrentUserFolderLocation                 = Az aktuális "{0}" mappa helye: "{1}".
