@@ -404,7 +404,7 @@ TaskbarSearch -Hide
 
 # Hide search highlights
 # Скрыть главное в поиске
-SearchHighlights -Hide
+#SearchHighlights -Hide
 
 # Show search highlights (default value)
 # Показать главное в поиске (значение по умолчанию)
