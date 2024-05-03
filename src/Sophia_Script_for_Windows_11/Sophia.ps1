@@ -1065,7 +1065,7 @@ SATADrivesRemovableMedia -Disable
 	Пакеты приложений не будут установлены для новых пользователей, если отмечена галочка "Для всех пользователей"
 	Аргумент "ForAllUsers" устанавливает галочку для удаления пакетов для всех пользователей
 #>
-UninstallUWPApps
+#UninstallUWPApps
 
 <#
 	Restore the default UWP apps using the pop-up dialog box
