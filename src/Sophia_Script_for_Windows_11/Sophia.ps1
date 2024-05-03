@@ -1293,7 +1293,7 @@ SaveZoneInformation -Disable
 	Действительные IPv4-адреса: 1.0.0.1, 1.1.1.1, 149.112.112.112, 8.8.4.4, 8.8.8.8, 9.9.9.9
 #>
 #TIAGO-PC
-DNSoverHTTPS -Enable -PrimaryDNS 1.0.0.1 -SecondaryDNS 1.1.1.1
+DNSoverHTTPS -Enable -PrimaryDNS 9.9.9.9 -SecondaryDNS 149.112.112.112
 
 # Disable DNS-over-HTTPS for IPv4 (default value)
 # Выключить DNS-over-HTTPS для IPv4 (значение по умолчанию)
