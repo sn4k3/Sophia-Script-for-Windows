@@ -1463,16 +1463,6 @@
   },
   {
     "Region": "Start menu",
-    "Function": "UnpinAllStartApps",
-    "Arg": {
-      "Zero": {
-        "Tag": "",
-        "ToolTip": "Открепить все приложения от начального экрана."
-      }
-    }
-  },
-  {
-    "Region": "Start menu",
     "Function": "StartLayout",
     "Arg": {
       "Zero": {
@@ -1666,6 +1656,20 @@
       "One": {
         "Tag": "Disable",
         "ToolTip": "Выключить обнаружение потенциально нежелательных приложений и блокировать их (значение по умолчанию)."
+      }
+    }
+  },
+  {
+    "Region": "Microsoft Defender & Security",
+    "Function": "DefenderSandbox",
+    "Arg": {
+      "Zero": {
+        "Tag": "Enable",
+        "ToolTip": "Включить песочницу для Microsoft Defender."
+      },
+      "One": {
+        "Tag": "Disable",
+        "ToolTip": "Выключить песочницу для Microsoft Defender (значение по умолчанию)."
       }
     }
   },
@@ -1873,34 +1877,6 @@
   },
   {
     "Region": "Context menu",
-    "Function": "CastToDeviceContext",
-    "Arg": {
-      "Zero": {
-        "Tag": "Hide",
-        "ToolTip": "Скрыть пункт \"Передать на устройство\" из контекстного меню медиа-файлов и папок."
-      },
-      "One": {
-        "Tag": "Show",
-        "ToolTip": "Отобразить пункт \"Передать на устройство\" в контекстном меню медиа-файлов и папок (значение по умолчанию)."
-      }
-    }
-  },
-  {
-    "Region": "Context menu",
-    "Function": "ShareContext",
-    "Arg": {
-      "Zero": {
-        "Tag": "Hide",
-        "ToolTip": "Скрыть пункт \"Отправить\" (поделиться) из контекстного меню."
-      },
-      "One": {
-        "Tag": "Show",
-        "ToolTip": "Отобразить пункт \"Отправить\" (поделиться) в контекстном меню (значение по умолчанию). Отображение элемента \"Поделиться\" в контекстном меню приведет к отключению проводника из Windows 10."
-      }
-    }
-  },
-  {
-    "Region": "Context menu",
     "Function": "EditWithClipchampContext",
     "Arg": {
       "Zero": {
@@ -1924,34 +1900,6 @@
       "One": {
         "Tag": "Show",
         "ToolTip": "Отобразить пункт \"Печать\" в контекстном меню .bat и .cmd файлов (значение по умолчанию)."
-      }
-    }
-  },
-  {
-    "Region": "Context menu",
-    "Function": "IncludeInLibraryContext",
-    "Arg": {
-      "Zero": {
-        "Tag": "Hide",
-        "ToolTip": "Скрыть пункт \"Добавить в библиотеку\" из контекстного меню папок и дисков."
-      },
-      "One": {
-        "Tag": "Show",
-        "ToolTip": "Отобразить пункт \"Добавить в библиотеку\" в контекстном меню папок и дисков (значение по умолчанию)."
-      }
-    }
-  },
-  {
-    "Region": "Context menu",
-    "Function": "SendToContext",
-    "Arg": {
-      "Zero": {
-        "Tag": "Hide",
-        "ToolTip": "Скрыть пункт \"Отправить\" из контекстного меню папок."
-      },
-      "One": {
-        "Tag": "Show",
-        "ToolTip": "Отобразить пункт \"Отправить\" в контекстном меню папок (значение по умолчанию)."
       }
     }
   },
@@ -2022,20 +1970,6 @@
       "One": {
         "Tag": "Disable",
         "ToolTip": "Не открывать Windows Terminal из контекстного меню от имени администратора по умолчанию (значение по умолчанию)."
-      }
-    }
-  },
-  {
-    "Region": "Context menu",
-    "Function": "Windows10ContextMenu",
-    "Arg": {
-      "Zero": {
-        "Tag": "Disable",
-        "ToolTip": "Отключить стиль контекстного меню из Windows 10 (значение по умолчанию)."
-      },
-      "One": {
-        "Tag": "Enable",
-        "ToolTip": "Включить стиль контекстного меню из Windows 10."
       }
     }
   },

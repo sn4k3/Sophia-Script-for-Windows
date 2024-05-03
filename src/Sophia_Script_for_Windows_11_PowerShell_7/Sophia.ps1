@@ -2,8 +2,8 @@
 	.SYNOPSIS
 	Default preset file for "Sophia Script for Windows 11 (PowerShell 7)"
 
-	Version: v6.6.3
-	Date: 01.04.2024
+	Version: v6.6.5
+	Date: 14.04.2024
 
 	Copyright (c) 2014—2024 farag, Inestic & lowl1f3
 
@@ -12,7 +12,7 @@
 	.DESCRIPTION
 	Place the "#" char before function if you don't want to run it
 	Remove the "#" char before function if you want to run it
-	Every tweak in the preset file has its' corresponding function to restore the default settings
+	Every tweak in the preset file has its corresponding function to restore the default settings
 
 	.EXAMPLE Run the whole script
 	.\Sophia.ps1
@@ -26,7 +26,7 @@
 	.NOTES
 	Supported Windows 11 versions
 	Version: 23H2+
-	Builds: 22631.3235+
+	Builds: 22631.3447+
 	Editions: Home/Pro/Enterprise
 
 	.NOTES
@@ -69,7 +69,7 @@ param
 
 Clear-Host
 
-$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 11 v6.6.3 (PowerShell 7) | Made with $([System.Char]::ConvertFromUtf32(0x1F497)) of Windows | $([System.Char]0x00A9) farag, Inestic & lowl1f3, 2014$([System.Char]0x2013)2024"
+$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 11 v6.6.5 (PowerShell 7) | Made with $([System.Char]::ConvertFromUtf32(0x1F497)) of Windows | $([System.Char]0x00A9) farag, Inestic & lowl1f3, 2014$([System.Char]0x2013)2024"
 
 Remove-Module -Name Sophia -Force -ErrorAction Ignore
 
@@ -94,8 +94,8 @@ catch [System.InvalidOperationException]
 {
 	Write-Warning -Message $Localization.PowerShellx86Warning
 
-	Start-Process -FilePath "https://t.me/sophia_chat"
-	Start-Process -FilePath "https://discord.gg/sSryhaEv79"
+	Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
+	Write-Verbose -Message "https://discord.gg/sSryhaEv79" -Verbose
 
 	exit
 }
@@ -643,7 +643,7 @@ Win32LongPathLimit -Disable
 # Отображать код Stop-ошибки при появлении BSoD
 BSoDStopError -Enable
 
-# Do not Stop error code when BSoD occurs (default value)
+# Do not display stop error code when BSoD occurs (default value)
 # Не отображать код Stop-ошибки при появлении BSoD (значение по умолчанию)
 # BSoDStopError -Disable
 
@@ -766,7 +766,7 @@ InputMethod -English
 
 <#
 	Change user folders location to the root of any drive using the interactive menu
-	User files or folders won't me moved to a new location. Move them manually
+	User files or folders won't be moved to a new location. Move them manually
 	They're located in the %USERPROFILE% folder by default
 
 	Переместить пользовательские папки в корень любого диска на выбор с помощью интерактивного меню
@@ -777,7 +777,7 @@ Set-UserShellFolderLocation -Root
 
 <#
 	Select folders for user folders location manually using a folder browser dialog
-	User files or folders won't me moved to a new location. Move them manually
+	User files or folders won't be moved to a new location. Move them manually
 	They're located in the %USERPROFILE% folder by default
 
 	Выбрать папки для расположения пользовательских папок вручную, используя диалог "Обзор папок"
@@ -788,7 +788,7 @@ Set-UserShellFolderLocation -Root
 
 <#
 	Change user folders location to the default values
-	User files or folders won't me moved to the new location. Move them manually
+	User files or folders won't be moved to the new location. Move them manually
 	They're located in the %USERPROFILE% folder by default
 
 	Изменить расположение пользовательских папок на значения по умолчанию
@@ -1011,7 +1011,7 @@ RKNBypass -Enable
 # Включить все необходимые зависимости (может потребоваться перезагрузка) и открыть страницу WSA в Microsoft Store, чтобы вручную установить Windows Subsystem for Android™ with Amazon Appstore
 # Install-WSA
 
-# List Microsoft Edge channels to prevent desktop shortcut creation upon its' update
+# List Microsoft Edge channels to prevent desktop shortcut creation upon its update
 # Перечислите каналы Microsoft Edge для предотвращения создания ярлыков на рабочем столе после его обновления
 PreventEdgeShortcutCreation -Channels Stable, Beta, Dev, Canary
 
@@ -1048,10 +1048,6 @@ SATADrivesRemovableMedia -Disable
 #endregion WSL
 
 #region Start menu
-# Unpin all Start apps
-# Открепить все приложения от начального экрана
-# UnpinAllStartApps
-
 # Show default Start layout (default value)
 # Отображать стандартный макет начального экрана (значение по умолчанию)
 # StartLayout -Default
@@ -1201,6 +1197,14 @@ PUAppsDetection -Enable
 # Выключить обнаружение потенциально нежелательных приложений и блокировать их (значение по умолчанию)
 # PUAppsDetection -Disable
 
+# Enable sandboxing for Microsoft Defender
+# Включить песочницу для Microsoft Defender
+DefenderSandbox -Enable
+
+# Disable sandboxing for Microsoft Defender (default value)
+# Выключить песочницу для Microsoft Defender (значение по умолчанию)
+# DefenderSandbox -Disable
+
 # Dismiss Microsoft Defender offer in the Windows Security about signing in Microsoft account
 # Отклонить предложение Microsoft Defender в "Безопасность Windows" о входе в аккаунт Microsoft
 DismissMSAccount
@@ -1334,22 +1338,6 @@ CABInstallContext -Show
 # Скрыть пункт "Установить" из контекстного меню .cab архивов (значение по умолчанию)
 # CABInstallContext -Hide
 
-# Hide the "Cast to Device" item from the media files and folders context menu
-# Скрыть пункт "Передать на устройство" из контекстного меню медиа-файлов и папок
-CastToDeviceContext -Hide
-
-# Show the "Cast to Device" item in the media files and folders context menu (default value)
-# Отобразить пункт "Передать на устройство" в контекстном меню медиа-файлов и папок (значение по умолчанию)
-# CastToDeviceContext -Show
-
-# Hide the "Share" item from the context menu
-# Скрыть пункт "Отправить" (поделиться) из контекстного меню
-ShareContext -Hide
-
-# Show the "Share" item in the context menu (default value)
-# Отобразить пункт "Отправить" (поделиться) в контекстном меню (значение по умолчанию)
-# ShareContext -Show
-
 # Hide the "Edit with Clipchamp" item from the media files context menu
 # Скрыть пункт "Редактировать в Climpchamp" из контекстного меню
 EditWithClipchampContext -Hide
@@ -1365,22 +1353,6 @@ PrintCMDContext -Hide
 # Show the "Print" item in the .bat and .cmd context menu (default value)
 # Отобразить пункт "Печать" в контекстном меню .bat и .cmd файлов (значение по умолчанию)
 # PrintCMDContext -Show
-
-# Hide the "Include in Library" item from the folders and drives context menu
-# Скрыть пункт "Добавить в библиотеку" из контекстного меню папок и дисков
-IncludeInLibraryContext -Hide
-
-# Show the "Include in Library" item in the folders and drives context menu (default value)
-# Отобразить пункт "Добавить в библиотеку" в контекстном меню папок и дисков (значение по умолчанию)
-# IncludeInLibraryContext -Show
-
-# Hide the "Send to" item from the folders context menu
-# Скрыть пункт "Отправить" из контекстного меню папок
-SendToContext -Hide
-
-# Show the "Send to" item in the folders context menu (default value)
-# Отобразить пункт "Отправить" в контекстном меню папок (значение по умолчанию)
-# SendToContext -Show
 
 # Hide the "Compressed (zipped) Folder" item from the "New" context menu
 # Скрыть пункт "Сжатая ZIP-папка" из контекстного меню "Создать"
@@ -1421,14 +1393,6 @@ OpenWindowsTerminalAdminContext -Enable
 # Do not open Windows Terminal in context menu as administrator by default (default value)
 # Не открывать Windows Terminal из контекстного меню от имени администратора по умолчанию (значение по умолчанию)
 # OpenWindowsTerminalAdminContext -Disable
-
-# Disable the Windows 10 context menu style (default value)
-# Отключить стиль контекстного меню из Windows 10 (значение по умолчанию)
-Windows10ContextMenu -Disable
-
-# Enable the Windows 10 context menu style
-# Включить стиль контекстного меню из Windows 10
-# Windows10ContextMenu -Enable
 #endregion Context menu
 
 #region Update Policies

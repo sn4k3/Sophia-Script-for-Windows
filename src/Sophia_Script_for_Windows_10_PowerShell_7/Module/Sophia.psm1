@@ -2,8 +2,8 @@
 	.SYNOPSIS
 	Sophia Script is a PowerShell module for Windows 10 & Windows 11 fine-tuning and automating the routine tasks
 
-	Version: v5.18.3
-	Date: 01.04.2024
+	Version: v5.18.5
+	Date: 14.04.2024
 
 	Copyright (c) 2014—2024 farag, Inestic & lowl1f3
 
@@ -12,7 +12,7 @@
 	.NOTES
 	Supported Windows 10 versions
 	Version: 22H2
-	Builds: 19045.4123+
+	Builds: 19045.4291+
 	Editions: Home/Pro/Enterprise
 	Architecture: x64
 
@@ -58,14 +58,20 @@ function InitialActions
 
 	[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
-	# Extract strings from %SystemRoot%\System32\shell32.dll using its' number
+	# Extract strings from %SystemRoot%\System32\shell32.dll using its number
 	# https://github.com/SamuelArnold/StarKill3r/blob/master/Star%20Killer/Star%20Killer/bin/Debug/Scripts/SANS-SEC505-master/scripts/Day1-PowerShell/Expand-IndirectString.ps1
 	# [WinAPI.GetStrings]::GetIndirectString("@%SystemRoot%\system32\schedsvc.dll,-100")
+
+	# https://github.com/PowerShell/PowerShell/issues/21070
+	$Script:CompilerParameters = [System.CodeDom.Compiler.CompilerParameters]::new("System.dll")
+	$Script:CompilerParameters.TempFiles = [System.CodeDom.Compiler.TempFileCollection]::new($env:TEMP, $false)
+	$Script:CompilerParameters.GenerateInMemory = $true
 	$Signature = @{
 		Namespace        = "WinAPI"
 		Name             = "GetStrings"
 		Language         = "CSharp"
 		UsingNamespace   = "System.Text"
+		CompilerOptions  = $CompilerParameters
 		MemberDefinition = @"
 [DllImport("kernel32.dll", CharSet = CharSet.Auto)]
 public static extern IntPtr GetModuleHandle(string lpModuleName);
@@ -120,6 +126,7 @@ public static string GetIndirectString(string indirectString)
 		Namespace        = "WinAPI"
 		Name             = "ForegroundWindow"
 		Language         = "CSharp"
+		CompilerOptions  = $CompilerParameters
 		MemberDefinition = @"
 [DllImport("user32.dll")]
 public static extern bool ShowWindowAsync(IntPtr hWnd, int nCmdShow);
@@ -132,24 +139,7 @@ public static extern bool SetForegroundWindow(IntPtr hWnd);
 
 	if (-not ("WinAPI.ForegroundWindow" -as [type]))
 	{
-		try
-		{
-			Add-Type @Signature
-		}
-		catch [System.ComponentModel.Win32Exception]
-		{
-			Write-Warning -Message $Localization.NonLatinUsernameWarning
-
-			Start-Process -FilePath "https://t.me/sophia_chat"
-			Start-Process -FilePath "https://discord.gg/sSryhaEv79"
-
-			Start-Process -FilePath "https://github.com/PowerShell/PowerShell/releases/latest"
-			Start-Process -FilePath "https://github.com/farag2/Sophia-Script-for-Windows/releases/latest"
-
-			Start-Process -FilePath "https://github.com/PowerShell/PowerShell/issues/21070"
-
-			exit
-		}
+		Add-Type @Signature
 	}
 
 	# Detect Windows bitness
@@ -157,8 +147,8 @@ public static extern bool SetForegroundWindow(IntPtr hWnd);
 	{
 		Write-Warning -Message $Localization.UnsupportedOSBitness
 
-		Start-Process -FilePath "https://t.me/sophia_chat"
-		Start-Process -FilePath "https://discord.gg/sSryhaEv79"
+		Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
+		Write-Verbose -Message "https://discord.gg/sSryhaEv79" -Verbose
 
 		exit
 	}
@@ -168,9 +158,9 @@ public static extern bool SetForegroundWindow(IntPtr hWnd);
 	{
 		Write-Warning -Message $Localization.UnsupportedLanguageMode
 
-		Start-Process -FilePath "https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_language_modes"
-		Start-Process -FilePath "https://t.me/sophia_chat"
-		Start-Process -FilePath "https://discord.gg/sSryhaEv79"
+		Write-Verbose -Message "https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_language_modes" -Verbose
+		Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
+		Write-Verbose -Message "https://discord.gg/sSryhaEv79" -Verbose
 
 		exit
 	}
@@ -184,8 +174,8 @@ public static extern bool SetForegroundWindow(IntPtr hWnd);
 	{
 		Write-Warning -Message $Localization.LoggedInUserNotAdmin
 
-		Start-Process -FilePath "https://t.me/sophia_chat"
-		Start-Process -FilePath "https://discord.gg/sSryhaEv79"
+		Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
+		Write-Verbose -Message "https://discord.gg/sSryhaEv79" -Verbose
 
 		exit
 	}
@@ -195,8 +185,8 @@ public static extern bool SetForegroundWindow(IntPtr hWnd);
 	{
 		Write-Warning -Message ($Localization.UnsupportedPowerShell -f $PSVersionTable.PSVersion.Major, $PSVersionTable.PSVersion.Minor)
 
-		Start-Process -FilePath "https://t.me/sophia_chat"
-		Start-Process -FilePath "https://discord.gg/sSryhaEv79"
+		Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
+		Write-Verbose -Message "https://discord.gg/sSryhaEv79" -Verbose
 
 		exit
 	}
@@ -206,8 +196,8 @@ public static extern bool SetForegroundWindow(IntPtr hWnd);
 	{
 		Write-Warning -Message ($Localization.UnsupportedHost -f $Host.Name.Replace("Host", ""))
 
-		Start-Process -FilePath "https://t.me/sophia_chat"
-		Start-Process -FilePath "https://discord.gg/sSryhaEv79"
+		Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
+		Write-Verbose -Message "https://discord.gg/sSryhaEv79" -Verbose
 
 		exit
 	}
@@ -255,18 +245,18 @@ public static extern bool SetForegroundWindow(IntPtr hWnd);
 			{
 				Write-Warning -Message $Localization.Win10TweakerWarning
 
-				Start-Process -FilePath "https://youtu.be/na93MS-1EkM"
-				Start-Process -FilePath "https://pikabu.ru/story/byekdor_v_win_10_tweaker_ili_sovremennyie_metodyi_borbyi_s_piratstvom_8227558"
-				Start-Process -FilePath "https://t.me/sophia_chat"
-				Start-Process -FilePath "https://discord.gg/sSryhaEv79"
+				Write-Verbose -Message "https://youtu.be/na93MS-1EkM" -Verbose
+				Write-Verbose -Message "https://pikabu.ru/story/byekdor_v_win_10_tweaker_ili_sovremennyie_metodyi_borbyi_s_piratstvom_8227558" -Verbose
+				Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
+				Write-Verbose -Message "https://discord.gg/sSryhaEv79" -Verbose
 
 				exit
 			}
 
 			Write-Warning -Message ($Localization.TweakerWarning -f $Tweaker)
 
-			Start-Process -FilePath "https://t.me/sophia_chat"
-			Start-Process -FilePath "https://discord.gg/sSryhaEv79"
+			Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
+			Write-Verbose -Message "https://discord.gg/sSryhaEv79" -Verbose
 
 			exit
 		}
@@ -285,8 +275,8 @@ public static extern bool SetForegroundWindow(IntPtr hWnd);
 		{
 			Write-Warning -Message ($Localization.TweakerWarning -f $Tweaker)
 
-			Start-Process -FilePath "https://t.me/sophia_chat"
-			Start-Process -FilePath "https://discord.gg/sSryhaEv79"
+			Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
+			Write-Verbose -Message "https://discord.gg/sSryhaEv79" -Verbose
 
 			exit
 		}
@@ -310,8 +300,8 @@ public static extern bool SetForegroundWindow(IntPtr hWnd);
 	{
 		Write-Warning -Message ($Localization.WindowsComponentBroken -f "Windows Feature Experience Pack")
 
-		Start-Process -FilePath "https://t.me/sophia_chat"
-		Start-Process -FilePath "https://discord.gg/sSryhaEv79"
+		Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
+		Write-Verbose -Message "https://discord.gg/sSryhaEv79" -Verbose
 
 		exit
 	}
@@ -322,8 +312,8 @@ public static extern bool SetForegroundWindow(IntPtr hWnd);
 		# Extract the localized "Event Viewer" string from shell32.dll
 		Write-Warning -Message ($Localization.WindowsComponentBroken -f $([WinAPI.GetStrings]::GetString(22029)))
 
-		Start-Process -FilePath "https://t.me/sophia_chat"
-		Start-Process -FilePath "https://discord.gg/sSryhaEv79"
+		Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
+		Write-Verbose -Message "https://discord.gg/sSryhaEv79" -Verbose
 
 		exit
 	}
@@ -333,8 +323,8 @@ public static extern bool SetForegroundWindow(IntPtr hWnd);
 	{
 		Write-Warning -Message ($Localization.WindowsComponentBroken -f "Microsoft Store")
 
-		Start-Process -FilePath "https://t.me/sophia_chat"
-		Start-Process -FilePath "https://discord.gg/sSryhaEv79"
+		Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
+		Write-Verbose -Message "https://discord.gg/sSryhaEv79" -Verbose
 
 		exit
 	}
@@ -352,9 +342,9 @@ public static extern bool SetForegroundWindow(IntPtr hWnd);
 		{
 			Write-Warning -Message ($Localization.WindowsComponentBroken -f $File)
 
-			Start-Process -FilePath "https://github.com/farag2/Sophia-Script-for-Windows/releases/latest"
-			Start-Process -FilePath "https://t.me/sophia_chat"
-			Start-Process -FilePath "https://discord.gg/sSryhaEv79"
+			Write-Verbose -Message "https://github.com/farag2/Sophia-Script-for-Windows/releases/latest" -Verbose
+			Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
+			Write-Verbose -Message "https://discord.gg/sSryhaEv79" -Verbose
 
 			exit
 		}
@@ -365,8 +355,8 @@ public static extern bool SetForegroundWindow(IntPtr hWnd);
 	{
 		Write-Warning -Message ($Localization.WindowsComponentBroken -f "Microsoft Defender")
 
-		Start-Process -FilePath "https://t.me/sophia_chat"
-		Start-Process -FilePath "https://discord.gg/sSryhaEv79"
+		Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
+		Write-Verbose -Message "https://discord.gg/sSryhaEv79" -Verbose
 
 		exit
 	}
@@ -382,8 +372,8 @@ public static extern bool SetForegroundWindow(IntPtr hWnd);
 		Write-Warning -Message $Global:Error.Exception.Message | Select-Object -First 1
 		Write-Warning -Message ($Localization.WindowsComponentBroken -f "Microsoft Defender")
 
-		Start-Process -FilePath "https://t.me/sophia_chat"
-		Start-Process -FilePath "https://discord.gg/sSryhaEv79"
+		Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
+		Write-Verbose -Message "https://discord.gg/sSryhaEv79" -Verbose
 
 		exit
 	}
@@ -393,8 +383,8 @@ public static extern bool SetForegroundWindow(IntPtr hWnd);
 	{
 		Write-Warning -Message ($Localization.WindowsComponentBroken -f "Microsoft Defender")
 
-		Start-Process -FilePath "https://t.me/sophia_chat"
-		Start-Process -FilePath "https://discord.gg/sSryhaEv79"
+		Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
+		Write-Verbose -Message "https://discord.gg/sSryhaEv79" -Verbose
 
 		exit
 	}
@@ -409,8 +399,8 @@ public static extern bool SetForegroundWindow(IntPtr hWnd);
 	{
 		Write-Warning -Message ($Localization.WindowsComponentBroken -f "Microsoft Defender")
 
-		Start-Process -FilePath "https://t.me/sophia_chat"
-		Start-Process -FilePath "https://discord.gg/sSryhaEv79"
+		Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
+		Write-Verbose -Message "https://discord.gg/sSryhaEv79" -Verbose
 
 		exit
 	}
@@ -514,8 +504,8 @@ public static extern bool SetForegroundWindow(IntPtr hWnd);
 	{
 		Write-Warning -Message $Localization.RebootPending
 
-		Start-Process -FilePath "https://t.me/sophia_chat"
-		Start-Process -FilePath "https://discord.gg/sSryhaEv79"
+		Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
+		Write-Verbose -Message "https://discord.gg/sSryhaEv79" -Verbose
 
 		exit
 	}
@@ -550,9 +540,9 @@ public static extern bool SetForegroundWindow(IntPtr hWnd);
 			{
 				Write-Warning -Message $Localization.UnsupportedRelease
 
-				Start-Process -FilePath "https://github.com/farag2/Sophia-Script-for-Windows/releases/latest"
-				Start-Process -FilePath "https://t.me/sophia_chat"
-				Start-Process -FilePath "https://discord.gg/sSryhaEv79"
+				Write-Verbose -Message "https://github.com/farag2/Sophia-Script-for-Windows/releases/latest" -Verbose
+				Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
+				Write-Verbose -Message "https://discord.gg/sSryhaEv79" -Verbose
 
 				exit
 			}
@@ -579,9 +569,9 @@ public static extern bool SetForegroundWindow(IntPtr hWnd);
 	{
 		Write-Warning -Message $Localization.Bin
 
-		Start-Process -FilePath "https://github.com/farag2/Sophia-Script-for-Windows/releases/latest"
-		Start-Process -FilePath "https://t.me/sophia_chat"
-		Start-Process -FilePath "https://discord.gg/sSryhaEv79"
+		Write-Verbose -Message "https://github.com/farag2/Sophia-Script-for-Windows/releases/latest" -Verbose
+		Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
+		Write-Verbose -Message "https://discord.gg/sSryhaEv79" -Verbose
 
 		exit
 	}
@@ -593,9 +583,9 @@ public static extern bool SetForegroundWindow(IntPtr hWnd);
 		{
 			Write-Warning -Message $Localization.UnsupportedOSBuild
 
-			Start-Process -FilePath "https://t.me/sophia_chat"
-			Start-Process -FilePath "https://discord.gg/sSryhaEv79"
-			Start-Process -FilePath "https://github.com/farag2/Sophia-Script-for-Windows#system-requirements"
+			Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
+			Write-Verbose -Message "https://discord.gg/sSryhaEv79" -Verbose
+			Write-Verbose -Message "https://github.com/farag2/Sophia-Script-for-Windows#system-requirements" -Verbose
 
 			# Receive updates for other Microsoft products when you update Windows
 			(New-Object -ComObject Microsoft.Update.ServiceManager).AddService2("7971f918-a847-4430-9279-4a52d1efe18d", 7, "")
@@ -661,9 +651,9 @@ public static extern bool SetForegroundWindow(IntPtr hWnd);
 				$UBR = Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows nt\CurrentVersion" -Name UBR
 				Write-Warning -Message ($Localization.UpdateWarning -f $CurrentBuild.CurrentBuild, $UBR.UBR, $LatestSupportedBuild)
 
-				Start-Process -FilePath "https://t.me/sophia_chat"
-				Start-Process -FilePath "https://discord.gg/sSryhaEv79"
-				Start-Process -FilePath "https://github.com/farag2/Sophia-Script-for-Windows#system-requirements"
+				Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
+				Write-Verbose -Message "https://discord.gg/sSryhaEv79" -Verbose
+				Write-Verbose -Message "https://github.com/farag2/Sophia-Script-for-Windows#system-requirements" -Verbose
 
 				# Receive updates for other Microsoft products when you update Windows
 				(New-Object -ComObject Microsoft.Update.ServiceManager).AddService2("7971f918-a847-4430-9279-4a52d1efe18d", 7, "")
@@ -688,7 +678,7 @@ public static extern bool SetForegroundWindow(IntPtr hWnd);
 		Get-Service -Name SysMain | Set-Service -StartupType Automatic
 		Get-Service -Name SysMain | Start-Service
 
-		Start-Process -FilePath "https://www.outsidethebox.ms/19318/"
+		Write-Verbose -Message "https://www.outsidethebox.ms/19318/" -Verbose
 	}
 
 	# Automatically manage paging file size for all drives
@@ -973,9 +963,9 @@ public static extern bool SetForegroundWindow(IntPtr hWnd);
 
 					Start-Sleep -Seconds 5
 
-					Start-Process -FilePath "https://github.com/farag2/Sophia-Script-for-Windows#how-to-use"
-					Start-Process -FilePath "https://t.me/sophia_chat"
-					Start-Process -FilePath "https://discord.gg/sSryhaEv79"
+					Write-Verbose -Message "https://github.com/farag2/Sophia-Script-for-Windows#how-to-use" -Verbose
+					Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
+					Write-Verbose -Message "https://discord.gg/sSryhaEv79" -Verbose
 
 					exit
 				}
@@ -1176,8 +1166,8 @@ function DiagTrackService
 		Write-Information -MessageData "" -InformationAction Continue
 		Write-Verbose -Message ($Localization.InitialActionsCheckFailed -f $PresetName) -Verbose
 
-		Start-Process -FilePath "https://t.me/sophia_chat"
-		Start-Process -FilePath "https://discord.gg/sSryhaEv79"
+		Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
+		Write-Verbose -Message "https://discord.gg/sSryhaEv79" -Verbose
 
 		exit
 	}
@@ -1258,7 +1248,7 @@ function DiagnosticDataLevel
 	{
 		"Minimal"
 		{
-			if (Get-WindowsEdition -Online | Where-Object -FilterScript {($_.Edition -like "Enterprise*") -or ($_.Edition -eq "Education")})
+			if (Get-WindowsEdition -Online | Where-Object -FilterScript {($_.Edition -eq "Enterprise") -or ($_.Edition -eq "Education")})
 			{
 				# Security level
 				New-ItemProperty -Path HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection -Name AllowTelemetry -PropertyType DWord -Value 0 -Force
@@ -1589,7 +1579,7 @@ function ScheduledTasks
 
 		[void]$Window.Close()
 
-		$SelectedTasks | ForEach-Object -Process {Write-Verbose $_.TaskName -Verbose}
+		$SelectedTasks | ForEach-Object -Process {Write-Verbose -Message $_.TaskName -Verbose}
 		$SelectedTasks | Disable-ScheduledTask
 	}
 
@@ -1601,7 +1591,7 @@ function ScheduledTasks
 
 		[void]$Window.Close()
 
-		$SelectedTasks | ForEach-Object -Process {Write-Verbose $_.TaskName -Verbose}
+		$SelectedTasks | ForEach-Object -Process {Write-Verbose -Message $_.TaskName -Verbose}
 		$SelectedTasks | Enable-ScheduledTask
 	}
 
@@ -3838,12 +3828,13 @@ function UnpinTaskbarShortcuts
 			Store
 			{
 				# Start-Job is used due to that the calling this function before UninstallUWPApps breaks the retrieval of the localized UWP apps packages names
-				if ((New-Object -ComObject Shell.Application).NameSpace("shell:::{4234d49b-0245-4df3-b780-3893943456e1}").Items() | Where-Object -FilterScript {$_.Path -eq "Microsoft.WindowsStore_8wekyb3d8bbwe!App"})
+				if ((New-Object -ComObject Shell.Application).NameSpace("shell:::{4234d49b-0245-4df3-b780-3893943456e1}").Items() | Where-Object -FilterScript {$_.Name -eq "Microsoft Store"})
 				{
 					Start-Job -ScriptBlock {
-						$Apps = (New-Object -ComObject Shell.Application).NameSpace("shell:::{4234d49b-0245-4df3-b780-3893943456e1}").Items()
 						# Extract the localized "Unpin from taskbar" string from shell32.dll
-						($Apps | Where-Object -FilterScript {$_.Name -eq "Microsoft Store"}).Verbs() | Where-Object -FilterScript {$_.Name -eq $using:LocalizedString} | ForEach-Object -Process {$_.DoIt()}
+						((New-Object -ComObject Shell.Application).NameSpace("shell:::{4234d49b-0245-4df3-b780-3893943456e1}").Items() | Where-Object -FilterScript {
+							$_.Name -eq "Microsoft Store"
+						}).Verbs() | Where-Object -FilterScript {$_.Name -eq $using:LocalizedString} | ForEach-Object -Process {$_.DoIt()}
 					} | Receive-Job -Wait -AutoRemoveJob
 				}
 			}
@@ -4543,14 +4534,6 @@ function Cursors
 		$Default
 	)
 
-	if (-not (Test-Path -Path "$env:SystemRoot\System32\tar.exe"))
-	{
-		Write-Information -MessageData "" -InformationAction Continue
-		Write-Verbose -Message $Localization.Skipped -Verbose
-
-		return
-	}
-
 	switch ($PSCmdlet.ParameterSetName)
 	{
 		"Dark"
@@ -4600,8 +4583,15 @@ function Cursors
 						New-Item -Path "$env:SystemRoot\Cursors\W11_dark_v2.2" -ItemType Directory -Force
 					}
 
-					# Extract archive
-					Start-Process -FilePath "$env:SystemRoot\System32\tar.exe" -ArgumentList "-xf `"$DownloadsFolder\dark.zip`" -C `"$env:SystemRoot\Cursors\W11_dark_v2.2`" -v"
+					# Extract archive. We cannot call tar.exe due to it fails to extract files if username has cyrillic first letter in lowercase
+					# Start-Process -FilePath "$env:SystemRoot\System32\tar.exe" -ArgumentList "-xf `"$DownloadsFolder\dark.zip`" -C `"$env:SystemRoot\Cursors\W11_dark_v2.2`" -v"
+					# https://github.com/PowerShell/PowerShell/issues/21070
+					Add-Type -Assembly System.IO.Compression.FileSystem
+					$ZIP = [IO.Compression.ZipFile]::OpenRead("$DownloadsFolder\dark.zip")
+					$ZIP.Entries | ForEach-Object -Process {
+						[IO.Compression.ZipFileExtensions]::ExtractToFile($_, "$env:SystemRoot\Cursors\W11_dark_v2.2\$($_.Name)", $true)
+					}
+					$ZIP.Dispose()
 
 					New-ItemProperty -Path "HKCU:\Control Panel\Cursors" -Name "(default)" -PropertyType String -Value "W11 Cursors Dark Free v2.2 by Jepri Creations" -Force
 					New-ItemProperty -Path "HKCU:\Control Panel\Cursors" -Name AppStarting -PropertyType ExpandString -Value "%SystemRoot%\Cursors\W11_dark_v2.2\working.ani" -Force
@@ -4653,6 +4643,8 @@ function Cursors
 						"%SystemRoot%\Cursors\W11_dark_v2.2\pin.cur"
 					) -join ","
 					New-ItemProperty -Path "HKCU:\Control Panel\Cursors\Schemes" -Name "W11 Cursors Dark Free v2.2 by Jepri Creations" -PropertyType String -Value $Schemes -Force
+
+					Start-Sleep -Seconds 1
 
 					Remove-Item -Path "$DownloadsFolder\dark.zip" -Force
 				}
@@ -4719,8 +4711,15 @@ function Cursors
 						New-Item -Path "$env:SystemRoot\Cursors\W11_light_v2.2" -ItemType Directory -Force
 					}
 
-					# Extract archive
-					Start-Process -FilePath "$env:SystemRoot\System32\tar.exe" -ArgumentList "-xf `"$DownloadsFolder\light.zip`" -C `"$env:SystemRoot\Cursors\W11_light_v2.2`" -v"
+					# Extract archive. We cannot call tar.exe due to it fails to extract files if username has cyrillic first letter in lowercase
+					# Start-Process -FilePath "$env:SystemRoot\System32\tar.exe" -ArgumentList "-xf `"$DownloadsFolder\light.zip`" -C `"$env:SystemRoot\Cursors\W11_dark_v2.2`" -v"
+					# https://github.com/PowerShell/PowerShell/issues/21070
+					Add-Type -Assembly System.IO.Compression.FileSystem
+					$ZIP = [IO.Compression.ZipFile]::OpenRead("$DownloadsFolder\light.zip")
+					$ZIP.Entries | ForEach-Object -Process {
+						[IO.Compression.ZipFileExtensions]::ExtractToFile($_, "$env:SystemRoot\Cursors\W11_light_v2.2\$($_.Name)", $true)
+					}
+					$ZIP.Dispose()
 
 					New-ItemProperty -Path "HKCU:\Control Panel\Cursors" -Name "(default)" -PropertyType String -Value "W11 Cursor Light Free v2.2 by Jepri Creations" -Force
 					New-ItemProperty -Path "HKCU:\Control Panel\Cursors" -Name AppStarting -PropertyType ExpandString -Value "%SystemRoot%\Cursors\W11_light_v2.2\working.ani" -Force
@@ -4734,10 +4733,8 @@ function Cursors
 					New-ItemProperty -Path "HKCU:\Control Panel\Cursors" -Name IBeam -PropertyType ExpandString -Value "%SystemRoot%\Cursors\W11_light_v2.2\beam.cur" -Force
 					New-ItemProperty -Path "HKCU:\Control Panel\Cursors" -Name No -PropertyType ExpandString -Value "%SystemRoot%\Cursors\W11_light_v2.2\unavailable.cur" -Force
 					New-ItemProperty -Path "HKCU:\Control Panel\Cursors" -Name NWPen -PropertyType ExpandString -Value "%SystemRoot%\Cursors\W11_light_v2.2\handwriting.cur" -Force
-					# This is not a typo
-					New-ItemProperty -Path "HKCU:\Control Panel\Cursors" -Name Person -PropertyType ExpandString -Value "%SystemRoot%\Cursors\W11_light_v2.2\pin.cur" -Force
-					# This is not a typo
-					New-ItemProperty -Path "HKCU:\Control Panel\Cursors" -Name Pin -PropertyType ExpandString -Value "%SystemRoot%\Cursors\W11_light_v2.2\person.cur" -Force
+					New-ItemProperty -Path "HKCU:\Control Panel\Cursors" -Name Person -PropertyType ExpandString -Value "%SystemRoot%\Cursors\W11_light_v2.2\person.cur" -Force
+					New-ItemProperty -Path "HKCU:\Control Panel\Cursors" -Name Pin -PropertyType ExpandString -Value "%SystemRoot%\Cursors\W11_light_v2.2\pin.cur" -Force
 					New-ItemProperty -Path "HKCU:\Control Panel\Cursors" -Name precisionhair -PropertyType ExpandString -Value "%SystemRoot%\Cursors\W11_light_v2.2\precision.cur" -Force
 					New-ItemProperty -Path "HKCU:\Control Panel\Cursors" -Name "Scheme Source" -PropertyType DWord -Value 1 -Force
 					New-ItemProperty -Path "HKCU:\Control Panel\Cursors" -Name SizeAll -PropertyType ExpandString -Value "%SystemRoot%\Cursors\W11_light_v2.2\move.cur" -Force
@@ -4772,6 +4769,8 @@ function Cursors
 						"%SystemRoot%\Cursors\W11_light_v2.2\pin.cur"
 					) -join ","
 					New-ItemProperty -Path "HKCU:\Control Panel\Cursors\Schemes" -Name "W11 Cursor Light Free v2.2 by Jepri Creations" -PropertyType String -Value $Schemes -Force
+
+					Start-Sleep -Seconds 1
 
 					Remove-Item -Path "$DownloadsFolder\light.zip" -Force
 				}
@@ -4820,10 +4819,11 @@ function Cursors
 
 	# Reload cursor on-the-fly
 	$Signature = @{
-		Namespace        = "WinAPI"
-		Name             = "Cursor"
-		Language         = "CSharp"
-		MemberDefinition = @"
+		Namespace          = "WinAPI"
+		Name               = "Cursor"
+		Language           = "CSharp"
+		CompilerParameters = $CompilerParameters
+		MemberDefinition   = @"
 [DllImport("user32.dll", EntryPoint = "SystemParametersInfo")]
 public static extern bool SystemParametersInfo(uint uiAction, uint uiParam, uint pvParam, uint fWinIni);
 "@
@@ -5035,7 +5035,7 @@ function OneDrive
 
 			Stop-Process -Name OneDrive, OneDriveSetup, FileCoAuth -Force -ErrorAction Ignore
 
-			# Getting link to the OneDriveSetup.exe and its' argument(s)
+			# Getting link to the OneDriveSetup.exe and its argument(s)
 			[string[]]$OneDriveSetup = ($UninstallString -replace("\s*/", ",/")).Split(",").Trim()
 			if ($OneDriveSetup.Count -eq 2)
 			{
@@ -5060,6 +5060,7 @@ function OneDrive
 						Namespace        = "WinAPI"
 						Name             = "DeleteFiles"
 						Language         = "CSharp"
+						CompilerOptions  = $CompilerParameters
 						MemberDefinition = @"
 public enum MoveFileFlags
 {
@@ -5115,7 +5116,7 @@ public static bool MarkFileDelete (string sourcefile)
 
 			# Do not restart the File Explorer process automatically if it stops in order to unload libraries
 			New-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon" -Name AutoRestartShell -PropertyType DWord -Value 0 -Force
-			# Kill all explorer instances but only one in case enabled to launch folder windows in a separate process
+			# Kill all explorer instances in case "launch folder windows in a separate process" enabled
 			Get-Process -Name explorer | Stop-Process -Force
 			Start-Sleep -Seconds 3
 			# Restart the File Explorer process automatically if it stops in order to unload libraries
@@ -5572,6 +5573,7 @@ function TempFolder
 					Namespace        = "WinAPI"
 					Name             = "DeleteFiles"
 					Language         = "CSharp"
+					CompilerOptions  = $CompilerParameters
 					MemberDefinition = @"
 public enum MoveFileFlags
 {
@@ -5695,6 +5697,7 @@ Unregister-ScheduledTask -TaskName SymbolicLink -Confirm:`$false
 					Namespace        = "WinAPI"
 					Name             = "DeleteFiles"
 					Language         = "CSharp"
+					CompilerOptions  = $CompilerParameters
 					MemberDefinition = @"
 public enum MoveFileFlags
 {
@@ -5829,7 +5832,7 @@ function Win32LongPathLimit
 	Display Stop error code when BSoD occurs
 
 	.PARAMETER Disable
-	Do not Stop error code when BSoD occurs
+	Do not display stop error code when BSoD occurs
 
 	.EXAMPLE
 	BSoDStopError -Enable
@@ -6252,7 +6255,7 @@ function WindowsFeatures
 
 		[void]$Window.Close()
 
-		$SelectedFeatures | ForEach-Object -Process {Write-Verbose $_.DisplayName -Verbose}
+		$SelectedFeatures | ForEach-Object -Process {Write-Verbose -Message $_.DisplayName -Verbose}
 		$SelectedFeatures | Disable-WindowsOptionalFeature -Online -NoRestart
 	}
 
@@ -7160,7 +7163,7 @@ function InputMethod
 	Set-UserShellFolderLocation -Default
 
 	.NOTES
-	User files or folders won't me moved to a new location
+	User files or folders won't be moved to a new location
 
 	.NOTES
 	Current user
@@ -7203,7 +7206,7 @@ function Set-UserShellFolderLocation
 		https://docs.microsoft.com/en-us/windows/win32/api/shlobj_core/nf-shlobj_core-shgetknownfolderpath
 
 		.NOTES
-		User files or folders won't me moved to a new location
+		User files or folders won't be moved to a new location
 	#>
 	function Set-UserShellFolder
 	{
@@ -7243,18 +7246,19 @@ function Set-UserShellFolderLocation
 			)
 
 			$KnownFolders = @{
-				"Desktop"   = @("B4BFCC3A-DB2C-424C-B029-7FE99A87C641");
-				"Documents" = @("FDD39AD0-238F-46AF-ADB4-6C85480369C7", "f42ee2d3-909f-4907-8871-4c22fc0bf756");
-				"Downloads" = @("374DE290-123F-4565-9164-39C4925E467B", "7d83ee9b-2244-4e70-b1f5-5404642af1e4");
-				"Music"     = @("4BD8D571-6D19-48D3-BE97-422220080E43", "a0c69a99-21c8-4671-8703-7934162fcf1d");
-				"Pictures"  = @("33E28130-4E1E-4676-835A-98395C3BC3BB", "0ddd015d-b06c-45d5-8c4c-f59713854639");
-				"Videos"    = @("18989B1D-99B5-455B-841C-AB7C74E4DDFC", "35286a68-3c57-41a1-bbb1-0eae73d76c95");
+				"Desktop"   = @("B4BFCC3A-DB2C-424C-B029-7FE99A87C641")
+				"Documents" = @("FDD39AD0-238F-46AF-ADB4-6C85480369C7", "f42ee2d3-909f-4907-8871-4c22fc0bf756")
+				"Downloads" = @("374DE290-123F-4565-9164-39C4925E467B", "7d83ee9b-2244-4e70-b1f5-5404642af1e4")
+				"Music"     = @("4BD8D571-6D19-48D3-BE97-422220080E43", "a0c69a99-21c8-4671-8703-7934162fcf1d")
+				"Pictures"  = @("33E28130-4E1E-4676-835A-98395C3BC3BB", "0ddd015d-b06c-45d5-8c4c-f59713854639")
+				"Videos"    = @("18989B1D-99B5-455B-841C-AB7C74E4DDFC", "35286a68-3c57-41a1-bbb1-0eae73d76c95")
 			}
 
 			$Signature = @{
 				Namespace        = "WinAPI"
 				Name             = "KnownFolders"
 				Language         = "CSharp"
+				CompilerOptions  = $CompilerParameters
 				MemberDefinition = @"
 [DllImport("shell32.dll")]
 public extern static int SHSetKnownFolderPath(ref Guid folderId, uint flags, IntPtr token, [MarshalAs(UnmanagedType.LPWStr)] string path);
@@ -7357,11 +7361,11 @@ public extern static int SHSetKnownFolderPath(ref Guid folderId, uint flags, Int
 	{
 		"Root"
 		{
-			# Store all fixed disks' letters to use them within Show-Menu function
-			# https://learn.microsoft.com/en-us/dotnet/api/system.io.drivetype?view=net-7.0#fields
-			$DriveLetters = @((Get-CimInstance -ClassName CIM_LogicalDisk | Where-Object -FilterScript {$_.DriveType -eq 3}).DeviceID | Sort-Object)
+			# Store all fixed disks' letters except C (system drive) to use them within Show-Menu function
+			# https://learn.microsoft.com/en-us/dotnet/api/system.io.drivetype
+			$DriveLetters = @((Get-CimInstance -ClassName CIM_LogicalDisk | Where-Object -FilterScript {($_.DriveType -eq 3) -and ($_.Name -ne $env:SystemDrive)}).DeviceID | Sort-Object)
 
-			if ($DriveLetters.Count -eq 1)
+			if (-not $DriveLetters)
 			{
 				Write-Information -MessageData "" -InformationAction Continue
 				Write-Verbose -Message $Localization.UserFolderLocationMove -Verbose
@@ -9032,6 +9036,9 @@ function WindowsLatestUpdate
 	https://forum.ru-board.com/profile.cgi?action=show&member=westlife
 
 	.NOTES
+	Microsoft blocked ability to write to UserChoice key for .pdf extention and http and https protocols with KB5034763 release
+
+	.NOTES
 	Machine-wide
 #>
 function Set-Association
@@ -9060,6 +9067,15 @@ function Set-Association
 		[string]
 		$Icon
 	)
+
+	# Microsoft blocked ability to write to UserChoice key for .pdf extention and http and https protocols with KB5034763 release
+	if (@(".pdf", "http", "https") -contains $Extension)
+	{
+		Write-Verbose -Message $Localization.UserChoiceWarning -Verbose
+		Write-Error -Message $Localization.UserChoiceWarning -ErrorAction SilentlyContinue
+
+		return
+	}
 
 	$ProgramPath = [System.Environment]::ExpandEnvironmentVariables($ProgramPath)
 
@@ -9122,6 +9138,7 @@ function Set-Association
 		Name             = "Action"
 		Language         = "CSharp"
 		UsingNamespace   = "System.Text", "System.Security.AccessControl", "Microsoft.Win32"
+		CompilerOptions  = $CompilerParameters
 		MemberDefinition = @"
 [DllImport("advapi32.dll", CharSet = CharSet.Auto)]
 private static extern int RegOpenKeyEx(UIntPtr hKey, string subKey, int ulOptions, int samDesired, out UIntPtr hkResult);
@@ -9591,6 +9608,7 @@ public static int UnloadHive(RegistryHives hive, string subKey)
 			Namespace        = "WinAPI"
 			Name             = "PatentHash"
 			Language         = "CSharp"
+			CompilerOptions  = $CompilerParameters
 			MemberDefinition = @"
 public static uint[] WordSwap(byte[] a, int sz, byte[] md5)
 {
@@ -9708,7 +9726,7 @@ public static long MakeLong(uint left, uint right)
 "@
 		}
 
-		if ( -not ("WinAPI.PatentHash" -as [type]))
+		if (-not ("WinAPI.PatentHash" -as [type]))
 		{
 			Add-Type @Signature
 		}
@@ -9836,6 +9854,7 @@ public static long MakeLong(uint left, uint right)
 		Namespace        = "WinAPI"
 		Name             = "Signature"
 		Language         = "CSharp"
+		CompilerOptions  = $CompilerParameters
 		MemberDefinition = @"
 [DllImport("shell32.dll", CharSet = CharSet.Auto, SetLastError = false)]
 private static extern int SHChangeNotify(int eventId, int flags, IntPtr item1, IntPtr item2);
@@ -10436,7 +10455,7 @@ function RKNBypass
 			# If current region is Russia
 			if (((Get-WinHomeLocation).GeoId -eq "203"))
 			{
-				New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings" -Name AutoConfigURL -PropertyType String -Value "https://antizapret.prostovpn.org:8443/proxy.pac" -Force
+				New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Internet Settings" -Name AutoConfigURL -PropertyType String -Value "https://p.thenewone.lol:8443/proxy.pac" -Force
 			}
 		}
 		"Disable"
@@ -10451,7 +10470,7 @@ function RKNBypass
 	Desktop shortcut creation upon Microsoft Edge update
 
 	.PARAMETER Channels
-	List Microsoft Edge channels to prevent desktop shortcut creation upon its' update
+	List Microsoft Edge channels to prevent desktop shortcut creation upon its update
 
 	.PARAMETER Disable
 	Do not prevent desktop shortcut creation upon Microsoft Edge update
@@ -10486,7 +10505,7 @@ function PreventEdgeShortcutCreation
 		$Disable
 	)
 
-	if (($null -eq (Get-Package -Name "Microsoft Edge Update" -ProviderName Programs -ErrorAction Ignore)) -or ([System.Version](Get-Package -Name "Microsoft Edge Update" -ProviderName Programs -ErrorAction Ignore).Version -lt [System.Version]"1.3.128.0"))
+	if (-not (Get-Package -Name "Microsoft Edge Update" -ProviderName Programs -ErrorAction Ignore))
 	{
 		Write-Information -MessageData "" -InformationAction Continue
 		Write-Verbose -Message $Localization.Skipped -Verbose
@@ -11472,7 +11491,10 @@ function UninstallUWPApps
 			"Microsoft.OutlookForWindows",
 
 			# Chat (Microsoft Teams)
-			"MicrosoftTeams"
+			"MicrosoftTeams",
+
+			# Microsoft Copilot
+			"Microsoft.Windows.Ai.CoPilot.Provider"
 		)
 		foreach ($Package in $Packages)
 		{
@@ -11571,7 +11593,7 @@ function UninstallUWPApps
 
 		$Window.Close() | Out-Null
 
-		# If Xbox Game Bar is selected to uninstall stop its' processes
+		# If Xbox Game Bar is selected to uninstall stop its processes
 		if ($PackagesToRemove -match "Microsoft.XboxGamingOverlay")
 		{
 			Get-Process -Name GameBar, GameBarFTServer -ErrorAction Ignore | Stop-Process -Force
@@ -12745,11 +12767,15 @@ while (`$true)
 	[int]`$CurrentMainWindowHandle = (Get-Process -Name cleanmgr | Where-Object -FilterScript {`$_.PriorityClass -eq """BelowNormal"""}).MainWindowHandle
 	if (`$SourceMainWindowHandle -ne `$CurrentMainWindowHandle)
 	{
-		`$ShowWindowAsync = @{
-			Namespace        = """WinAPI"""
-			Name             = """Win32ShowWindowAsync"""
-			Language         = """CSharp"""
-			MemberDefinition = @"""
+		`$CompilerParameters = [System.CodeDom.Compiler.CompilerParameters]::new("System.dll")
+		`$CompilerParameters.TempFiles = [System.CodeDom.Compiler.TempFileCollection]::new(`$env:TEMP, `$false)
+		`$CompilerParameters.GenerateInMemory = `$true
+		`$Signature = @{
+			Namespace          = """WinAPI"""
+			Name               = """Win32ShowWindowAsync"""
+			Language           = """CSharp"""
+			CompilerParameters = `$CompilerParameters
+			MemberDefinition   = @"""
 [DllImport("""user32.dll""")]
 public static extern bool ShowWindowAsync(IntPtr hWnd, int nCmdShow);
 """@
@@ -12757,7 +12783,7 @@ public static extern bool ShowWindowAsync(IntPtr hWnd, int nCmdShow);
 
 		if (-not ("""WinAPI.Win32ShowWindowAsync""" -as [type]))
 		{
-			Add-Type @ShowWindowAsync
+			Add-Type @Signature
 		}
 		`$MainWindowHandle = (Get-Process -Name cleanmgr | Where-Object -FilterScript {`$_.PriorityClass -eq """BelowNormal"""}).MainWindowHandle
 		[WinAPI.Win32ShowWindowAsync]::ShowWindowAsync(`$MainWindowHandle, 2)
@@ -12807,11 +12833,15 @@ public static extern bool ShowWindowAsync(IntPtr hWnd, int nCmdShow);
 # https://github.com/DCourtel/Windows_10_Focus_Assist/blob/master/FocusAssistLibrary/FocusAssistLib.cs
 # https://redplait.blogspot.com/2018/07/wnf-ids-from-perfntcdll-adk-version.html
 
-`$Focus = @{
-	Namespace        = "WinAPI"
-	Name             = "Focus"
-	Language         = "CSharp"
-	MemberDefinition = @""
+`$CompilerParameters = [System.CodeDom.Compiler.CompilerParameters]::new("System.dll")
+`$CompilerParameters.TempFiles = [System.CodeDom.Compiler.TempFileCollection]::new(`$env:TEMP, `$false)
+`$CompilerParameters.GenerateInMemory = `$true
+`$Signature = @{
+	Namespace          = "WinAPI"
+	Name               = "Focus"
+	Language           = "CSharp"
+	CompilerParameters = `$CompilerParameters
+	MemberDefinition   = @""
 [DllImport("NtDll.dll", SetLastError = true)]
 private static extern uint NtQueryWnfStateData(IntPtr pStateName, IntPtr pTypeId, IntPtr pExplicitScope, out uint nChangeStamp, out IntPtr pBuffer, ref uint nBufferSize);
 
@@ -12874,7 +12904,7 @@ public static FocusAssistState GetFocusAssistState()
 
 if (-not ("WinAPI.Focus" -as [type]))
 {
-	Add-Type @Focus
+	Add-Type @Signature
 }
 
 while ([WinAPI.Focus]::GetFocusAssistState() -ne "OFF")
@@ -13124,11 +13154,15 @@ function SoftwareDistributionTask
 # https://github.com/DCourtel/Windows_10_Focus_Assist/blob/master/FocusAssistLibrary/FocusAssistLib.cs
 # https://redplait.blogspot.com/2018/07/wnf-ids-from-perfntcdll-adk-version.html
 
-`$Focus = @{
-	Namespace        = "WinAPI"
-	Name             = "Focus"
-	Language         = "CSharp"
-	MemberDefinition = @""
+`$CompilerParameters = [System.CodeDom.Compiler.CompilerParameters]::new("System.dll")
+`$CompilerParameters.TempFiles = [System.CodeDom.Compiler.TempFileCollection]::new(`$env:TEMP, `$false)
+`$CompilerParameters.GenerateInMemory = `$true
+`$Signature = @{
+	Namespace          = "WinAPI"
+	Name               = "Focus"
+	Language           = "CSharp"
+	CompilerParameters = `$CompilerParameters
+	MemberDefinition   = @""
 [DllImport("NtDll.dll", SetLastError = true)]
 private static extern uint NtQueryWnfStateData(IntPtr pStateName, IntPtr pTypeId, IntPtr pExplicitScope, out uint nChangeStamp, out IntPtr pBuffer, ref uint nBufferSize);
 
@@ -13191,7 +13225,7 @@ public static FocusAssistState GetFocusAssistState()
 
 if (-not ("WinAPI.Focus" -as [type]))
 {
-	Add-Type @Focus
+	Add-Type @Signature
 }
 
 # Wait until it will be "OFF" (0)
@@ -13430,11 +13464,15 @@ function TempTask
 # https://github.com/DCourtel/Windows_10_Focus_Assist/blob/master/FocusAssistLibrary/FocusAssistLib.cs
 # https://redplait.blogspot.com/2018/07/wnf-ids-from-perfntcdll-adk-version.html
 
-`$Focus = @{
-	Namespace        = "WinAPI"
-	Name             = "Focus"
-	Language         = "CSharp"
-	MemberDefinition = @""
+`$CompilerParameters = [System.CodeDom.Compiler.CompilerParameters]::new("System.dll")
+`$CompilerParameters.TempFiles = [System.CodeDom.Compiler.TempFileCollection]::new(`$env:TEMP, `$false)
+`$CompilerParameters.GenerateInMemory = `$true
+`$Signature = @{
+	Namespace          = "WinAPI"
+	Name               = "Focus"
+	Language           = "CSharp"
+	CompilerParameters = `$CompilerParameters
+	MemberDefinition   = @""
 [DllImport("NtDll.dll", SetLastError = true)]
 private static extern uint NtQueryWnfStateData(IntPtr pStateName, IntPtr pTypeId, IntPtr pExplicitScope, out uint nChangeStamp, out IntPtr pBuffer, ref uint nBufferSize);
 
@@ -13497,7 +13535,7 @@ public static FocusAssistState GetFocusAssistState()
 
 if (-not ("WinAPI.Focus" -as [type]))
 {
-	Add-Type @Focus
+	Add-Type @Signature
 }
 
 # Wait until it will be "OFF" (0)
@@ -13745,9 +13783,6 @@ function PUAppsDetection
 
 	.EXAMPLE
 	DefenderSandbox -Disable
-
-	.NOTES
-	There is a bug in KVM with QEMU: enabling this function causes VM to freeze up during the loading phase of Windows
 
 	.NOTES
 	Machine-wide
@@ -14331,7 +14366,7 @@ function WindowsSandbox
 		$Enable
 	)
 
-	if (-not (Get-WindowsEdition -Online | Where-Object -FilterScript {($_.Edition -eq "Professional") -or ($_.Edition -like "Enterprise*")}))
+	if (-not (Get-WindowsEdition -Online | Where-Object -FilterScript {($_.Edition -eq "Professional") -or ($_.Edition -eq "Enterprise")}))
 	{
 		return
 	}
@@ -15347,10 +15382,11 @@ function UpdateLGPEPolicies
 function PostActions
 {
 	#region Refresh Environment
-	$UpdateEnvironment = @{
+	$Signature = @{
 		Namespace        = "WinAPI"
 		Name             = "UpdateEnvironment"
 		Language         = "CSharp"
+		CompilerOptions  = $CompilerParameters
 		MemberDefinition = @"
 private static readonly IntPtr HWND_BROADCAST = new IntPtr(0xffff);
 private const int WM_SETTINGCHANGE = 0x1a;
@@ -15394,7 +15430,7 @@ public static void PostMessage()
 	}
 	if (-not ("WinAPI.UpdateEnvironment" -as [type]))
 	{
-		Add-Type @UpdateEnvironment
+		Add-Type @Signature
 	}
 
 	# Simulate pressing F5 to refresh the desktop
@@ -15423,7 +15459,7 @@ public static void PostMessage()
 		Set-WinHomeLocation -GeoId $Script:Region
 	}
 
-	# Apply policies found in registry to re-build database database due to gpedit.msc relies in its' own database
+	# Apply policies found in registry to re-build database database due to gpedit.msc relies in its own database
 	if ((Test-Path -Path "$env:TEMP\Computer.txt") -or (Test-Path -Path "$env:TEMP\User.txt"))
 	{
 		if (Test-Path -Path "$env:TEMP\Computer.txt")
@@ -15452,7 +15488,7 @@ public static void PostMessage()
 	# https://github.com/PowerShell/PowerShell/issues/21070
 	Get-ChildItem -Path "$env:TEMP\Computer.txt", "$env:TEMP\User.txt" -Force -ErrorAction Ignore | Remove-Item -Recurse -Force -ErrorAction Ignore
 
-	# Kill all explorer instances but only one in case enabled to launch folder windows in a separate process
+	# Kill all explorer instances in case "launch folder windows in a separate process" enabled
 	Get-Process -Name explorer | Stop-Process -Force
 	Start-Sleep -Seconds 3
 
@@ -15468,7 +15504,7 @@ public static void PostMessage()
 	# Check whether any of scheduled tasks were created. Unless open Task Scheduler
 	if ($Script:ScheduledTasks)
 	{
-		# Find and close taskschd.msc by its' argument
+		# Find and close taskschd.msc by its argument
 		$taskschd_Process_ID = (Get-CimInstance -ClassName CIM_Process | Where-Object -FilterScript {$_.Name -eq "mmc.exe"} | Where-Object -FilterScript {
 			$_.CommandLine -match "taskschd.msc"
 		}).Handle
@@ -15587,13 +15623,6 @@ public static void PostMessage()
 	$ToastMessage = [Windows.UI.Notifications.ToastNotification]::New($ToastXML)
 	[Windows.UI.Notifications.ToastNotificationManager]::CreateToastNotifier("Sophia").Show($ToastMessage)
 	#endregion Toast notifications
-
-	# Check for UWP apps updates
-	Write-Information -MessageData "" -InformationAction Continue
-	# Extract the localized "Please wait..." string from shell32.dll
-	Write-Verbose -Message ([WinAPI.GetStrings]::GetString(12612)) -Verbose
-
-	Get-CimInstance -Namespace root/CIMV2/mdm/dmmap -ClassName MDM_EnterpriseModernAppManagement_AppManagement01 | Invoke-CimMethod -MethodName UpdateScanMethod
 }
 #endregion Post Actions
 

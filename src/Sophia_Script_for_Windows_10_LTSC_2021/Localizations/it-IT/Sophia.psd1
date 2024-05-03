@@ -1,7 +1,6 @@
 ﻿ConvertFrom-StringData -StringData @'
 UnsupportedOSBitness                      = Lo script supporta solo Windows a 64 bit.
 UnsupportedOSBuild                        = Lo script supporta Windows 10 Enterprise LTSC 2021.
-NonLatinUsernameWarning                   = PowerShell 5.1 non compila il codice se il nome utente contiene caratteri non latini (compresi gli emoji) ed è scritto in minuscolo. Si prega di utilizzare PowerShell 7.
 UpdateWarning                             = La tua build di Windows 10 {0}.{1} non è supportata. Build supportate: {2}+. Eseguire Windows Update e riprovare.
 UnsupportedLanguageMode                   = La sessione PowerShell è in esecuzione in modalità lingua limitata.
 LoggedInUserNotAdmin                      = L'utente in suo non ha i diritti di amministratore.
@@ -51,6 +50,7 @@ ErrorsMessage                             = Errori/avvisi
 DialogBoxOpening                          = Visualizzazione della finestra di dialogo...
 Disable                                   = Disattivare
 Enable                                    = Abilitare
+UserChoiceWarning                         = Microsoft ha bloccato l'accesso in scrittura alla chiave UserChoice per l'estensione .pdf e il protocollo http/https con il rilascio della KB5034765.
 AllFilesFilter                            = Tutti i file
 FolderSelect                              = Selezionare una cartella
 FilesWontBeMoved                          = I file non verranno trasferiti.

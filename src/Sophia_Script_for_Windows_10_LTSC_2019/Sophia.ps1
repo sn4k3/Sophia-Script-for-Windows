@@ -2,8 +2,8 @@
 	.SYNOPSIS
 	Default preset file for "Sophia Script for Windows 10 LTSC 2019"
 
-	Version: v5.8.3
-	Date: 01.04.2024
+	Version: v5.8.5
+	Date: 14.04.2024
 
 	Copyright (c) 2014—2024 farag, Inestic & lowl1f3
 
@@ -12,7 +12,7 @@
 	.DESCRIPTION
 	Place the "#" char before function if you don't want to run it
 	Remove the "#" char before function if you want to run it
-	Every tweak in the preset file has its' corresponding function to restore the default settings
+	Every tweak in the preset file has its corresponding function to restore the default settings
 
 	.EXAMPLE Run the whole script
 	.\Sophia.ps1
@@ -26,7 +26,7 @@
 	.NOTES
 	Supported Windows 10 version
 	Version: 1809
-	Build: 17763.5458+
+	Build: 17763.5696+
 	Edition: Enterprise LTSC 2019
 	Architecture: x64
 
@@ -70,7 +70,7 @@ param
 
 Clear-Host
 
-$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 10 LTSC 2019 v5.8.3 | Made with $([System.Char]::ConvertFromUtf32(0x1F497)) of Windows | $([System.Char]0x00A9) farag, Inestic & lowl1f3, 2014$([System.Char]0x2013)2024"
+$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 10 LTSC 2019 v5.8.5 | Made with $([System.Char]::ConvertFromUtf32(0x1F497)) of Windows | $([System.Char]0x00A9) farag, Inestic & lowl1f3, 2014$([System.Char]0x2013)2024"
 
 Remove-Module -Name Sophia -Force -ErrorAction Ignore
 Import-LocalizedData -BindingVariable Global:Localization -BaseDirectory $PSScriptRoot\Localizations -FileName Sophia
@@ -84,8 +84,8 @@ catch [System.InvalidOperationException]
 {
 	Write-Warning -Message $Localization.PowerShellx86Warning
 
-	Start-Process -FilePath "https://t.me/sophia_chat"
-	Start-Process -FilePath "https://discord.gg/sSryhaEv79"
+	Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
+	Write-Verbose -Message "https://discord.gg/sSryhaEv79" -Verbose
 
 	exit
 }
@@ -506,7 +506,7 @@ Win32LongPathLimit -Disable
 # Отображать код Stop-ошибки при появлении BSoD
 BSoDStopError -Enable
 
-# Do not Stop error code when BSoD occurs (default value)
+# Do not display stop error code when BSoD occurs (default value)
 # Не отображать код Stop-ошибки при появлении BSoD (значение по умолчанию)
 # BSoDStopError -Disable
 
@@ -629,7 +629,7 @@ InputMethod -English
 
 <#
 	Change user folders location to the root of any drive using the interactive menu
-	User files or folders won't me moved to a new location. Move them manually
+	User files or folders won't be moved to a new location. Move them manually
 	They're located in the %USERPROFILE% folder by default
 
 	Переместить пользовательские папки в корень любого диска на выбор с помощью интерактивного меню
@@ -640,7 +640,7 @@ Set-UserShellFolderLocation -Root
 
 <#
 	Select folders for user folders location manually using a folder browser dialog
-	User files or folders won't me moved to a new location. Move them manually
+	User files or folders won't be moved to a new location. Move them manually
 	They're located in the %USERPROFILE% folder by default
 
 	Выбрать папки для расположения пользовательских папок вручную, используя диалог "Обзор папок"
@@ -651,7 +651,7 @@ Set-UserShellFolderLocation -Root
 
 <#
 	Change user folders location to the default values
-	User files or folders won't me moved to the new location. Move them manually
+	User files or folders won't be moved to the new location. Move them manually
 	They're located in the %USERPROFILE% folder by default
 
 	Изменить расположение пользовательских папок на значения по умолчанию
@@ -805,7 +805,7 @@ RKNBypass -Enable
 # https://antizapret.prostovpn.org
 # RKNBypass -Disable
 
-# List Microsoft Edge channels to prevent desktop shortcut creation upon its' update
+# List Microsoft Edge channels to prevent desktop shortcut creation upon its update
 # Перечислите каналы Microsoft Edge для предотвращения создания ярлыков на рабочем столе после его обновления
 PreventEdgeShortcutCreation -Channels Stable, Beta, Dev, Canary
 
@@ -912,13 +912,8 @@ PUAppsDetection -Enable
 # Выключить обнаружение потенциально нежелательных приложений и блокировать их (значение по умолчанию)
 # PUAppsDetection -Disable
 
-<#
-	Enable sandboxing for Microsoft Defender
-	There is a bug in KVM with QEMU: enabling this function causes VM to freeze up during the loading phase of Windows
-
-	Включить песочницу для Microsoft Defender
-	В KVM с QEMU присутствует баг: включение этой функции приводит ВМ к зависанию во время загрузки Windows
-#>
+# Enable sandboxing for Microsoft Defender
+# Включить песочницу для Microsoft Defender
 DefenderSandbox -Enable
 
 # Disable sandboxing for Microsoft Defender (default value)

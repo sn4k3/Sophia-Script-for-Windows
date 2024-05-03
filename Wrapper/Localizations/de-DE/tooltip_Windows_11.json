@@ -1463,16 +1463,6 @@
   },
   {
     "Region": "Start menu",
-    "Function": "UnpinAllStartApps",
-    "Arg": {
-      "Zero": {
-        "Tag": "",
-        "ToolTip": "Entferne alle \"Pins\" von den Start-Apps."
-      }
-    }
-  },
-  {
-    "Region": "Start menu",
     "Function": "StartLayout",
     "Arg": {
       "Zero": {
@@ -1666,6 +1656,20 @@
       "One": {
         "Tag": "Disable",
         "ToolTip": "Erkennung potenziell unerwünschter Apps deaktivieren und diese blockieren (Standardeinstellung)."
+      }
+    }
+  },
+  {
+    "Region": "Microsoft Defender & Security",
+    "Function": "DefenderSandbox",
+    "Arg": {
+      "Zero": {
+        "Tag": "Enable",
+        "ToolTip": "Aktiviert Sandboxing für Microsoft Defender."
+      },
+      "One": {
+        "Tag": "Disable",
+        "ToolTip": "Sandboxing für Microsoft Defender deaktivieren (Standardeinstellung)."
       }
     }
   },
@@ -1873,34 +1877,6 @@
   },
   {
     "Region": "Context menu",
-    "Function": "CastToDeviceContext",
-    "Arg": {
-      "Zero": {
-        "Tag": "Hide",
-        "ToolTip": "Eintrag \"Auf Gerät übertragen\" im Kontextmenü von Mediendateien und Ordnern ausblenden."
-      },
-      "One": {
-        "Tag": "Show",
-        "ToolTip": "Eintrag \"Auf Gerät übertragen\" im Kontextmenü von Mediendateien und Ordnern anzeigen (Standardeinstellung)."
-      }
-    }
-  },
-  {
-    "Region": "Context menu",
-    "Function": "ShareContext",
-    "Arg": {
-      "Zero": {
-        "Tag": "Hide",
-        "ToolTip": "Eintrag \"Teilen\" im Kontextmenü ausblenden."
-      },
-      "One": {
-        "Tag": "Show",
-        "ToolTip": "Eintrag \"Teilen\" im Kontextmenü anzeigen (Standardeinstellung)."
-      }
-    }
-  },
-  {
-    "Region": "Context menu",
     "Function": "EditWithClipchampContext",
     "Arg": {
       "Zero": {
@@ -1924,34 +1900,6 @@
       "One": {
         "Tag": "Show",
         "ToolTip": "Eintrag \"Drucken\" im Kontextmenü von .bat und .cmd anzeigen (Standardeinstellung)."
-      }
-    }
-  },
-  {
-    "Region": "Context menu",
-    "Function": "IncludeInLibraryContext",
-    "Arg": {
-      "Zero": {
-        "Tag": "Hide",
-        "ToolTip": "Eintrag \"In Bibliothek einbeziehen\" im Kontextmenü von Ordnern und Laufwerken ausblenden."
-      },
-      "One": {
-        "Tag": "Show",
-        "ToolTip": "Eintrag \"In Bibliothek einbeziehen\" im Kontextmenü von Ordnern und Laufwerken anzeigen (Standardeinstellung)."
-      }
-    }
-  },
-  {
-    "Region": "Context menu",
-    "Function": "SendToContext",
-    "Arg": {
-      "Zero": {
-        "Tag": "Hide",
-        "ToolTip": "Eintrag \"Senden an\" aus dem Ordner-Kontextmenü ausblenden."
-      },
-      "One": {
-        "Tag": "Show",
-        "ToolTip": "Eintrag \"Senden an\" aus dem Ordner-Kontextmenü anzeigen (Standardeinstellung)."
       }
     }
   },
@@ -2022,20 +1970,6 @@
       "One": {
         "Tag": "Disable",
         "ToolTip": "Windows-Terminal im Kontextmenü standardmäßig als Administrator nicht öffnen (Standardeinstellung)."
-      }
-    }
-  },
-  {
-    "Region": "Context menu",
-    "Function": "Windows10ContextMenu",
-    "Arg": {
-      "Zero": {
-        "Tag": "Disable",
-        "ToolTip": "Windows 10-Kontextmenüstil deaktivieren (Standardeinstellung)."
-      },
-      "One": {
-        "Tag": "Enable",
-        "ToolTip": "Windows 10-Kontextmenüstil aktivieren."
       }
     }
   },

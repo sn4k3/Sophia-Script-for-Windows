@@ -1,6 +1,5 @@
 ﻿ConvertFrom-StringData -StringData @'
 UnsupportedOSBuild                        = Komut dosyası Windows 11 23H2+'yı destekler.
-NonLatinUsernameWarning                   = PowerShell 5.1, kullanıcı adı Latin olmayan karakterler içeriyorsa (emoji dahil) ve küçük harfle yazılmışsa kodu derlemez. Lütfen PowerShell 7 kullanın.
 UpdateWarning                             = Windows 11 yapınız: {0}.{1}. Desteklenen yapılar: {2}+. Windows Update'i çalıştırın ve tekrar deneyin.
 UnsupportedLanguageMode                   = Sınırlı bir dil modunda çalışan PowerShell oturumu.
 LoggedInUserNotAdmin                      = Oturum açan kullanıcının yönetici hakları yok.
@@ -57,6 +56,7 @@ ErrorsMessage                             = Hatalar/Uyarılar
 DialogBoxOpening                          = İletişim kutusu görüntüleniyor...
 Disable                                   = Devre dışı bırak
 Enable                                    = Aktif et
+UserChoiceWarning                         = Microsoft, KB5034765 sürümü ile .pdf uzantısı ve http/https protokolü için UserChoice anahtarına yazma erişimini engellemiştir.
 AllFilesFilter                            = Tüm Dosyalar
 FolderSelect                              = Klasör seç
 FilesWontBeMoved                          = Dosyalar taşınmayacak.

@@ -5,6 +5,34 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 5.18.5 | 6.6.5 — 14.04.2024
+
+* Removed `ShareContext` & `UnpinAllStartApps` functions for `Windows 11`;
+  * Start icon positions are stored in a binary obfuscated JSON file that changes with every update. `$env:LOCALAPPDATA\Packages\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\LocalState\start2.bin`, and it's changed with every update;
+  * Take a look at https://gist.github.com/rad1ke/d8c4121931633eca04ca625d09ff1a11#file-windows-11-setup-ps1-L42 if you're interested in the function.
+* Fixed `Cursors` function;
+  * Please re-run it by using `. .\Functions.ps1` module
+* Added a warning for `Set-Association` function: `.pdf` and `http/https` protocols will be skipped;
+  * Microsoft has blocked write access to UserChoice key for .pdf extention and http/https protocols with KB5034765 and KB5034763 for Windows 11 and Windows 10 respectively.
+* `RKNBypass` updated;
+  * Changed URL to `https://p.thenewone.lol:8443/proxy.pac`. Applicable for Russia only.
+* Fixed numerous typos.
+
+## 5.18.4 | 6.6.4 — 07.04.2024
+
+* Fixed script not checking version correctly;
+* Script-wide improved compiling .NET code compatibility when a username has the first capital letter`;
+  * https://github.com/PowerShell/PowerShell/issues/21070
+* Fixed `Cursors` function not extracting files from archives using `%SystemRoot%\System32\tar.exe` when a username has the first capital letter`;
+  * https://github.com/PowerShell/PowerShell/issues/21070
+* Fixed `Set-UserShellFolderLocation -Root` function not checking drives correctly what results in skipping the whole function;
+* Minor changes.
+
+### Wrapper 2.7.0
+
+* Updated colors for each theme and coded more correctly according to industry standards;
+* Clean up code.
+
 ## 5.18.3 | 6.6.3 — 01.04.2024
 
 * Removed `RunAsDifferentUserContext`, `EditWithPhotosContext`, `ImagesEditContext` for Windows 10 as unnecessary ones.

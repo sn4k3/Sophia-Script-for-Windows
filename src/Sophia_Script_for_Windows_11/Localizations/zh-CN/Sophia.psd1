@@ -1,6 +1,5 @@
 ﻿ConvertFrom-StringData -StringData @'
 UnsupportedOSBuild                        = 脚本支持Windows 11 23H2+。
-NonLatinUsernameWarning                   = 如果用户名包含非拉丁字符（包括表情符号）且以小写字母书写，PowerShell 5.1 将无法编译代码。请使用 PowerShell 7。
 UpdateWarning                             = 您的Windows 11构建: {0}.{1}。支持的构建: {2}+。运行Windows Update并再次尝试。
 UnsupportedLanguageMode                   = PowerShell会话在有限的语言模式下运行。
 LoggedInUserNotAdmin                      = 登录的用户没有管理员的权利。
@@ -57,6 +56,7 @@ ErrorsMessage                             = 错误/警告
 DialogBoxOpening                          = 显示对话窗口.....
 Disable                                   = 禁用
 Enable                                    = 启用
+UserChoiceWarning                         = 微软在发布 KB5034765 时阻止了对 .pdf 扩展和 http/https 协议的 UserChoice 密钥的写入访问。
 AllFilesFilter                            = 所有文件
 FolderSelect                              = 选择一个文件夹
 FilesWontBeMoved                          = 文件将不会被移动。

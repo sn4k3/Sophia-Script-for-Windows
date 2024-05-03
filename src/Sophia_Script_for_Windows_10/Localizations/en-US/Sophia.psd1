@@ -1,7 +1,6 @@
 ﻿ConvertFrom-StringData -StringData @'
 UnsupportedOSBitness                      = The script supports 64-bit Windows only.
 UnsupportedOSBuild                        = The script supports Windows 10 22H2.
-NonLatinUsernameWarning                   = PowerShell 5.1 does not compile code if the username contains non-Latin characters (including emoji) and is written in lowercase. Please, use PowerShell 7.
 UpdateWarning                             = Your Windows 10 build: {0}.{1}. Supported builds: {2}+. Run Windows Update and try again.
 UnsupportedLanguageMode                   = The PowerShell session in running in a limited language mode.
 LoggedInUserNotAdmin                      = The logged-on user doesn't have admin rights.
@@ -58,6 +57,7 @@ ErrorsMessage                             = Errors/Warnings
 DialogBoxOpening                          = Displaying the dialog box...
 Disable                                   = Disable
 Enable                                    = Enable
+UserChoiceWarning                         = Microsoft has blocked write access to UserChoice key for .pdf extention and http/https protocols with KB5034765 release.
 AllFilesFilter                            = All Files
 FolderSelect                              = Select a folder
 FilesWontBeMoved                          = Files will not be moved.
