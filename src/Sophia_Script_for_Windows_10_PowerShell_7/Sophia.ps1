@@ -2,8 +2,8 @@
 	.SYNOPSIS
 	Default preset file for "Sophia Script for Windows 10 (PowerShell 7)"
 
-	Version: v5.18.5
-	Date: 14.04.2024
+	Version: v5.18.6
+	Date: 28.05.2024
 
 	Copyright (c) 2014—2024 farag, Inestic & lowl1f3
 
@@ -26,7 +26,7 @@
 	.NOTES
 	Supported Windows 10 versions
 	Version: 22H2
-	Builds: 19045.4291+
+	Builds: 19045.4412+
 	Editions: Home/Pro/Enterprise
 	Architecture: x64
 
@@ -70,7 +70,9 @@ param
 
 Clear-Host
 
-$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 10 v5.18.5 (PowerShell 7) | Made with $([System.Char]::ConvertFromUtf32(0x1F497)) of Windows | $([System.Char]0x00A9) farag, Inestic & lowl1f3, 2014$([System.Char]0x2013)2024"
+$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 10 v5.18.6 (PowerShell 7) | Made with $([System.Char]::ConvertFromUtf32(0x1F497)) of Windows | $([System.Char]0x00A9) farag, Inestic & lowl1f3, 2014$([System.Char]0x2013)2024"
+
+Remove-Module -Name Sophia -Force -ErrorAction Ignore
 
 # PowerShell 7 doesn't load en-us localization automatically if there is no localization folder in user's language which is determined by $PSUICulture
 # https://docs.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/import-localizeddata?view=powershell-7.3
@@ -265,6 +267,14 @@ BingSearch -Disable
 # Enable Bing search in the Start Menu (default value)
 # Включить поиск через Bing в меню "Пуск" (значение по умолчанию)
 # BingSearch -Enable
+
+# Do not show Microsoft account-related notifications on Start Menu in the Start menu
+# Не показывать в меню "Пуск" уведомления, связанные с учетной записью Microsoft
+StartAccountNotifications -Hide
+
+# Show Microsoft account-related notifications on Start Menu in the Start menu (default value)
+# Переодически показывать в меню "Пуск" уведомления, связанные с учетной записью Microsoft (значение по умолчанию)
+# StartAccountNotifications -Show
 #endregion Privacy & Telemetry
 
 #region UI & Personalization
@@ -1269,34 +1279,16 @@ DismissMSAccount
 # Отклонить предложение Microsoft Defender в "Безопасность Windows" включить фильтр SmartScreen для Microsoft Edge
 DismissSmartScreenFilter
 
-# Enable events auditing generated when a process is created (starts)
-# Включить аудит событий, возникающих при создании или запуске процесса
-AuditProcess -Enable
-
-# Disable events auditing generated when a process is created (starts) (default value)
-# Выключить аудит событий, возникающих при создании или запуске процесса (значение по умолчанию)
-# AuditProcess -Disable
-
-<#
-	Include command line in process creation events
-	In order this feature to work events auditing (ProcessAudit -Enable) will be enabled
-
-	Включать командную строку в событиях создания процесса
-	Для того, чтобы работал данный функционал, будет включен аудит событий (AuditProcess -Enable)
-#>
+# Create the "Process Creation" сustom view in the Event Viewer to log executed processes and their arguments
+# Создать настраиваемое представление "Создание процесса" в Просмотре событий для журналирования запускаемых процессов и их аргументов
 CommandLineProcessAudit -Enable
 
 # Do not include command line in process creation events (default value)
 # Не включать командную строку в событиях создания процесса (значение по умолчанию)
 # CommandLineProcessAudit -Disable
 
-<#
-	Create the "Process Creation" сustom view in the Event Viewer to log executed processes and their arguments
-	In order this feature to work events auditing (AuditProcess -Enable) and command line (CommandLineProcessAudit -Enable) in process creation events will be enabled
-
-	Создать настраиваемое представление "Создание процесса" в Просмотре событий для журналирования запускаемых процессов и их аргументов
-	Для того, чтобы работал данный функционал, буден включен аудит событий (AuditProcess -Enable) и командной строки (CommandLineProcessAudit -Enable) в событиях создания процесса
-#>
+# Create the "Process Creation" сustom view in the Event Viewer to log executed processes and their arguments
+# Создать настраиваемое представление "Создание процесса" в Просмотре событий для журналирования запускаемых процессов и их аргументов
 EventViewerCustomView -Enable
 
 # Remove the "Process Creation" custom view in the Event Viewer to log executed processes and their arguments (default value)

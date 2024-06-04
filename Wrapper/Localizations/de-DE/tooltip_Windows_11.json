@@ -245,15 +245,29 @@
   },
   {
     "Region": "Privacy & Telemetry",
-    "Function": "BrowsingHistory",
+    "Function": "StartRecommendationsTips",
     "Arg": {
       "Zero": {
         "Tag": "Hide",
-        "ToolTip": "Zeigt keine Websites aus dem Browserverlauf im Startmenü an."
+        "ToolTip": "Im Startmenü werden keine Empfehlungen für Tipps, Verknüpfungen, neue Apps und mehr angezeigt."
       },
       "One": {
         "Tag": "Show",
-        "ToolTip": "Zeigt Websites aus dem Browserverlauf im Startmenü an (Standardeinstellung)."
+        "ToolTip": "Empfehlungen für Tipps, Verknüpfungen, neue Apps und mehr im Startmenü anzeigen (Standardeinstellung)."
+      }
+    }
+  },
+  {
+    "Region": "Privacy & Telemetry",
+    "Function": "StartAccountNotifications",
+    "Arg": {
+      "Zero": {
+        "Tag": "Hide",
+        "ToolTip": "Microsoft-Kontobezogene Benachrichtigungen werden im Startmenü nicht angezeigt."
+      },
+      "One": {
+        "Tag": "Show",
+        "ToolTip": "Microsoft-Kontobezogene Benachrichtigungen im Startmenü im Startmenü anzeigen (Standardeinstellung)."
       }
     }
   },
@@ -1695,25 +1709,11 @@
   },
   {
     "Region": "Microsoft Defender & Security",
-    "Function": "AuditProcess",
-    "Arg": {
-      "Zero": {
-        "Tag": "Enable",
-        "ToolTip": "Aktiviert das Überwachen von Ereignissen, die beim Erstellen (Starten) eines Prozesses erzeugt werden."
-      },
-      "One": {
-        "Tag": "Disable",
-        "ToolTip": "Deaktiviert das Überwachen von Ereignissen, die beim Erstellen (Starten) eines Prozesses erzeugt werden."
-      }
-    }
-  },
-  {
-    "Region": "Microsoft Defender & Security",
     "Function": "CommandLineProcessAudit",
     "Arg": {
       "Zero": {
         "Tag": "Enable",
-        "ToolTip": "Einbeziehung der Befehlszeile in Ereignisse der Prozesserstellung. Damit diese Funktion funktioniert, muss die Ereignisüberprüfung (ProcessAudit -Enable) aktiviert werden."
+        "ToolTip": "Einbeziehung der Befehlszeile in Ereignisse der Prozesserstellung."
       },
       "One": {
         "Tag": "Disable",
@@ -1727,7 +1727,7 @@
     "Arg": {
       "Zero": {
         "Tag": "Enable",
-        "ToolTip": "Erstellt eine benutzerdefinierte Ansicht \"Prozesserstellung\", um ausgeführte Prozesse und ihre Argumente zu protokollieren. Damit diese Funktion funktioniert, müssen die Ereignisprüfung (AuditProcess -Enable) und die Befehlszeile (CommandLineProcessAudit -Enable) in Ereignissen zur Prozesserstellung aktiviert werden."
+        "ToolTip": "Erstellt eine benutzerdefinierte Ansicht \"Prozesserstellung\", um ausgeführte Prozesse und ihre Argumente zu protokollieren. Damit diese Funktion funktioniert, müssen Ereignisse in der Befehlszeile (CommandLineProcessAudit -Enable) in den Ereignissen der Prozesserstellung aktiviert werden."
       },
       "One": {
         "Tag": "Disable",
@@ -1839,11 +1839,11 @@
     "Arg": {
       "Zero": {
         "Tag": "Enable",
-        "ToolTip": "Aktivieren Sie einen zusätzlichen Schutz für den LSA-Prozess (Local Security Authority), um die Einspeisung von Code zu verhindern, der Anmeldeinformationen gefährden könnte."
+        "ToolTip": "Aktivieren Sie den Schutz der lokalen Sicherheitsbehörde, um Code-Injektion ohne UEFI-Sperre zu verhindern."
       },
       "One": {
         "Tag": "Disable",
-        "ToolTip": "Deaktivieren Sie den Schutz der lokalen Sicherheitsbehörde (Standardeinstellung)."
+        "ToolTip": "Deaktivieren Sie den Schutz der lokalen Sicherheitsbehörde ohne UEFI-Sperre (Standardeinstellung)."
       }
     }
   },

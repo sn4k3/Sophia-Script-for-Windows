@@ -245,15 +245,29 @@
   },
   {
     "Region": "Privacy & Telemetry",
-    "Function": "BrowsingHistory",
+    "Function": "StartRecommendationsTips",
     "Arg": {
       "Zero": {
         "Tag": "Hide",
-        "ToolTip": "Do not show websites from your browsing history in the Start menu."
+        "ToolTip": "Do not show recommendations for tips, shortcuts, new apps, and more in the Start menu."
       },
       "One": {
         "Tag": "Show",
-        "ToolTip": "Show websites from your browsing history in the Start menu (default value)."
+        "ToolTip": "Show recommendations for tips, shortcuts, new apps, and more in the Start menu (default value)."
+      }
+    }
+  },
+  {
+    "Region": "Privacy & Telemetry",
+    "Function": "StartAccountNotifications",
+    "Arg": {
+      "Zero": {
+        "Tag": "Hide",
+        "ToolTip": "Do not show Microsoft account-related notifications on Start Menu in the Start menu."
+      },
+      "One": {
+        "Tag": "Show",
+        "ToolTip": "Show Microsoft account-related notifications on Start Menu in the Start menu (default value)."
       }
     }
   },
@@ -1695,25 +1709,11 @@
   },
   {
     "Region": "Microsoft Defender & Security",
-    "Function": "AuditProcess",
-    "Arg": {
-      "Zero": {
-        "Tag": "Enable",
-        "ToolTip": "Enable events auditing generated when a process is created (starts)."
-      },
-      "One": {
-        "Tag": "Disable",
-        "ToolTip": "Disable events auditing generated when a process is created (starts) (default value)."
-      }
-    }
-  },
-  {
-    "Region": "Microsoft Defender & Security",
     "Function": "CommandLineProcessAudit",
     "Arg": {
       "Zero": {
         "Tag": "Enable",
-        "ToolTip": "Include command line in process creation events. In order this feature to work events auditing (ProcessAudit -Enable) will be enabled."
+        "ToolTip": "Include command line in process creation events."
       },
       "One": {
         "Tag": "Disable",
@@ -1727,7 +1727,7 @@
     "Arg": {
       "Zero": {
         "Tag": "Enable",
-        "ToolTip": "Create the \"Process Creation\" Event Viewer сustom view to log executed processes and their arguments. In order this feature to work events auditing (AuditProcess -Enable) and command line (CommandLineProcessAudit -Enable) in process creation events will be enabled."
+        "ToolTip": "Create the \"Process Creation\" Event Viewer сustom view to log executed processes and their arguments. In order this feature to work events command line (CommandLineProcessAudit -Enable) in process creation events will be enabled."
       },
       "One": {
         "Tag": "Disable",
@@ -1839,11 +1839,11 @@
     "Arg": {
       "Zero": {
         "Tag": "Enable",
-        "ToolTip": "Enable Local Security Authority protection to prevent code injection."
+        "ToolTip": "Enable Local Security Authority protection to prevent code injection without UEFI lock."
       },
       "One": {
         "Tag": "Disable",
-        "ToolTip": "Disable Local Security Authority protection (default value)."
+        "ToolTip": "Disable Local Security Authority protection without UEFI lock (default value)."
       }
     }
   },

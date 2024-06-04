@@ -2,8 +2,8 @@
 	.SYNOPSIS
 	Sophia Script is a PowerShell module for Windows 10 & Windows 11 fine-tuning and automating the routine tasks
 
-	Version: v5.18.5
-	Date: 14.04.2024
+	Version: v5.18.6
+	Date: 28.05.2024
 
 	Copyright (c) 2014—2024 farag, Inestic & lowl1f3
 
@@ -12,7 +12,7 @@
 	.NOTES
 	Supported Windows 10 versions
 	Version: 22H2
-	Builds: 19045.4291+
+	Builds: 19045.4412+
 	Editions: Home/Pro/Enterprise
 	Architecture: x64
 
@@ -217,7 +217,7 @@ public static extern bool SetForegroundWindow(IntPtr hWnd);
 		# https://www.youtube.com/GHOSTSPECTRE
 		"Ghost Toolbox"     = "$env:SystemRoot\System32\migwiz\dlmanifests\run.ghost.cmd"
 		# https://github.com/hellzerg/optimizer
-		Optimizer           = "$(Get-ItemPropertyValue -Path `"HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders`" -Name `"{374DE290-123F-4565-9164-39C4925E467B}`")\OptimizerDownloads"
+		Optimizer           = "$(Get-ItemPropertyValue -Path `"HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders`" -Name `"{374DE290-123F-4565-9164-39C4925E467B}`")\OptimizerDownloads"
 		# https://win10tweaker.ru
 		"Win 10 Tweaker"    = "HKCU:\Software\Win 10 Tweaker"
 		# https://forum.ru-board.com/topic.cgi?forum=5&topic=50519
@@ -240,6 +240,8 @@ public static extern bool SetForegroundWindow(IntPtr hWnd);
 		winutil             = "$env:TEMP\Winutil.log"
 		# https://www.youtube.com/watch?v=5NBqbUUB1Pk
 		WinClean             = "$env:ProgramFiles\WinClean Plus Apps"
+		# https://github.com/Atlas-OS/Atlas
+		AtlasOS              = "$env:SystemRoot\AtlasModules"
 	}
 	foreach ($Tweaker in $Tweakers.Keys)
 	{
@@ -1308,6 +1310,10 @@ function ErrorReporting
 		$Enable
 	)
 
+	# Remove all policies in order to make changes visible in UI only if it's possible
+	Remove-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\Windows\Windows Error Reporting" -Name Disabled -Force -ErrorAction Ignore
+	Set-Policy -Scope Computer -Path "SOFTWARE\Policies\Microsoft\Windows\Windows Error Reporting" -Name Disabled -Type CLEAR
+
 	switch ($PSCmdlet.ParameterSetName)
 	{
 		"Disable"
@@ -1370,6 +1376,10 @@ function FeedbackFrequency
 		$Automatically
 	)
 
+	# Remove all policies in order to make changes visible in UI only if it's possible
+	Remove-ItemProperty -Path HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection -Name DoNotShowFeedbackNotifications -Force -ErrorAction Ignore
+	Set-Policy -Scope Computer -Path SOFTWARE\Policies\Microsoft\Windows\DataCollection -Name DoNotShowFeedbackNotifications -Type CLEAR
+
 	switch ($PSCmdlet.ParameterSetName)
 	{
 		"Never"
@@ -1379,10 +1389,12 @@ function FeedbackFrequency
 				New-Item -Path HKCU:\Software\Microsoft\Siuf\Rules -Force
 			}
 			New-ItemProperty -Path HKCU:\Software\Microsoft\Siuf\Rules -Name NumberOfSIUFInPeriod -PropertyType DWord -Value 0 -Force
+
+			Remove-ItemProperty -Path HKCU:\SOFTWARE\Microsoft\Siuf\Rules -Name PeriodInNanoSeconds -Force -ErrorAction Ignore
 		}
 		"Automatically"
 		{
-			Remove-Item -Path HKCU:\Software\Microsoft\Siuf\Rules -Force -ErrorAction Ignore
+			Remove-ItemProperty -Path HKCU:\SOFTWARE\Microsoft\Siuf\Rules -Name PeriodInNanoSeconds, NumberOfSIUFInPeriod -Force -ErrorAction Ignore
 		}
 	}
 }
@@ -1734,6 +1746,10 @@ function SigninInfo
 		$Enable
 	)
 
+	# Remove all policies in order to make changes visible in UI only if it's possible
+	Remove-ItemProperty -Path HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System -Name DisableAutomaticRestartSignOn -Force -ErrorAction Ignore
+	Set-Policy -Scope Computer -Path SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System -Name DisableAutomaticRestartSignOn -Type CLEAR
+
 	switch ($PSCmdlet.ParameterSetName)
 	{
 		"Disable"
@@ -1841,6 +1857,10 @@ function AdvertisingID
 		[switch]
 		$Enable
 	)
+
+	# Remove all policies in order to make changes visible in UI only if it's possible
+	Remove-ItemProperty -Path HKLM:\SOFTWARE\Policies\Microsoft\Windows\AdvertisingInfo -Name DisabledByGroupPolicy -Force -ErrorAction Ignore 
+	Set-Policy -Scope Computer -Path SOFTWARE\Policies\Microsoft\Windows\DataCollection -Name DisabledByGroupPolicy -Type CLEAR
 
 	switch ($PSCmdlet.ParameterSetName)
 	{
@@ -1952,6 +1972,10 @@ function WindowsTips
 		$Enable
 	)
 
+	# Remove all policies in order to make changes visible in UI only if it's possible
+	Remove-ItemProperty -Path HKLM:\SOFTWARE\Policies\Microsoft\Windows\CloudContent -Name DisableSoftLanding -Force -ErrorAction Ignore
+	Set-Policy -Scope Computer -Path SOFTWARE\Policies\Microsoft\Windows\CloudContent -Name DisableSoftLanding -Type CLEAR
+
 	switch ($PSCmdlet.ParameterSetName)
 	{
 		"Enable"
@@ -2057,6 +2081,10 @@ function AppsSilentInstalling
 		[switch]
 		$Enable
 	)
+
+	# Remove all policies in order to make changes visible in UI only if it's possible
+	Remove-ItemProperty -Path HKLM:\Software\Policies\Microsoft\Windows\CloudContent -Name DisableWindowsConsumerFeatures -Force -ErrorAction Ignore
+	Set-Policy -Scope Computer -Path SOFTWARE\Policies\Microsoft\Windows\CloudContent -Name DisableWindowsConsumerFeatures -Type CLEAR
 
 	switch ($PSCmdlet.ParameterSetName)
 	{
@@ -2168,6 +2196,10 @@ function TailoredExperiences
 		$Enable
 	)
 
+	# Remove all policies in order to make changes visible in UI only if it's possible
+	Remove-ItemProperty -Path HKCU:\Software\Policies\Microsoft\Windows\CloudContent -Name DisableTailoredExperiencesWithDiagnosticData -Force -ErrorAction Ignore
+	Set-Policy -Scope User -Path Software\Policies\Microsoft\Windows\CloudContent -Name DisableTailoredExperiencesWithDiagnosticData -Type CLEAR
+
 	switch ($PSCmdlet.ParameterSetName)
 	{
 		"Disable"
@@ -2235,6 +2267,57 @@ function BingSearch
 		{
 			Remove-ItemProperty -Path HKCU:\Software\Policies\Microsoft\Windows\Explorer -Name DisableSearchBoxSuggestions -Force -ErrorAction Ignore
 			Set-Policy -Scope User -Path Software\Policies\Microsoft\Windows\Explorer -Name DisableSearchBoxSuggestions -Type CLEAR
+		}
+	}
+}
+
+<#
+	.SYNOPSIS
+	Microsoft account-related notifications on Start Menu
+
+	.PARAMETER Hide
+	Do not show Microsoft account-related notifications on Start Menu in the Start menu
+
+	.PARAMETER Show
+	Show Microsoft account-related notifications on Start Menu in the Start menu
+
+	.EXAMPLE
+	StartAccountNotifications -Hide
+
+	.EXAMPLE
+	StartAccountNotifications -Show
+
+	.NOTES
+	Current user
+#>
+function StartAccountNotifications
+{
+	param
+	(
+		[Parameter(
+			Mandatory = $true,
+			ParameterSetName = "Hide"
+		)]
+		[switch]
+		$Hide,
+
+		[Parameter(
+			Mandatory = $true,
+			ParameterSetName = "Show"
+		)]
+		[switch]
+		$Show
+	)
+
+	switch ($PSCmdlet.ParameterSetName)
+	{
+		"Hide"
+		{
+			New-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced -Name Start_AccountNotifications -PropertyType DWord -Value 0 -Force
+		}
+		"Show"
+		{
+			Remove-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced -Name Start_AccountNotifications -Force -ErrorAction Ignore
 		}
 	}
 }
@@ -4563,7 +4646,7 @@ function Cursors
 						return
 					}
 
-					$DownloadsFolder = Get-ItemPropertyValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "{374DE290-123F-4565-9164-39C4925E467B}"
+					$DownloadsFolder = Get-ItemPropertyValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "{374DE290-123F-4565-9164-39C4925E467B}"
 					$Parameters = @{
 						Uri             = "https://github.com/farag2/Sophia-Script-for-Windows/raw/master/Misc/dark.zip"
 						OutFile         = "$DownloadsFolder\dark.zip"
@@ -4577,15 +4660,8 @@ function Cursors
 						New-Item -Path "$env:SystemRoot\Cursors\W11_dark_v2.2" -ItemType Directory -Force
 					}
 
-					# Extract archive. We cannot call tar.exe due to it fails to extract files if username has cyrillic first letter in lowercase
-					# Start-Process -FilePath "$env:SystemRoot\System32\tar.exe" -ArgumentList "-xf `"$DownloadsFolder\dark.zip`" -C `"$env:SystemRoot\Cursors\W11_dark_v2.2`" -v"
-					# https://github.com/PowerShell/PowerShell/issues/21070
-					Add-Type -Assembly System.IO.Compression.FileSystem
-					$ZIP = [IO.Compression.ZipFile]::OpenRead("$DownloadsFolder\dark.zip")
-					$ZIP.Entries | ForEach-Object -Process {
-						[IO.Compression.ZipFileExtensions]::ExtractToFile($_, "$env:SystemRoot\Cursors\W11_dark_v2.2\$($_.Name)", $true)
-					}
-					$ZIP.Dispose()
+					# Extract archive
+					Start-Process -FilePath "$env:SystemRoot\System32\tar.exe" -ArgumentList "-xf `"$DownloadsFolder\dark.zip`" -C `"$env:SystemRoot\Cursors\W11_dark_v2.2`" -v"
 
 					New-ItemProperty -Path "HKCU:\Control Panel\Cursors" -Name "(default)" -PropertyType String -Value "W11 Cursors Dark Free v2.2 by Jepri Creations" -Force
 					New-ItemProperty -Path "HKCU:\Control Panel\Cursors" -Name AppStarting -PropertyType ExpandString -Value "%SystemRoot%\Cursors\W11_dark_v2.2\working.ani" -Force
@@ -4599,10 +4675,8 @@ function Cursors
 					New-ItemProperty -Path "HKCU:\Control Panel\Cursors" -Name IBeam -PropertyType ExpandString -Value "%SystemRoot%\Cursors\W11_dark_v2.2\beam.cur" -Force
 					New-ItemProperty -Path "HKCU:\Control Panel\Cursors" -Name No -PropertyType ExpandString -Value "%SystemRoot%\Cursors\W11_dark_v2.2\unavailable.cur" -Force
 					New-ItemProperty -Path "HKCU:\Control Panel\Cursors" -Name NWPen -PropertyType ExpandString -Value "%SystemRoot%\Cursors\W11_dark_v2.2\handwriting.cur" -Force
-					# This is not a typo
-					New-ItemProperty -Path "HKCU:\Control Panel\Cursors" -Name Person -PropertyType ExpandString -Value "%SystemRoot%\Cursors\W11_dark_v2.2\pin.cur" -Force
-					# This is not a typo
-					New-ItemProperty -Path "HKCU:\Control Panel\Cursors" -Name Pin -PropertyType ExpandString -Value "%SystemRoot%\Cursors\W11_dark_v2.2\person.cur" -Force
+					New-ItemProperty -Path "HKCU:\Control Panel\Cursors" -Name Person -PropertyType ExpandString -Value "%SystemRoot%\Cursors\W11_dark_v2.2\person.cur" -Force
+					New-ItemProperty -Path "HKCU:\Control Panel\Cursors" -Name Pin -PropertyType ExpandString -Value "%SystemRoot%\Cursors\W11_dark_v2.2\pin.cur" -Force
 					New-ItemProperty -Path "HKCU:\Control Panel\Cursors" -Name precisionhair -PropertyType ExpandString -Value "%SystemRoot%\Cursors\W11_dark_v2.2\precision.cur" -Force
 					New-ItemProperty -Path "HKCU:\Control Panel\Cursors" -Name "Scheme Source" -PropertyType DWord -Value 1 -Force
 					New-ItemProperty -Path "HKCU:\Control Panel\Cursors" -Name SizeAll -PropertyType ExpandString -Value "%SystemRoot%\Cursors\W11_dark_v2.2\move.cur" -Force
@@ -4691,7 +4765,7 @@ function Cursors
 						return
 					}
 
-					$DownloadsFolder = Get-ItemPropertyValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "{374DE290-123F-4565-9164-39C4925E467B}"
+					$DownloadsFolder = Get-ItemPropertyValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "{374DE290-123F-4565-9164-39C4925E467B}"
 					$Parameters = @{
 						Uri             = "https://github.com/farag2/Sophia-Script-for-Windows/raw/master/Misc/light.zip"
 						OutFile         = "$DownloadsFolder\light.zip"
@@ -4705,15 +4779,8 @@ function Cursors
 						New-Item -Path "$env:SystemRoot\Cursors\W11_light_v2.2" -ItemType Directory -Force
 					}
 
-					# Extract archive. We cannot call tar.exe due to it fails to extract files if username has cyrillic first letter in lowercase
-					# Start-Process -FilePath "$env:SystemRoot\System32\tar.exe" -ArgumentList "-xf `"$DownloadsFolder\light.zip`" -C `"$env:SystemRoot\Cursors\W11_dark_v2.2`" -v"
-					# https://github.com/PowerShell/PowerShell/issues/21070
-					Add-Type -Assembly System.IO.Compression.FileSystem
-					$ZIP = [IO.Compression.ZipFile]::OpenRead("$DownloadsFolder\light.zip")
-					$ZIP.Entries | ForEach-Object -Process {
-						[IO.Compression.ZipFileExtensions]::ExtractToFile($_, "$env:SystemRoot\Cursors\W11_light_v2.2\$($_.Name)", $true)
-					}
-					$ZIP.Dispose()
+					# Extract archive
+					Start-Process -FilePath "$env:SystemRoot\System32\tar.exe" -ArgumentList "-xf `"$DownloadsFolder\light.zip`" -C `"$env:SystemRoot\Cursors\W11_light_v2.2`" -v"
 
 					New-ItemProperty -Path "HKCU:\Control Panel\Cursors" -Name "(default)" -PropertyType String -Value "W11 Cursor Light Free v2.2 by Jepri Creations" -Force
 					New-ItemProperty -Path "HKCU:\Control Panel\Cursors" -Name AppStarting -PropertyType ExpandString -Value "%SystemRoot%\Cursors\W11_light_v2.2\working.ani" -Force
@@ -9547,9 +9614,9 @@ public static int UnloadHive(RegistryHives hive, string subKey)
 		Clear-Variable -Name UserRegisteredProgIDs -Force -ErrorAction Ignore
 		[array]$UserRegisteredProgIDs = @()
 
-		foreach ($Item in (Get-Item -Path "HKCU:\SOFTWARE\RegisteredApplications").Property)
+		foreach ($Item in (Get-Item -Path "HKCU:\Software\RegisteredApplications").Property)
 		{
-			$Subkey = (Get-ItemProperty -Path "HKCU:\SOFTWARE\RegisteredApplications" -Name $Item -ErrorAction Ignore).$Item
+			$Subkey = (Get-ItemProperty -Path "HKCU:\Software\RegisteredApplications" -Name $Item -ErrorAction Ignore).$Item
 			if ($Subkey)
 			{
 				if (Test-Path -Path "HKCU:\$Subkey\$Associations")
@@ -9820,7 +9887,7 @@ public static long MakeLong(uint left, uint right)
 		New-ItemProperty -Path "HKCU:\Software\Classes\$ProgId\DefaultIcon" -Name "(default)" -PropertyType String -Value $Icon -Force
 	}
 
-	New-ItemProperty -Path HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\ApplicationAssociationToasts -Name "$($ProgID)_$($Extension)"  -Type DWord -Value 0 -Force
+	New-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\ApplicationAssociationToasts -Name "$($ProgID)_$($Extension)"  -Type DWord -Value 0 -Force
 
 	if ($Extension.Contains("."))
 	{
@@ -9915,7 +9982,7 @@ function Export-Associations
 				# ProgrammPath
 				if ([Microsoft.Win32.Registry]::GetValue("HKEY_CURRENT_USER\Software\Classes\$($_.ProgId)\shell\open\command", "", $null))
 				{
-					$PartProgramPath = (Get-ItemPropertyValue -Path "HKCU:\SOFTWARE\Classes\$($_.ProgId)\Shell\Open\Command" -Name "(default)").Trim()
+					$PartProgramPath = (Get-ItemPropertyValue -Path "HKCU:\Software\Classes\$($_.ProgId)\Shell\Open\Command" -Name "(default)").Trim()
 					$Program = $PartProgramPath.Substring(0, ($PartProgramPath.IndexOf(".exe") + 4)).Trim('"')
 
 					if ($Program)
@@ -12132,7 +12199,7 @@ function HEVC
 
 					Write-Verbose -Message $Localization.HEVCDownloading -Verbose
 
-					$DownloadsFolder = Get-ItemPropertyValue -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "{374DE290-123F-4565-9164-39C4925E467B}"
+					$DownloadsFolder = Get-ItemPropertyValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "{374DE290-123F-4565-9164-39C4925E467B}"
 					$Parameters = @{
 						Uri             = $TempURL
 						OutFile         = "$DownloadsFolder\Microsoft.HEVCVideoExtension_8wekyb3d8bbwe.appx"
@@ -13816,57 +13883,6 @@ function DismissSmartScreenFilter
 
 <#
 	.SYNOPSIS
-	Audit process creation
-
-	.PARAMETER Enable
-	Enable events auditing generated when a process is created (starts)
-
-	.PARAMETER Disable
-	Disable events auditing generated when a process is created (starts)
-
-	.EXAMPLE
-	AuditProcess -Enable
-
-	.EXAMPLE
-	AuditProcess -Disable
-
-	.NOTES
-	Machine-wide
-#>
-function AuditProcess
-{
-	param
-	(
-		[Parameter(
-			Mandatory = $true,
-			ParameterSetName = "Enable"
-		)]
-		[switch]
-		$Enable,
-
-		[Parameter(
-			Mandatory = $true,
-			ParameterSetName = "Disable"
-		)]
-		[switch]
-		$Disable
-	)
-
-	switch ($PSCmdlet.ParameterSetName)
-	{
-		"Enable"
-		{
-			auditpol /set /subcategory:"{0CCE922B-69AE-11D9-BED3-505054503030}" /success:enable /failure:enable
-		}
-		"Disable"
-		{
-			auditpol /set /subcategory:"{0CCE922B-69AE-11D9-BED3-505054503030}" /success:disable /failure:disable
-		}
-	}
-}
-
-<#
-	.SYNOPSIS
 	Сommand line auditing
 
 	.PARAMETER Enable
@@ -14003,7 +14019,7 @@ function EventViewerCustomView
 			}
 
 			# Save ProcessCreation.xml in the UTF-8 without BOM encoding
-			Set-Content -Path "$env:ProgramData\Microsoft\Event Viewer\Views\ProcessCreation.xml" -Value $XML -Encoding Default -NoNewline -Force
+			Set-Content -Path "$env:ProgramData\Microsoft\Event Viewer\Views\ProcessCreation.xml" -Value $XML -Encoding UTF8 -NoNewline -Force
 		}
 		"Disable"
 		{
@@ -14558,15 +14574,15 @@ function CastToDeviceContext
 	{
 		"Hide"
 		{
-			if (-not (Test-Path -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked"))
+			if (-not (Test-Path -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked"))
 			{
-				New-Item -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked" -Force
+				New-Item -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked" -Force
 			}
-			New-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked" -Name "{7AD84985-87B4-4a16-BE58-8B72A5B390F7}" -PropertyType String -Value "" -Force
+			New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked" -Name "{7AD84985-87B4-4a16-BE58-8B72A5B390F7}" -PropertyType String -Value "" -Force
 		}
 		"Show"
 		{
-			Remove-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked" -Name "{7AD84985-87B4-4a16-BE58-8B72A5B390F7}" -Force -ErrorAction Ignore
+			Remove-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked" -Name "{7AD84985-87B4-4a16-BE58-8B72A5B390F7}" -Force -ErrorAction Ignore
 		}
 	}
 }
@@ -14615,15 +14631,15 @@ function ShareContext
 	{
 		"Hide"
 		{
-			if (-not (Test-Path -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked"))
+			if (-not (Test-Path -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked"))
 			{
-				New-Item -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked" -Force
+				New-Item -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked" -Force
 			}
-			New-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked" -Name "{E2BF9676-5F8F-435C-97EB-11607A5BEDF7}" -PropertyType String -Value "" -Force
+			New-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked" -Name "{E2BF9676-5F8F-435C-97EB-11607A5BEDF7}" -PropertyType String -Value "" -Force
 		}
 		"Show"
 		{
-			Remove-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked" -Name "{E2BF9676-5F8F-435C-97EB-11607A5BEDF7}" -Force -ErrorAction Ignore
+			Remove-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked" -Name "{E2BF9676-5F8F-435C-97EB-11607A5BEDF7}" -Force -ErrorAction Ignore
 		}
 	}
 }
