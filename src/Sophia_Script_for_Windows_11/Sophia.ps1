@@ -258,7 +258,7 @@ TailoredExperiences -Disable
 
 # Do not show recommendations for tips, shortcuts, new apps, and more in the Start menu
 # Не показать рекомендации с советами, сочетаниями клавиш, новыми приложениями и т. д. в меню "Пуск"
-StartRecommendationsTips -Hide
+# StartRecommendationsTips -Hide
 
 # Show recommendations for tips, shortcuts, new apps, and more in the Start menu (default value)
 # Показать рекомендации с советами, сочетаниями клавиш, новыми приложениями и т. д. в меню "Пуск" (значение по умолчанию)
@@ -1209,7 +1209,7 @@ DismissMSAccount
 
 # Dismiss Microsoft Defender offer in the Windows Security about turning on the SmartScreen filter for Microsoft Edge
 # Отклонить предложение Microsoft Defender в "Безопасность Windows" включить фильтр SmartScreen для Microsoft Edge
-#DismissSmartScreenFilter
+DismissSmartScreenFilter
 
 # Create the "Process Creation" сustom view in the Event Viewer to log executed processes and their arguments
 # Создать настраиваемое представление "Создание процесса" в Просмотре событий для журналирования запускаемых процессов и их аргументов
@@ -1245,11 +1245,11 @@ PowerShellScriptsLogging -Enable
 
 # Microsoft Defender SmartScreen doesn't marks downloaded files from the Internet as unsafe
 # Microsoft Defender SmartScreen не помечает скачанные файлы из интернета как небезопасные
-AppsSmartScreen -Disable
+# AppsSmartScreen -Disable
 
 # Microsoft Defender SmartScreen marks downloaded files from the Internet as unsafe (default value)
 # Microsoft Defender SmartScreen помечает скачанные файлы из интернета как небезопасные (значение по умолчанию)
-# AppsSmartScreen -Enable
+AppsSmartScreen -Enable
 
 # Disable the Attachment Manager marking files that have been downloaded from the Internet as unsafe
 # Выключить проверку Диспетчером вложений файлов, скачанных из интернета, как небезопасные
