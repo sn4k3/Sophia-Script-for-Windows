@@ -5,6 +5,48 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 5.18.9 | 6.6.9 — 16.08.2024
+
+* Added function `DNS-over-HTTPS for IPv4` for Windows 10
+  * `DNSoverHTTPS -Enable -PrimaryDNS 1.0.0.1 -SecondaryDNS 1.1.1.1`
+  * `DNSoverHTTPS -ComssOneDNS` to use [COMSS.ONE'](https://www.comss.ru) DNS. Applicable for Russia only.
+  * The valid IPv4 addresses: 1.0.0.1, 1.1.1.1, 149.112.112.112, 8.8.4.4, 8.8.8.8, 9.9.9.9
+* Added `TaskbarEndTask` function to add `End task in taskbar by right click`. Applicable for `Windows 11` only.
+* Simplify a little bit all Scheduled Tasks related function.
+  * You may update them by using `. .\Functions` module. Nothing new.
+* Expanded harmful tweakers by adding [xd-AntiSpy](https://github.com/builtbybel/xd-AntiSpy) for letting users remove system UWP components to break Windows in the end (along side with [Winpilot](https://github.com/builtbybel/Winpilot). You're welcome again. Bravo! 👏
+* Improved `RKNBypass` function. Now all browsers will know about a new proxy server isntantly by using [InternetSetOption](https://learn.microsoft.com/en-us/windows/win32/api/wininet/nf-wininet-internetsetoptiona) API.
+* `TaskbarWidgets`' function future is up in the air due to Microsoft has blocked access for editing TaskbarDa key in KB5041585, so technically the function doesn't work throwing `Attempted to perform an unauthorized operation.`
+* Small improvements;
+* Minor changes.
+
+## 5.18.8 | 6.6.8 — 06.07.2024
+
+* Removed `RestoreUWPApps`
+  * It doesn't work at all anymore.
+* Removed `TempFolder` as it makes more harm than good;
+* Fixed `OneDrive -Install -AllUsers` and `Install-WSL` functions;
+* Improved all three scheduled tasks related functions;
+* Improved `WindowsScriptHost -Disable`
+  * Now it checks whether scheduled tasks were created. If so, the function will be skipped to due to they rely on VBS scripts execution.
+* Fixed typos;
+* Minor changes;
+* Thanks to Kudzor.
+
+## 5.18.7 | 6.6.7 — 12.06.2024
+
+* Fixed `CleanupTask -Register` function not working due to a typo;
+  * Please re-create it via invoking `. .\Functions.ps1` (with a dot at the beginning) method.
+* Removed `CommandLineProcessAudit` and `Install-WSA` as WSA support is deprecated;
+* Improved `EventViewerCustomView -Disable` function;
+* Fixed typos;
+* Minor changes;
+* Thanks to @lowl1f3.
+
+### Wrapper 2.7.1
+
+Closed #576
+
 ## 5.18.6 | 6.6.6 — 28.05.2024
 
 * Removed `Windows10ContextMenu` (as this was a strange function to make Windows 11 looks like an old OS), `AuditProcess` (as `CommandLineProcessAudit -Enable` contains the same functionality), `BrowsingHistory`  functions for `Windows 11`;

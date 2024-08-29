@@ -245,7 +245,7 @@
   },
   {
     "Region": "Privacy & Telemetry",
-    "Function": "StartRecommendationsTips",
+    "Function": "StartAccountNotifications",
     "Arg": {
       "Zero": {
         "Tag": "Hide",
@@ -614,7 +614,7 @@
   {
     "Region": "UI & Personalization",
     "Function": "UnpinTaskbarShortcuts -Shortcuts",
-    "ToolTip": "Unpin the \"Microsoft Edge\", \"Microsoft Store\", or \"Mail\" shortcuts from the taskbar",
+    "ToolTip": "Unpin the \"Microsoft Edge\", \"Microsoft Store\", or \"Mail\" shortcuts from the taskbar.",
     "Arg": {
       "Zero": {
         "Tag": "Edge",
@@ -930,20 +930,6 @@
   },
   {
     "Region": "System",
-    "Function": "TempFolder",
-    "Arg": {
-      "Zero": {
-        "Tag": "SystemDrive",
-        "ToolTip": "Change the %TEMP% environment variable path to %SystemDrive%\\Temp."
-      },
-      "One": {
-        "Tag": "Default",
-        "ToolTip": "Change %TEMP% environment variable path to %LOCALAPPDATA%\\Temp (default value)."
-      }
-    }
-  },
-  {
-    "Region": "System",
     "Function": "Win32LongPathLimit",
     "Arg": {
       "Zero": {
@@ -1036,7 +1022,7 @@
       },
       "One": {
         "Tag": "Enable",
-        "ToolTip": "Enable the Windows features using the pop-up dialog box (default value)."
+        "ToolTip": "Enable the Windows features using the pop-up dialog box."
       }
     }
   },
@@ -1050,7 +1036,7 @@
       },
       "One": {
         "Tag": "Install",
-        "ToolTip": "Install optional features using the pop-up dialog box (default value)."
+        "ToolTip": "Install optional features using the pop-up dialog box."
       }
     }
   },
@@ -1065,6 +1051,62 @@
       "One": {
         "Tag": "Disable",
         "ToolTip": "Do not receive updates for other Microsoft products when you update Windows (default value)."
+      }
+    }
+  },
+  {
+    "Region": "System",
+    "Function": "RestartNotification",
+    "Arg": {
+      "Zero": {
+        "Tag": "Show",
+        "ToolTip": "Show a notification when your PC requires a restart to finish updating."
+      },
+      "One": {
+        "Tag": "Hide",
+        "ToolTip": "Do not show a notification when your PC requires a restart to finish updating (default value)."
+      }
+    }
+  },
+  {
+    "Region": "System",
+    "Function": "RestartDeviceAfterUpdate",
+    "Arg": {
+      "Zero": {
+        "Tag": "Enable",
+        "ToolTip": "Restart this device as soon as possible when a restart is required to install an update."
+      },
+      "One": {
+        "Tag": "Disable",
+        "ToolTip": "Do not restart this device as soon as possible when a restart is required to install an update (default value)."
+      }
+    }
+  },
+  {
+    "Region": "System",
+    "Function": "ActiveHours",
+    "Arg": {
+      "Zero": {
+        "Tag": "Automatically",
+        "ToolTip": "Automatically adjust active hours for me based on daily usage."
+      },
+      "One": {
+        "Tag": "Manually",
+        "ToolTip": "Manually adjust active hours for me based on daily usage (default value)."
+      }
+    }
+  },
+  {
+    "Region": "System",
+    "Function": "WindowsLatestUpdate",
+    "Arg": {
+      "Zero": {
+        "Tag": "Disable",
+        "ToolTip": "Do not get Windows updates as soon as they're available for your device (default value)."
+      },
+      "One": {
+        "Tag": "Enable",
+        "ToolTip": "Get Windows updates as soon as they're available for your device."
       }
     }
   },
@@ -1330,73 +1372,17 @@
   },
   {
     "Region": "System",
-    "Function": "RestartNotification",
-    "Arg": {
-      "Zero": {
-        "Tag": "Show",
-        "ToolTip": "Show a notification when your PC requires a restart to finish updating."
-      },
-      "One": {
-        "Tag": "Hide",
-        "ToolTip": "Do not show a notification when your PC requires a restart to finish updating (default value)."
-      }
-    }
-  },
-  {
-    "Region": "System",
-    "Function": "RestartDeviceAfterUpdate",
-    "Arg": {
-      "Zero": {
-        "Tag": "Enable",
-        "ToolTip": "Restart this device as soon as possible when a restart is required to install an update."
-      },
-      "One": {
-        "Tag": "Disable",
-        "ToolTip": "Do not restart this device as soon as possible when a restart is required to install an update (default value)."
-      }
-    }
-  },
-  {
-    "Region": "System",
-    "Function": "ActiveHours",
-    "Arg": {
-      "Zero": {
-        "Tag": "Automatically",
-        "ToolTip": "Automatically adjust active hours for me based on daily usage."
-      },
-      "One": {
-        "Tag": "Manually",
-        "ToolTip": "Manually adjust active hours for me based on daily usage (default value)."
-      }
-    }
-  },
-  {
-    "Region": "System",
-    "Function": "WindowsLatestUpdate",
-    "Arg": {
-      "Zero": {
-        "Tag": "Disable",
-        "ToolTip": "Do not get Windows updates as soon as they're available for your device (default value)."
-      },
-      "One": {
-        "Tag": "Enable",
-        "ToolTip": "Get Windows updates as soon as they're available for your device."
-      }
-    }
-  },
-  {
-    "Region": "System",
     "Function": "Set-Association",
     "Arg": {
       "Zero": {
         "Tag": "",
         "ToolTip": "Register app, calculate hash, and associate with an extension with the 'How do you want to open this' pop-up hidden."
       },
-      "One":  {
+      "One": {
         "Tag": "ProgramPath",
         "ToolTip": "Path to executable file."
       },
-      "Two":  {
+      "Two": {
         "Tag": "Extension",
         "ToolTip": "Extension."
       },
@@ -1558,7 +1544,7 @@
   {
     "Region": "Start menu",
     "Function": "PinToStart -Tiles",
-    "ToolTip": "Pin to Start the following shortcuts: Control Panel, Devices and Printers, PowerShell",
+    "ToolTip": "Pin to Start the following shortcuts: Control Panel, Devices and Printers, PowerShell.",
     "Arg": {
       "Zero": {
         "Tag": "ControlPanel",
@@ -1601,16 +1587,6 @@
       "Zero": {
         "Tag": "",
         "ToolTip": "Uninstall UWP apps using the pop-up dialog box. If the \"For all users\" is checked apps packages will not be installed for new users. The \"ForAllUsers\" argument sets a checkbox to unistall packages for all users."
-      }
-    }
-  },
-  {
-    "Region": "UWP apps",
-    "Function": "RestoreUWPApps",
-    "Arg": {
-      "Zero": {
-        "Tag": "",
-        "ToolTip": "Restore the default UWP apps using the pop-up dialog box. UWP apps can be restored only if they were uninstalled only for the current user."
       }
     }
   },
@@ -1714,7 +1690,7 @@
     "Arg": {
       "Zero": {
         "Tag": "Register",
-        "ToolTip": "Create the \"Windows Cleanup\" scheduled task for cleaning up Windows unused files and updates. A native interactive toast notification pops up every 30 days. You have to enable Windows Script Host in order to make the function work."
+        "ToolTip": "Create \"Windows Cleanup\" (main task) and \"Windows Cleanup Notification\" (task to generate a pop-up notification) tasks to clean up unused files and Windows updates in the Task Scheduler in the Sophia folder. A native notification prompting you to run the task will pop up before the cleanup begins. The task runs every 30 days. Windows Script Host must be enabled for the task to run."
       },
       "One": {
         "Tag": "Delete",
@@ -1728,7 +1704,7 @@
     "Arg": {
       "Zero": {
         "Tag": "Register",
-        "ToolTip": "Create the \"SoftwareDistribution\" scheduled task for cleaning up the %SystemRoot%\\SoftwareDistribution\\Download folder. The task will wait until the Windows Updates service finishes running. The task runs every 90 days. You have to enable Windows Script Host in order to make the function work"
+        "ToolTip": "Create a \"SoftwareDistribution\" task to clean up the %SystemRoot%\\SoftwareDistribution\\Download folder where the installation files for all Windows updates are downloaded, in the Sophia folder in the  Task Scheduler. The task will wait until the Windows Update service has finished running. The task runs every 90 days. Windows Script Host must be enabled for the task to run."
       },
       "One": {
         "Tag": "Delete",
@@ -1742,7 +1718,7 @@
     "Arg": {
       "Zero": {
         "Tag": "Register",
-        "ToolTip": "Create the \"Temp\" scheduled task for cleaning up the %TEMP% folder. Only files older than one day will be deleted. The task runs every 60 days. You have to enable Windows Script Host in order to make the function work"
+        "ToolTip": "Create a \"Temp\" task in the Task Scheduler to clean up the %TEMP% folder. Only files older than one day will be deleted. The task runs every 60 days. Windows Script Host must be enabled for the task to run."
       },
       "One": {
         "Tag": "Delete",
@@ -1814,25 +1790,11 @@
   },
   {
     "Region": "Microsoft Defender & Security",
-    "Function": "CommandLineProcessAudit",
-    "Arg": {
-      "Zero": {
-        "Tag": "Enable",
-        "ToolTip": "Include command line in process creation events."
-      },
-      "One": {
-        "Tag": "Disable",
-        "ToolTip": "Do not include command line in process creation events (default value)."
-      }
-    }
-  },
-  {
-    "Region": "Microsoft Defender & Security",
     "Function": "EventViewerCustomView",
     "Arg": {
       "Zero": {
         "Tag": "Enable",
-        "ToolTip": "Create the \"Process Creation\" сustom view in the Event Viewer to log executed processes and their arguments. In order this feature to work events command line (CommandLineProcessAudit -Enable) in process creation events will be enabled."
+        "ToolTip": "Create the \"Process Creation\" сustom view in the Event Viewer to log executed processes and their arguments."
       },
       "One": {
         "Tag": "Disable",
@@ -1921,6 +1883,20 @@
       "One": {
         "Tag": "Disable",
         "ToolTip": "Disable Windows Sandbox (default value)."
+      }
+    }
+  },
+  {
+    "Region": "Microsoft Defender & Security",
+    "Function": "DNSoverHTTPS",
+    "Arg": {
+      "Zero": {
+        "Tag": "Enable",
+        "ToolTip": "Enable DNS-over-HTTPS for IPv4. The valid IPv4 addresses: 1.0.0.1, 1.1.1.1, 149.112.112.112, 8.8.4.4, 8.8.8.8, 9.9.9.9."
+      },
+      "One": {
+        "Tag": "Disable",
+        "ToolTip": "Disable DNS-over-HTTPS for IPv4 (default value)."
       }
     }
   },

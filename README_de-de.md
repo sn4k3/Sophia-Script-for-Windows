@@ -11,17 +11,12 @@
 <img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Windows_10_Logo.svg" height="30px"/> &emsp; <img src="https://upload.wikimedia.org/wikipedia/commons/e/e6/Windows_11_logo.svg" height="30px"/>
 
 <p align="left">
-  <a href="https://github.com/farag2/Sophia-Script-for-Windows/actions"><img src="https://img.shields.io/github/actions/workflow/status/farag2/Sophia-Script-for-Windows/Sophia.yml?label=GitHub%20Actions&logo=GitHub"></a>
-  <img src="https://img.shields.io/badge/PowerShell%205.1%20&%207.3-Ready-blue.svg?color=5391FE&style=flat&logo=powershell">
-
-  <a href="https://github.com/farag2/Sophia-Script-for-Windows/releases"><img src="https://img.shields.io/github/v/release/farag2/Sophia-Script-for-Windows"></a>
-  <a href="https://github.com/farag2/Sophia-Script-for-Windows"><img src="https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/farag2/9852d6b9569a91bf69ceba8a94cc97f4/raw/SophiaScript.json"></a>
-
   <a href="https://github.com/farag2/Sophia-Script-for-Windows/releases"><img src="https://img.shields.io/github/downloads/farag2/Sophia-Script-for-Windows/total?label=downloads%20%28since%20May%202020%29"></a>
   <a href="https://community.chocolatey.org/packages/sophia"><img src="https://img.shields.io/chocolatey/dt/sophia?color=blue&label=chocolatey%20package"></a>
 
-  <a href="https://twitter.com/tea_head_"><img src="https://img.shields.io/badge/Logo%20by-teahead-blue?style=flat&logo=Twitter"></a>
+  <a href="https://twitter.com/tea_head_"><img src="https://img.shields.io/badge/Logo%20by-teahead-blue?style=flat&logo=X"></a>
   <img src="https://img.shields.io/badge/Made%20with-149ce2.svg?color=149ce2"><img src="https://raw.githubusercontent.com/farag2/Sophia-Script-for-Windows/master/img/heart.svg" height="17px"/>
+  <a href="https://github.com/farag2/Sophia-Script-for-Windows"><img src="https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/farag2/9852d6b9569a91bf69ceba8a94cc97f4/raw/SophiaScript.json"></a>
 
   [telegram-news-badge]: https://img.shields.io/badge/Sophia%20News-Telegram-blue?style=flat&logo=Telegram
   [telegram-news]: https://t.me/sophianews
@@ -34,6 +29,7 @@
   [discord-news-badge]: https://discordapp.com/api/guilds/1006179075263561779/widget.png?style=shield
   [discord-link]: https://discord.gg/sSryhaEv79
   [![Discord][discord-news-badge]][discord-link]
+  <a href="https://github.com/farag2/Sophia-Script-for-Windows/actions"><img src="https://img.shields.io/github/actions/workflow/status/farag2/Sophia-Script-for-Windows/Sophia.yml?label=GitHub%20Actions&logo=GitHub"></a>
 </p>
 
 <p align="left">
@@ -64,7 +60,7 @@
 
 ***
 
-<a href="https://github.com/farag2/Sophia-Script-for-Windows/releases/latest"><img src="https://raw.githubusercontent.com/farag2/Sophia-Script-for-Windows/master/img/SSdownloadbutton.svg" width=220px height=55px></a>
+<a href="https://github.com/farag2/Sophia-Script-for-Windows/releases/latest"><img src="https://raw.githubusercontent.com/farag2/Sophia-Script-for-Windows/master/img/get-it-on-github.png" width="50%" height="50%"></a>
 
 ***
 
@@ -93,36 +89,37 @@
 
 ![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Fira+Code&size30&pause=1000&width=435&lines=Made+with+%E2%9D%A4%EF%B8%8F+of+Windows%C2%AE)
 
-> **Hinweis**: Sophia Script für Windows ist das größte PowerShell-Modul auf `GitHub` für `Windows 10` & `Windows 11` zur Feinabstimmung und Automatisierung von Routineaufgaben. Es bietet mehr als 150 einzigartige Tweaks und zeigt, wie Windows konfiguriert werden kann, ohne Windows dabei zu schaden.
+> [!IMPORTANT]
+> Sophia Script für Windows ist das größte PowerShell-Modul auf `GitHub` für `Windows 10` & `Windows 11` zur Feinabstimmung und Automatisierung von Routineaufgaben. Es bietet mehr als 150 einzigartige Tweaks und zeigt, wie Windows konfiguriert werden kann, ohne Windows dabei zu schaden.
 
 ## Vor der Ausführung
 
-> **Anmerkung**: Da das Skript mehr als **150** Funktionen mit unterschiedlichen Argumenten enthält, müssen Sie die gesamte Datei **Sophia.ps1** sorgfältig lesen und **die Funktionen, die Sie nicht ausführen möchten, auskommentieren/entkommentieren** (ohne den Code bearbeiten zu müssen) oder [Wrapper](https://github.com/farag2/Sophia-Script-for-Windows#benchtweakgaming-sophia-script-wrapper) verwenden. Für jede Änderung in der Voreinstellungsdatei gibt es eine entsprechende Funktion zum **Wiederherstellen der Standardeinstellungen**. Das Skript sollte am besten auf einem frisch installierten System ausgeführt werden, da die Ausführung auf einem **falsch** getweakten System zu Fehlern führen kann.
+> [!CAUTION]
+> Da das Skript mehr als **150** Funktionen mit unterschiedlichen Argumenten enthält, müssen Sie die gesamte Datei **Sophia.ps1** sorgfältig lesen und **die Funktionen, die Sie nicht ausführen möchten, auskommentieren/entkommentieren** (ohne den Code bearbeiten zu müssen) oder [Wrapper](https://github.com/farag2/Sophia-Script-for-Windows#benchtweakgaming-sophia-script-wrapper) verwenden. Für jede Änderung in der Voreinstellungsdatei gibt es eine entsprechende Funktion zum **Wiederherstellen der Standardeinstellungen**. Das Skript sollte am besten auf einem frisch installierten System ausgeführt werden, da die Ausführung auf einem **falsch** getweakten System zu Fehlern führen kann.
 
 ## Spenden
 
-<a href="https://yoomoney.ru/to/4100116615568835"><img src="https://yoomoney.ru/i/shop/iomoney_logo_color_example.png" width=220px height=46px align="left">
 </a><a href="https://ko-fi.com/farag"><img src="https://www.ko-fi.com/img/githubbutton_sm.svg" width=220px height=46px align="left"></a>
-
-| ![ko-fi](https://img.shields.io/badge/tether-168363?style=for-the-badge&logo=tether&logoColor=white) |
-|:----------------------------------------------------------------------------------------------------:|
-|                                         USDT (TRC20)                                                 |
-|                             `TQtMjdocUWbKAeg1kLtB4ApjAVHt1v8Rtf`                                     |
 
 ## System-Voraussetzungen
 
-|               Version                    |    Marketing name   |    Build    |      Editions       |
-|:-----------------------------------------|--------------------:|:-----------:|:-------------------:|
-| Windows 11 Insider Preview 24H2          | 2024 Update         | 22509+      | Home/Pro/Enterprise |
-| Windows 11 23H2                          | 2023 Update         | 22631.3447+ | Home/Pro/Enterprise |
-| Windows 10 x64 22H2                      | 2022 Update         | 19045.4291+ | Home/Pro/Enterprise |
-| Windows 10 x64 21H2 Enterprise LTSC 2021 | October 2021 Update | 19044.4291+ | Enterprise          |
-| Windows 10 x64 1809 Enterprise LTSC 2019 | October 2018 Update | 17763.5696+ | Enterprise          |
+[Windows-10]: https://support.microsoft.com/topic/windows-10-update-history-8127c2c6-6edf-4fdf-8b9f-0f7be1ef3562
+[Windows-10-LTSC-2019]: https://support.microsoft.com/topic/windows-10-and-windows-server-2019-update-history-725fc2e1-4443-6831-a5ca-51ff5cbcb059
+[Windows-10-LTSC-2021]: https://support.microsoft.com/topic/windows-10-update-history-857b8ccb-71e4-49e5-b3f6-7073197d98fb
+[Windows-11]: https://support.microsoft.com/topic/windows-11-version-23h2-update-history-59875222-b990-4bd9-932f-91a5954de434
 
-### Warnung
+|               Version                    |    Marketing name   |                          Build                  |      Editions       |
+|:-----------------------------------------|--------------------:|:-----------------------------------------------:|:-------------------:|
+| Windows 11 Insider Preview 24H2          | 2024 Update         | 22509+                                          | Home/Pro/Enterprise |
+| Windows 11 23H2                          | 2023 Update         | [Neueste stabile Version][Windows-11]           | Home/Pro/Enterprise |
+| Windows 10 x64 22H2                      | 2022 Update         | [Neueste stabile Version][Windows-10]           | Home/Pro/Enterprise |
+| Windows 10 x64 21H2 Enterprise LTSC 2021 | October 2021 Update | [Neueste stabile Version][Windows-10-LTSC-2021] | Enterprise          |
+| Windows 10 x64 1809 Enterprise LTSC 2019 | October 2018 Update | [Neueste stabile Version][Windows-10-LTSC-2019] | Enterprise          |
 
-* Es darf nur ein Admin-Benutzer während des Starts der Anwendung angemeldet sein.
-* 🔥🔥🔥 `Sophia Script for Windows` funktioniert möglicherweise nicht auf einem selbstgebauten Windows. Insbesondere, wenn das Homebrew-Image von Betriebssystemherstellern erstellt wurde, die Microsoft Defender zerstören und die Telemetrie des Betriebssystems deaktivieren, indem sie absichtlich Systemkomponenten "uprooten".
+> [!WARNING]
+> Es darf nur ein Admin-Benutzer während des Starts der Anwendung angemeldet sein.
+> 
+> `Sophia Script for Windows` funktioniert möglicherweise nicht auf einem selbstgebauten Windows. Insbesondere, wenn das Homebrew-Image von Betriebssystemherstellern erstellt wurde, die Microsoft Defender zerstören und die Telemetrie des Betriebssystems deaktivieren, indem sie absichtlich Systemkomponenten "uprooten".
 
 ## Haupt-Features
 

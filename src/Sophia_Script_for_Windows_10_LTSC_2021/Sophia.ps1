@@ -2,8 +2,8 @@
 	.SYNOPSIS
 	Default preset file for "Sophia Script for Windows 10 LTSC 2021"
 
-	Version: v5.18.6
-	Date: 28.05.2024
+	Version: v5.18.9
+	Date: 16.08.2024
 
 	Copyright (c) 2014—2024 farag, Inestic & lowl1f3
 
@@ -26,7 +26,6 @@
 	.NOTES
 	Supported Windows 10 version
 	Version: 21H2
-	Build: 19044.4412+
 	Edition: Enterprise LTSC 2021
 	Architecture: x64
 
@@ -47,8 +46,8 @@
 
 	.NOTES
 	https://forum.ru-board.com/topic.cgi?forum=62&topic=30617#15
-	https://habr.com/company/skillfactory/blog/553800/
-	https://forums.mydigitallife.net/threads/powershell-windows-10-sophia-script.81675/
+	https://habr.com/companies/skillfactory/articles/553800/
+	https://forums.mydigitallife.net/threads/powershell-sophia-script-for-windows-10-windows-11-5-17-8-6-5-8-x64-2023.81675/
 	https://www.reddit.com/r/PowerShell/comments/go2n5v/powershell_script_setup_windows_10/
 
 	.LINK Authors
@@ -70,7 +69,7 @@ param
 
 Clear-Host
 
-$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 10 LTSC 2021 v5.18.6 | Made with $([System.Char]::ConvertFromUtf32(0x1F497)) of Windows | $([System.Char]0x00A9) farag, Inestic & lowl1f3, 2014$([System.Char]0x2013)2024"
+$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 10 LTSC 2021 v5.18.9 | Made with $([System.Char]::ConvertFromUtf32(0x1F497)) of Windows | $([System.Char]0x00A9) farag, Inestic & lowl1f3, 2014$([System.Char]0x2013)2024"
 
 Remove-Module -Name Sophia -Force -ErrorAction Ignore
 Import-LocalizedData -BindingVariable Global:Localization -BaseDirectory $PSScriptRoot\Localizations -FileName Sophia
@@ -212,11 +211,11 @@ TailoredExperiences -Disable
 # Разрешите корпорации Майкософт использовать ваши диагностические данные для предоставления вам персонализированных советов, рекламы и рекомендаций, чтобы улучшить работу со службами Майкрософт (значение по умолчанию)
 # TailoredExperiences -Enable
 
-# Disable Bing search in the Start Menu
+# Disable Bing search in Start Menu
 # Отключить в меню "Пуск" поиск через Bing
 BingSearch -Disable
 
-# Enable Bing search in the Start Menu (default value)
+# Enable Bing search in Start Menu (default value)
 # Включить поиск через Bing в меню "Пуск" (значение по умолчанию)
 # BingSearch -Enable
 #endregion Privacy & Telemetry
@@ -542,14 +541,6 @@ Hibernation -Disable
 # Включить режим гибернации (значение по умолчанию)
 # Hibernation -Enable
 
-# Change the %TEMP% environment variable path to %SystemDrive%\Temp
-# Изменить путь переменной среды для %TEMP% на %SystemDrive%\Temp
-# TempFolder -SystemDrive
-
-# Change %TEMP% environment variable path to %LOCALAPPDATA%\Temp (default value)
-# Изменить путь переменной среды для %TEMP% на %LOCALAPPDATA%\Temp (значение по умолчанию)
-# TempFolder -Default
-
 # Disable the Windows 260 characters path limit
 # Отключить ограничение Windows на 260 символов в пути
 Win32LongPathLimit -Disable
@@ -631,6 +622,30 @@ UpdateMicrosoftProducts -Enable
 # Do not receive updates for other Microsoft products when you update Windows (default value)
 # При обновлении Windows не получать обновления для других продуктов Майкрософт (значение по умолчанию)
 # UpdateMicrosoftProducts -Disable
+
+# Notify me when a restart is required to finish updating
+# Уведомлять меня о необходимости перезагрузки для завершения обновления
+RestartNotification -Show
+
+# Do not notify me when a restart is required to finish updating (default value)
+# Не yведомлять меня о необходимости перезагрузки для завершения обновления (значение по умолчанию)
+# RestartNotification -Hide
+
+# Restart as soon as possible to finish updating
+# Перезапустить устройство как можно быстрее, чтобы завершить обновление
+RestartDeviceAfterUpdate -Enable
+
+# Don't restart as soon as possible to finish updating (default value)
+# Не перезапускать устройство как можно быстрее, чтобы завершить обновление (значение по умолчанию)
+# RestartDeviceAfterUpdate -Disable
+
+# Automatically adjust active hours for me based on daily usage
+# Автоматически изменять период активности для этого устройства на основе действий
+ActiveHours -Automatically
+
+# Manually adjust active hours for me based on daily usage (default value)
+# Вручную изменять период активности для этого устройства на основе действий (значение по умолчанию)
+# ActiveHours -Manually
 
 # Set power plan on "High performance". It isn't recommended to turn on for laptops
 # Установить схему управления питанием на "Высокая производительность". Не рекомендуется включать на ноутбуках
@@ -725,7 +740,7 @@ LatestInstalled.NET -Enable
 # LatestInstalled.NET -Disable
 
 # Save screenshots by pressing Win+PrtScr on the Desktop
-# Сохранять скриншоты по нажатию Win+PrtScr на рабочий столе
+# Сохранять скриншоты по нажатию Win+PrtScr на рабочий стол
 WinPrtScrFolder -Desktop
 
 # Save screenshots by pressing Win+PrtScr in the Pictures folder (default value)
@@ -830,30 +845,6 @@ NetworkDiscovery -Enable
 # Выключить сетевое обнаружение и общий доступ к файлам и принтерам для рабочих групп (значение по умолчанию)
 # NetworkDiscovery -Disable
 
-# Show a notification when your PC requires a restart to finish updating
-# Показывать уведомление, когда компьютеру требуется перезагрузка для завершения обновления
-RestartNotification -Show
-
-# Do not show a notification when your PC requires a restart to finish updating (default value)
-# Не показывать уведомление, когда компьютеру требуется перезагрузка для завершения обновления (значение по умолчанию)
-# RestartNotification -Hide
-
-# Restart this device as soon as possible when a restart is required to install an update
-# Перезапускать это устройство как можно быстрее, если для установки обновления требуется перезагрузка
-RestartDeviceAfterUpdate -Enable
-
-# Do not restart this device as soon as possible when a restart is required to install an update (default value)
-# Не перезапускать это устройство как можно быстрее, если для установки обновления требуется перезагрузка (значение по умолчанию)
-# RestartDeviceAfterUpdate -Disable
-
-# Automatically adjust active hours for me based on daily usage
-# Автоматически изменять период активности для этого устройства на основе действий
-ActiveHours -Automatically
-
-# Manually adjust active hours for me based on daily usage (default value)
-# Вручную изменять период активности для этого устройства на основе действий (значение по умолчанию)
-# ActiveHours -Manually
-
 <#
 	Register app, calculate hash, and associate with an extension with the "How do you want to open this" pop-up hidden
 	Зарегистрировать приложение, вычислить хэш и ассоциировать его с расширением без всплывающего окна "Каким образом вы хотите открыть этот файл?"
@@ -940,19 +931,19 @@ SATADrivesRemovableMedia -Disable
 #endregion WSL
 
 #region Start menu
-# Hide recently added apps in the Start menu
+# Hide recently added apps in Start menu
 # Скрывать недавно добавленные приложения в меню "Пуск"
 RecentlyAddedApps -Hide
 
-# Show recently added apps in the Start menu (default value)
+# Show recently added apps in Start menu (default value)
 # Показывать недавно добавленные приложения в меню "Пуск" (значение по умолчанию)
 # RecentlyAddedApps -Show
 
-# Hide app suggestions in the Start menu
+# Hide app suggestions in Start menu
 # Скрывать рекомендации в меню "Пуск"
 AppSuggestions -Hide
 
-# Show app suggestions in the Start menu (default value)
+# Show app suggestions in Start menu (default value)
 # Показывать рекомендации в меню "Пуск" (значение по умолчанию)
 # AppSuggestions -Show
 
@@ -1069,14 +1060,6 @@ DismissSmartScreenFilter
 
 # Create the "Process Creation" сustom view in the Event Viewer to log executed processes and their arguments
 # Создать настраиваемое представление "Создание процесса" в Просмотре событий для журналирования запускаемых процессов и их аргументов
-CommandLineProcessAudit -Enable
-
-# Do not include command line in process creation events (default value)
-# Не включать командную строку в событиях создания процесса (значение по умолчанию)
-# CommandLineProcessAudit -Disable
-
-# Create the "Process Creation" сustom view in the Event Viewer to log executed processes and their arguments
-# Создать настраиваемое представление "Создание процесса" в Просмотре событий для журналирования запускаемых процессов и их аргументов
 EventViewerCustomView -Enable
 
 # Remove the "Process Creation" custom view in the Event Viewer to log executed processes and their arguments (default value)
@@ -1130,6 +1113,23 @@ SaveZoneInformation -Disable
 # Disable Windows Sandbox (default value)
 # Выключить Windows Sandbox (значение по умолчанию)
 # WindowsSandbox -Disable
+
+<#
+	Enable DNS-over-HTTPS for IPv4
+	The valid IPv4 addresses: 1.0.0.1, 1.1.1.1, 149.112.112.112, 8.8.4.4, 8.8.8.8, 9.9.9.9
+
+	Включить DNS-over-HTTPS для IPv4
+	Действительные IPv4-адреса: 1.0.0.1, 1.1.1.1, 149.112.112.112, 8.8.4.4, 8.8.8.8, 9.9.9.9
+#>
+DNSoverHTTPS -Enable -PrimaryDNS 1.0.0.1 -SecondaryDNS 1.1.1.1
+
+# Disable DNS-over-HTTPS for IPv4 (default value)
+# Выключить DNS-over-HTTPS для IPv4 (значение по умолчанию)
+# DNSoverHTTPS -Disable
+
+# Enable DNS-over-HTTPS via Comss.one DNS server. Applicable for Russia only
+# Включить DNS-over-HTTPS для IPv4 через DNS-сервер Comss.one. Применимо только для России
+# DNSoverHTTPS -ComssOneDNS
 #endregion Microsoft Defender & Security
 
 #region Context menu

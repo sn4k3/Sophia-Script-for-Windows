@@ -594,7 +594,7 @@
   {
     "Region": "UI & Personalization",
     "Function": "UnpinTaskbarShortcuts -Shortcuts",
-    "ToolTip": "Открепить ярлыки \"Microsoft Edge\", \"Microsoft Store\" от панели задач",
+    "ToolTip": "Открепить ярлыки \"Microsoft Edge\", \"Microsoft Store\" от панели задач.",
     "Arg": {
       "Zero": {
         "Tag": "Edge",
@@ -603,6 +603,20 @@
       "One": {
         "Tag": "Store",
         "ToolTip": "Открепить ярлык \"Microsoft Store\" от панели задач."
+      }
+    }
+  },
+  {
+    "Region": "UI & Personalization",
+    "Function": "TaskbarEndTask",
+    "Arg": {
+      "Zero": {
+        "Tag": "Enable",
+        "ToolTip": "Включить завершение задачи на панели задач правой кнопкой мыши."
+      },
+      "One": {
+        "Tag": "Disable",
+        "ToolTip": "Выключить завершение задачи на панели задач правой кнопкой мыши (default value)."
       }
     }
   },
@@ -750,7 +764,7 @@
       },
       "Two": {
         "Tag": "Dark",
-        "ToolTip": "Скачать и установить бесплатные темные курсоры \"Windows 11 Cursors Concept v2\" от Jepri Creations"
+        "ToolTip": "Скачать и установить бесплатные темные курсоры \"Windows 11 Cursors Concept v2\" от Jepri Creations."
       }
     }
   },
@@ -859,20 +873,6 @@
       "One": {
         "Tag": "Enable",
         "ToolTip": "Включить режим гибернации (значение по умолчанию)."
-      }
-    }
-  },
-  {
-    "Region": "System",
-    "Function": "TempFolder",
-    "Arg": {
-      "Zero": {
-        "Tag": "SystemDrive",
-        "ToolTip": "Изменить путь переменной среды для %TEMP% на %SystemDrive%\\Temp."
-      },
-      "One": {
-        "Tag": "Default",
-        "ToolTip": "Изменить путь переменной среды для %TEMP% на %LOCALAPPDATA%\\Temp (значение по умолчанию)."
       }
     }
   },
@@ -999,6 +999,62 @@
       "One": {
         "Tag": "Disable",
         "ToolTip": "Не получать обновления для других продуктов Майкрософт (значение по умолчанию)."
+      }
+    }
+  },
+  {
+    "Region": "System",
+    "Function": "RestartNotification",
+    "Arg": {
+      "Zero": {
+        "Tag": "Show",
+        "ToolTip": "Уведомлять меня о необходимости перезагрузки для завершения обновления."
+      },
+      "One": {
+        "Tag": "Hide",
+        "ToolTip": "Не yведомлять меня о необходимости перезагрузки для завершения обновления (значение по умолчанию)."
+      }
+    }
+  },
+  {
+    "Region": "System",
+    "Function": "RestartDeviceAfterUpdate",
+    "Arg": {
+      "Zero": {
+        "Tag": "Enable",
+        "ToolTip": "Перезапустить устройство как можно быстрее, чтобы завершить обновление."
+      },
+      "One": {
+        "Tag": "Disable",
+        "ToolTip": "Не перезапускать устройство как можно быстрее, чтобы завершить обновление (значение по умолчанию)."
+      }
+    }
+  },
+  {
+    "Region": "System",
+    "Function": "ActiveHours",
+    "Arg": {
+      "Zero": {
+        "Tag": "Automatically",
+        "ToolTip": "Автоматически изменять период активности для этого устройства на основе действий."
+      },
+      "One": {
+        "Tag": "Manually",
+        "ToolTip": "Вручную изменять период активности для этого устройства на основе действий (значение по умолчанию)."
+      }
+    }
+  },
+  {
+    "Region": "System",
+    "Function": "WindowsLatestUpdate",
+    "Arg": {
+      "Zero": {
+        "Tag": "Disable",
+        "ToolTip": "Не получать последние обновления, как только они будут доступны (значение по умолчанию)."
+      },
+      "One": {
+        "Tag": "Enable",
+        "ToolTip": "Получайте последние обновления, как только они будут доступны."
       }
     }
   },
@@ -1264,62 +1320,6 @@
   },
   {
     "Region": "System",
-    "Function": "RestartNotification",
-    "Arg": {
-      "Zero": {
-        "Tag": "Show",
-        "ToolTip": "Уведомлять меня о необходимости перезагрузки для завершения обновления."
-      },
-      "One": {
-        "Tag": "Hide",
-        "ToolTip": "Не yведомлять меня о необходимости перезагрузки для завершения обновления (значение по умолчанию)."
-      }
-    }
-  },
-  {
-    "Region": "System",
-    "Function": "RestartDeviceAfterUpdate",
-    "Arg": {
-      "Zero": {
-        "Tag": "Enable",
-        "ToolTip": "Перезапустить устройство как можно быстрее, чтобы завершить обновление."
-      },
-      "One": {
-        "Tag": "Disable",
-        "ToolTip": "Не перезапускать устройство как можно быстрее, чтобы завершить обновление (значение по умолчанию)."
-      }
-    }
-  },
-  {
-    "Region": "System",
-    "Function": "ActiveHours",
-    "Arg": {
-      "Zero": {
-        "Tag": "Automatically",
-        "ToolTip": "Автоматически изменять период активности для этого устройства на основе действий."
-      },
-      "One": {
-        "Tag": "Manually",
-        "ToolTip": "Вручную изменять период активности для этого устройства на основе действий (значение по умолчанию)."
-      }
-    }
-  },
-  {
-    "Region": "System",
-    "Function": "WindowsLatestUpdate",
-    "Arg": {
-      "Zero": {
-        "Tag": "Disable",
-        "ToolTip": "Не получать последние обновления, как только они будут доступны (значение по умолчанию)."
-      },
-      "One": {
-        "Tag": "Enable",
-        "ToolTip": "Получайте последние обновления, как только они будут доступны."
-      }
-    }
-  },
-  {
-    "Region": "System",
     "Function": "Set-Association",
     "Arg": {
       "Zero": {
@@ -1415,16 +1415,6 @@
   },
   {
     "Region": "System",
-    "Function": "Install-WSA",
-    "Arg": {
-      "Zero": {
-        "Tag": "",
-        "ToolTip": "Включить все необходимые зависимости (может потребоваться перезагрузка) и открыть страницу WSA в Microsoft Store, чтобы вручную установить Windows Subsystem for Android™ with Amazon Appstore."
-      }
-    }
-  },
-  {
-    "Region": "System",
     "Function": "PreventEdgeShortcutCreation",
     "Arg": {
       "Zero": {
@@ -1515,16 +1505,6 @@
   },
   {
     "Region": "UWP apps",
-    "Function": "RestoreUWPApps",
-    "Arg": {
-      "Zero": {
-        "Tag": "",
-        "ToolTip": "Восстановить стандартные UWP-приложения, используя всплывающее диалоговое окно. UWP-приложения могут быть восстановлены, только если они были удалены для текущего пользователя."
-      }
-    }
-  },
-  {
-    "Region": "UWP apps",
     "Function": "CortanaAutostart",
     "Arg": {
       "Zero": {
@@ -1609,7 +1589,7 @@
     "Arg": {
       "Zero": {
         "Tag": "Register",
-        "ToolTip": "Создать задание \"Windows Cleanup\" по очистке неиспользуемых файлов и обновлений Windows в Планировщике заданий. Задание выполняется каждые 30 дней. Необходимо включить Windows Script Host для того, чтобы работала функция."
+        "ToolTip": "Создать задания \"Windows Cleanup\" (основное задание) и \"Windows Cleanup Notification\" (задание для создания всплывающего уведомления) по очистке неиспользуемых файлов и обновлений Windows в Планировщике заданий в папке Sophia. Перед началом очистки всплывет нативное уведомление Windows с предложением запустить задание. Задание выполняется каждые 30 дней. Для работы задания необходимо включить Windows Script Host."
       },
       "One": {
         "Tag": "Delete",
@@ -1623,7 +1603,7 @@
     "Arg": {
       "Zero": {
         "Tag": "Register",
-        "ToolTip": "Создать задание \"SoftwareDistribution\" по очистке папки %SystemRoot%\\SoftwareDistribution\\Download в Планировщике заданий. Задание будет ждать, пока служба обновлений Windows не закончит работу. Задание выполняется каждые 90 дней. Необходимо включить Windows Script Host для того, чтобы работала функция."
+        "ToolTip": "Создать задание \"SoftwareDistribution\" по очистке папки %SystemRoot%\\SoftwareDistribution\\Download, куда скачиваются установочные файлы всех обновлений Windows, в папке Sophia в Планировщике заданий. Задание будет ждать, пока служба обновлений Windows не закончит работу. Задача выполняется каждые 90 дней. Необходимо включить Windows Script Host для того, чтобы работала функция."
       },
       "One": {
         "Tag": "Delete",
@@ -1709,29 +1689,15 @@
   },
   {
     "Region": "Microsoft Defender & Security",
-    "Function": "CommandLineProcessAudit",
-    "Arg": {
-      "Zero": {
-        "Tag": "Enable",
-        "ToolTip": "Включать командную строку в событиях создания процесса."
-      },
-      "One": {
-        "Tag": "Disable",
-        "ToolTip": "Не включать командную строку в событиях создания процесса (значение по умолчанию)."
-      }
-    }
-  },
-  {
-    "Region": "Microsoft Defender & Security",
     "Function": "EventViewerCustomView",
     "Arg": {
       "Zero": {
         "Tag": "Enable",
-        "ToolTip": "Создать настраиваемое представление \"Создание процесса\" в Просмотре событий. Для того, чтобы работал данный функционал, буден включен командной строки (CommandLineProcessAudit -Enable) в событиях создания процесса."
+        "ToolTip": "Создать настраиваемое представление \"Создание процесса\" в Просмотре событий для журналирования запускаемых процессов и их аргументов."
       },
       "One": {
         "Tag": "Disable",
-        "ToolTip": "Удалить настраиваемое представление \"Создание процесса\" в Просмотре событий (значение по умолчанию)."
+        "ToolTip": "Удалить настраиваемое представление \"Создание процесса\" в Просмотре событий для журналирования запускаемых процессов и их аргументов (значение по умолчанию)."
       }
     }
   },
