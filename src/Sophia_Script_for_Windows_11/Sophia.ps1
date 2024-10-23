@@ -1,9 +1,9 @@
-﻿<#
+<#
 	.SYNOPSIS
 	Default preset file for "Sophia Script for Windows 11"
 
-	Version: v6.6.9
-	Date: 16.08.2024
+	Version: 6.7.1
+	Date: 20.10.2024
 
 	Copyright (c) 2014—2024 farag, Inestic & lowl1f3
 
@@ -68,10 +68,10 @@ param
 
 Clear-Host
 
-$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 11 v6.6.9 | Made with $([System.Char]::ConvertFromUtf32(0x1F497)) of Windows | $([System.Char]0x00A9) farag, Inestic & lowl1f3, 2014$([System.Char]0x2013)2024"
+$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 11 v6.7.1 | Made with $([System.Char]::ConvertFromUtf32(0x1F497)) of Windows | $([System.Char]0x00A9) farag, Inestic & lowl1f3, 2014$([System.Char]0x2013)2024"
 
 Remove-Module -Name Sophia -Force -ErrorAction Ignore
-Import-LocalizedData -BindingVariable Global:Localization -BaseDirectory $PSScriptRoot\Localizations -FileName Sophia
+Import-LocalizedData -BindingVariable Global:Localization -UICulture $PSUICulture -BaseDirectory $PSScriptRoot\Localizations -FileName Sophia
 
 # Check whether script is not running via PowerShell (x86)
 try
@@ -758,33 +758,6 @@ WindowsLatestUpdate -Disable
 # Разрешить отключение всех сетевых адаптеров для экономии энергии (значение по умолчанию)
 # NetworkAdaptersSavePower -Enable
 
-<#
-	Disable the Internet Protocol Version 6 (TCP/IPv6) component for all network connections
-	Before invoking the function, a check will be run whether your ISP supports the IPv6 protocol using https://ipify.org
-
-	Выключить IP версии 6 (TCP/IPv6)
-	Перед выполнением функции будет проведена проверка: поддерживает ли ваш провайдер IPv6, используя ресурс https://ipify.org
-#>
-#IPv6Component -Disable
-
-<#
-	Enable the Internet Protocol Version 6 (TCP/IPv6) component for all network connections (default value)
-	Before invoking the function, a check will be run whether your ISP supports the IPv6 protocol using https://ipify.org
-
-	Включить IP версии 6 (TCP/IPv6) (значение по умолчанию)
-	Перед выполнением функции будет проведена проверка: поддерживает ли ваш провайдер IPv6, используя ресурс https://ipify.org
-#>
-# IPv6Component -Enable
-
-<#
-	Enable the Internet Protocol Version 6 (TCP/IPv6) component for all network connections. Prefer IPv4 over IPv6
-	Before invoking the function, a check will be run whether your ISP supports the IPv6 protocol using https://ipify.org
-
-	Включить IP версии 6 (TCP/IPv6) и предпочитать. Предпочтение IPv4 перед IPv6
-	Перед выполнением функции будет проведена проверка: поддерживает ли ваш провайдер IPv6, используя ресурс https://ipify.org
-#>
-# IPv6Component -PreferIPv4overIPv6
-
 # Override for default input method: English
 # Переопределить метод ввода по умолчанию: английский
 #InputMethod -English
@@ -1087,24 +1060,24 @@ TeamsAutostart -Disable
 
 #region Gaming
 <#
-	Disable Xbox Game Bar
-	To prevent popping up the "You'll need a new app to open this ms-gamingoverlay" warning, you need to disable the Xbox Game Bar app, even if you uninstalled it before
+	Disable Game Bar
+	To prevent popping up the "You'll need a new app to open this ms-gamingoverlay" warning, you need to disable the Game Bar app, even if you uninstalled it before
 
-	Отключить Xbox Game Bar
-	Чтобы предотвратить появление предупреждения "Вам понадобится новое приложение, чтобы открыть этот ms-gamingoverlay", вам необходимо отключить приложение Xbox Game Bar, даже если вы удалили его раньше
+	Отключить Game Bar
+	Чтобы предотвратить появление предупреждения "Вам понадобится новое приложение, чтобы открыть этот ms-gamingoverlay", вам необходимо отключить приложение Game Bar, даже если вы удалили его раньше
 #>
 #XboxGameBar -Disable
 
-# Enable Xbox Game Bar (default value)
-# Включить Xbox Game Bar (значение по умолчанию)
+# Enable Game Bar (default value)
+# Включить Game Bar (значение по умолчанию)
 # XboxGameBar -Enable
 
-# Disable Xbox Game Bar tips
-# Отключить советы Xbox Game Bar
+# Disable Game Bar tips
+# Отключить советы Game Bar
 XboxGameTips -Disable
 
-# Enable Xbox Game Bar tips (default value)
-# Включить советы Xbox Game Bar (значение по умолчанию)
+# Enable Game Bar tips (default value)
+# Включить советы Game Bar (значение по умолчанию)
 # XboxGameTips -Enable
 
 # Choose an app and set the "High performance" graphics performance for it. Only if you have a dedicated GPU
@@ -1307,6 +1280,14 @@ CABInstallContext -Show
 # Отобразить пункт "Редактировать в Climpchamp" в контекстном меню (значение по умолчанию)
 # EditWithClipchampContext -Show
 
+# Hide the "Edit with Photos" item from the media files context menu
+# Скрыть пункт "Изменить с помощью приложения "Фотографии"" из контекстного меню
+EditWithPhotosContext -Hide
+
+# Show the "Edit with Photos" item in the media files context menu (default value)
+# Отобразить пункт "Изменить с помощью приложения "Фотографии"" в контекстном меню (значение по умолчанию)
+# EditWithPhotosContext -Show
+
 # Hide the "Print" item from the .bat and .cmd context menu
 # Скрыть пункт "Печать" из контекстного меню .bat и .cmd файлов
 PrintCMDContext -Hide
@@ -1359,7 +1340,7 @@ OpenWindowsTerminalAdminContext -Enable
 #region Update Policies
 <#
 	Display all policy registry keys (even manually created ones) in the Local Group Policy Editor snap-in (gpedit.msc)
-	This can take up to 30 minutes, depending on on the number of policies created in the registry and your system resources
+	This can take up to 30 minutes, depending on the number of policies created in the registry and your system resources
 
 	Отобразить все политики реестра (даже созданные вручную) в оснастке Редактора локальной групповой политики (gpedit.msc)
 	Это может занять до 30 минут в зависимости от количества политик, созданных в реестре, и мощности вашей системы

@@ -797,6 +797,20 @@
     }
   },
   {
+    "Region": "UI & Personalization",
+    "Function": "HideRecommendedSection",
+    "Arg": {
+      "Zero": {
+        "Tag": "Enable",
+        "ToolTip": "Do not expand to open folder on navigation pane (default value)."
+      },
+      "One": {
+        "Tag": "Disable",
+        "ToolTip": "Do not remove Recommended section in Start Menu (default value)."
+      }
+    }
+  },
+  {
     "Region": "OneDrive",
     "Function": "OneDrive",
     "Arg": {
@@ -1083,24 +1097,6 @@
       "One": {
         "Tag": "Enable",
         "ToolTip": "Allow the computer to turn off the network adapters to save power (default value)."
-      }
-    }
-  },
-  {
-    "Region": "System",
-    "Function": "IPv6Component",
-    "Arg": {
-      "Zero": {
-        "Tag": "Disable",
-        "ToolTip": "Disable the Internet Protocol Version 6 (TCP/IPv6) component for all network connections. Before invoking the function, a check will be run whether your ISP supports the IPv6 protocol using https://ipify.org."
-      },
-      "One": {
-        "Tag": "Enable",
-        "ToolTip": "Enable the Internet Protocol Version 6 (TCP/IPv6) component for all network connections (default value). Before invoking the function, a check will be run whether your ISP supports the IPv6 protocol using https://ipify.org."
-      },
-      "Two": {
-        "Tag": "PreferIPv4overIPv6",
-        "ToolTip": "Enable the Internet Protocol Version 6 (TCP/IPv6) component for all network connections. Prefer IPv4 over IPv6. Before invoking the function, a check will be run whether your ISP supports the IPv6 protocol using https://ipify.org."
       }
     }
   },
@@ -1857,6 +1853,20 @@
   },
   {
     "Region": "Context menu",
+    "Function": "EditWithPhotosContext",
+    "Arg": {
+      "Zero": {
+        "Tag": "Hide",
+        "ToolTip": "Hide the \"Edit with Photos\" item from the media files context menu."
+      },
+      "One": {
+        "Tag": "Show",
+        "ToolTip": "Show the \"Edit with Photos\" item in the media files context menu (default value)."
+      }
+    }
+  },
+  {
+    "Region": "Context menu",
     "Function": "PrintCMDContext",
     "Arg": {
       "Zero": {
@@ -1945,7 +1955,7 @@
     "Arg": {
       "Zero": {
         "Tag": "",
-        "ToolTip": "Display all policy registry keys (even manually created ones) in the Local Group Policy Editor snap-in (gpedit.msc). This can take up to 30 minutes, depending on on the number of policies created in the registry and your system resources."
+        "ToolTip": "Display all policy registry keys (even manually created ones) in the Local Group Policy Editor snap-in (gpedit.msc). This can take up to 30 minutes, depending on the number of policies created in the registry and your system resources."
       }
     }
   }
