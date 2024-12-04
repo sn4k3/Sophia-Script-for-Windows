@@ -2,8 +2,8 @@
 	.SYNOPSIS
 	Default preset file for "Sophia Script for Windows 11 (PowerShell 7)"
 
-	Version: 6.7.1
-	Date: 20.10.2024
+	Version: 6.7.3
+	Date: 28.11.2024
 
 	Copyright (c) 2014—2024 farag, Inestic & lowl1f3
 
@@ -21,7 +21,7 @@
 	.\Sophia.ps1 -Functions "DiagTrackService -Disable", "DiagnosticDataLevel -Minimal", UninstallUWPApps
 
 	.EXAMPLE Download and expand the latest Sophia Script version archive (without running) according which Windows and PowerShell versions it is run on
-	irm script.sophi.app -useb | iex
+	iwr script.sophia.team -useb | iex
 
 	.NOTES
 	Supported Windows 11 versions
@@ -31,7 +31,7 @@
 	.NOTES
 	To use the TAB completion for functions and their arguments dot source the Functions.ps1 script first:
 		. .\Function.ps1 (with a dot at the beginning)
-	Read more in the Functions.ps1 file
+	Read more at https://github.com/farag2/Sophia-Script-for-Windows?tab=readme-ov-file#how-to-run-the-specific-functions
 
 	.LINK GitHub
 	https://github.com/farag2/Sophia-Script-for-Windows
@@ -56,7 +56,7 @@
 #>
 
 #Requires -RunAsAdministrator
-#Requires -Version 7.4
+
 
 [CmdletBinding()]
 param
@@ -68,7 +68,36 @@ param
 
 Clear-Host
 
-$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 11 v6.7.1 (PowerShell 7) | Made with $([System.Char]::ConvertFromUtf32(0x1F497)) of Windows | $([System.Char]0x00A9) farag, Inestic & lowl1f3, 2014$([System.Char]0x2013)2024"
+$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 11 v6.7.3 (PowerShell 7) | Made with $([System.Char]::ConvertFromUtf32(0x1F497)) of Windows | $([System.Char]0x00A9) farag, Inestic & lowl1f3, 2014$([System.Char]0x2013)2024"
+
+# Checking whether all files were expanded before running
+$ScriptFiles = @(
+	"$PSScriptRoot\Localizations\de-DE\Sophia.psd1",
+	"$PSScriptRoot\Localizations\en-US\Sophia.psd1",
+	"$PSScriptRoot\Localizations\es-ES\Sophia.psd1",
+	"$PSScriptRoot\Localizations\fr-FR\Sophia.psd1",
+	"$PSScriptRoot\Localizations\hu-HU\Sophia.psd1",
+	"$PSScriptRoot\Localizations\it-IT\Sophia.psd1",
+	"$PSScriptRoot\Localizations\pl-PL\Sophia.psd1",
+	"$PSScriptRoot\Localizations\pt-BR\Sophia.psd1",
+	"$PSScriptRoot\Localizations\ru-RU\Sophia.psd1",
+	"$PSScriptRoot\Localizations\tr-TR\Sophia.psd1",
+	"$PSScriptRoot\Localizations\uk-UA\Sophia.psd1",
+	"$PSScriptRoot\Localizations\zh-CN\Sophia.psd1",
+	"$PSScriptRoot\Module\Sophia.psm1",
+	"$PSScriptRoot\Manifest\Sophia.psd1"
+)
+if (($ScriptFiles | Test-Path) -contains $false)
+{
+	Write-Information -MessageData "" -InformationAction Continue
+	Write-Warning -Message "There are no files in the script folder. Please, re-download the archive and follow the guide: https://github.com/farag2/Sophia-Script-for-Windows?tab=readme-ov-file#how-to-use."
+	Write-Information -MessageData "" -InformationAction Continue
+
+	Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
+	Write-Verbose -Message "https://discord.gg/sSryhaEv79" -Verbose
+
+	exit
+}
 
 Remove-Module -Name Sophia -Force -ErrorAction Ignore
 
@@ -84,14 +113,14 @@ catch
 	Import-LocalizedData -BindingVariable Global:Localization -UICulture en-US -BaseDirectory $PSScriptRoot\Localizations -FileName Sophia
 }
 
-# Check whether script is not running via PowerShell (x86)
+# Checking whether script is the correct PowerShell version
 try
 {
 	Import-Module -Name $PSScriptRoot\Manifest\Sophia.psd1 -PassThru -Force -ErrorAction Stop
 }
 catch [System.InvalidOperationException]
 {
-	Write-Warning -Message $Localization.PowerShellx86Warning
+	Write-Warning -Message $Localization.UnsupportedPowerShell
 
 	Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
 	Write-Verbose -Message "https://discord.gg/sSryhaEv79" -Verbose
@@ -332,11 +361,11 @@ OpenFileExplorerTo -ThisPC
 # Открывать проводник для "Быстрый доступ" (значение по умолчанию)
 # OpenFileExplorerTo -QuickAccess
 
-# Disable the File Explorer compact mode (default value)
+# Disable File Explorer compact mode (default value)
 # Отключить компактный вид проводника (значение по умолчанию)
 FileExplorerCompactMode -Disable
 
-# Enable the File Explorer compact mode
+# Enable File Explorer compact mode
 # Включить компактный вид проводника
 # FileExplorerCompactMode -Enable
 
@@ -428,14 +457,6 @@ SearchHighlights -Hide
 # Показать главное в поиске (значение по умолчанию)
 # SearchHighlights -Show
 
-# Hide Copilot button on the taskbar
-# Скрыть кнопку Copilot с панели задач
-CopilotButton -Hide
-
-# Show Copilot button on the taskbar (default value)
-# Отобразить кнопку Copilot на панели задач (значение по умолчанию)
-# CopilotButton -Show
-
 # Hide the Task view button from the taskbar
 # Скрыть кнопку "Представление задач" с панели задач
 TaskViewButton -Hide
@@ -443,14 +464,6 @@ TaskViewButton -Hide
 # Show the Task view button on the taskbar (default value)
 # Отобразить кнопку "Представление задач" на панели задач (значение по умолчанию)
 # TaskViewButton -Show
-
-# Hide the Chat icon (Microsoft Teams) on the taskbar and prevent Microsoft Teams from installing for new users
-# Скрыть кнопку чата (Microsoft Teams) с панели задач и запретить установку Microsoft Teams для новых пользователей
-PreventTeamsInstallation -Enable
-
-# Show the Chat icon (Microsoft Teams) on the taskbar and remove block from installing Microsoft Teams for new users (default value)
-# Отобразить кнопку чата (Microsoft Teams) на панели задач и убрать блокировку на устанвоку Microsoft Teams для новых пользователей (значение по умолчанию)
-# PreventTeamsInstallation -Disable
 
 # Show seconds on the taskbar clock
 # Показывать секунды на часах на панели задач
@@ -604,7 +617,6 @@ NavigationPaneExpand -Disable
 #endregion OneDrive
 
 #region System
-#region StorageSense
 # Turn on Storage Sense
 # Включить Контроль памяти
 StorageSense -Enable
@@ -612,23 +624,6 @@ StorageSense -Enable
 # Turn off Storage Sense (default value)
 # Выключить Контроль памяти (значение по умолчанию)
 # StorageSense -Disable
-
-# Run Storage Sense every month
-# Запускать Контроль памяти каждый месяц
-StorageSenseFrequency -Month
-
-# Run Storage Sense during low free disk space (default value)
-# Запускать Контроль памяти, когда остается мало место на диске (значение по умолчанию)
-# StorageSenseFrequency -Default
-
-# Turn on automatic cleaning up temporary system and app files (default value)
-# Автоматически очищать временные файлы системы и приложений (значение по умолчанию)
-StorageSenseTempFiles -Enable
-
-# Turn off automatic cleaning up temporary system and app files
-# Не очищать временные файлы системы и приложений
-# StorageSenseTempFiles -Disable
-#endregion StorageSense
 
 # Disable hibernation. It isn't recommended to turn off for laptops
 # Отключить режим гибернации. Не рекомендуется выключать на ноутбуках
@@ -661,14 +656,6 @@ AdminApprovalMode -Never
 # Choose when to be notified about changes to your computer: notify me only when apps try to make changes to my computer (default value)
 # Настройка уведомления об изменении параметров компьютера: уведомлять меня только при попытках приложений внести изменения в компьютер (значение по умолчанию)
 # AdminApprovalMode -Default
-
-# Turn on access to mapped drives from app running with elevated permissions with Admin Approval Mode enabled
-# Включить доступ к сетевым дискам при включенном режиме одобрения администратором при доступе из программ, запущенных с повышенными правами
-MappedDrivesAppElevatedAccess -Enable
-
-# Turn off access to mapped drives from app running with elevated permissions with Admin Approval Mode enabled (default value)
-# Выключить доступ к сетевым дискам при включенном режиме одобрения администратором при доступе из программ, запущенных с повышенными правами (значение по умолчанию)
-# MappedDrivesAppElevatedAccess -Disable
 
 # Turn off Delivery Optimization
 # Выключить оптимизацию доставки

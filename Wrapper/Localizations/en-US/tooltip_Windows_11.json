@@ -361,11 +361,11 @@
     "Arg": {
       "Zero": {
         "Tag": "Disable",
-        "ToolTip": "Disable the File Explorer compact mode (default value)."
+        "ToolTip": "Disable File Explorer compact mode (default value)."
       },
       "One": {
         "Tag": "Enable",
-        "ToolTip": "Enable the File Explorer compact mode."
+        "ToolTip": "Enable File Explorer compact mode."
       }
     }
   },
@@ -519,20 +519,6 @@
   },
   {
     "Region": "UI & Personalization",
-    "Function": "CopilotButton",
-    "Arg": {
-      "Zero": {
-        "Tag": "Hide",
-        "ToolTip": "Hide Copilot button on the taskbar."
-      },
-      "One": {
-        "Tag": "Show",
-        "ToolTip": "Show Copilot button on the taskbar (default value)."
-      }
-    }
-  },
-  {
-    "Region": "UI & Personalization",
     "Function": "TaskViewButton",
     "Arg": {
       "Zero": {
@@ -542,20 +528,6 @@
       "One": {
         "Tag": "Show",
         "ToolTip": "Show the Task View button on the taskbar (default value)."
-      }
-    }
-  },
-  {
-    "Region": "UI & Personalization",
-    "Function": "PreventTeamsInstallation",
-    "Arg": {
-      "Zero": {
-        "Tag": "Enable",
-        "ToolTip": "Hide the Chat icon (Microsoft Teams) on the taskbar and prevent Microsoft Teams from installing for new users."
-      },
-      "One": {
-        "Tag": "Disable",
-        "ToolTip": "Show the Chat icon (Microsoft Teams) on the taskbar and remove block from installing Microsoft Teams for new users (default value)."
       }
     }
   },
@@ -850,34 +822,6 @@
   },
   {
     "Region": "System",
-    "Function": "StorageSenseFrequency",
-    "Arg": {
-      "Zero": {
-        "Tag": "Month",
-        "ToolTip": "Run Storage Sense every month."
-      },
-      "One": {
-        "Tag": "Default",
-        "ToolTip": "Run Storage Sense during low free disk space (default value)."
-      }
-    }
-  },
-  {
-    "Region": "System",
-    "Function": "StorageSenseTempFiles",
-    "Arg": {
-      "Zero": {
-        "Tag": "Enable",
-        "ToolTip": "Turn on automatic cleaning up temporary system and app files (default value)."
-      },
-      "One": {
-        "Tag": "Disable",
-        "ToolTip": "Turn off automatic cleaning up temporary system and app files."
-      }
-    }
-  },
-  {
-    "Region": "System",
     "Function": "Hibernation",
     "Arg": {
       "Zero": {
@@ -929,20 +873,6 @@
       "One": {
         "Tag": "Default",
         "ToolTip": "Choose when to be notified about changes to your computer: notify me only when apps try to make changes to my computer (default value)."
-      }
-    }
-  },
-  {
-    "Region": "System",
-    "Function": "MappedDrivesAppElevatedAccess",
-    "Arg": {
-      "Zero": {
-        "Tag": "Enable",
-        "ToolTip": "Turn on access to mapped drives from app running with elevated permissions with Admin Approval Mode enabled."
-      },
-      "One": {
-        "Tag": "Disable",
-        "ToolTip": "Turn off access to mapped drives from app running with elevated permissions with Admin Approval Mode enabled (default value)."
       }
     }
   },

@@ -2,8 +2,8 @@
 	.SYNOPSIS
 	Default preset file for "Sophia Script for Windows 10 (PowerShell 7)"
 
-	Version: 5.19.1
-	Date: 20.10.2024
+	Version: 5.19.3
+	Date: 28.11.2024
 
 	Copyright (c) 2014—2024 farag, Inestic & lowl1f3
 
@@ -21,7 +21,7 @@
 	.\Sophia.ps1 -Functions "DiagTrackService -Disable", "DiagnosticDataLevel -Minimal", UninstallUWPApps
 
 	.EXAMPLE Download and expand the latest Sophia Script version archive (without running) according which Windows and PowerShell versions it is run on
-	irm script.sophi.app -useb | iex
+	iwr script.sophia.team -useb | iex
 
 	.NOTES
 	Supported Windows 10 versions
@@ -32,7 +32,7 @@
 	.NOTES
 	To use the TAB completion for functions and their arguments dot source the Functions.ps1 script first:
 		. .\Function.ps1 (with a dot at the beginning)
-	Read more in the Functions.ps1 file
+	Read more at https://github.com/farag2/Sophia-Script-for-Windows?tab=readme-ov-file#how-to-run-the-specific-functions
 
 	.LINK GitHub
 	https://github.com/farag2/Sophia-Script-for-Windows
@@ -69,7 +69,36 @@ param
 
 Clear-Host
 
-$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 10 v5.19.1 (PowerShell 7) | Made with $([System.Char]::ConvertFromUtf32(0x1F497)) of Windows | $([System.Char]0x00A9) farag, Inestic & lowl1f3, 2014$([System.Char]0x2013)2024"
+$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 10 v5.19.3 (PowerShell 7) | Made with $([System.Char]::ConvertFromUtf32(0x1F497)) of Windows | $([System.Char]0x00A9) farag, Inestic & lowl1f3, 2014$([System.Char]0x2013)2024"
+
+# Checking whether all files were expanded before running
+$ScriptFiles = @(
+	"$PSScriptRoot\Localizations\de-DE\Sophia.psd1",
+	"$PSScriptRoot\Localizations\en-US\Sophia.psd1",
+	"$PSScriptRoot\Localizations\es-ES\Sophia.psd1",
+	"$PSScriptRoot\Localizations\fr-FR\Sophia.psd1",
+	"$PSScriptRoot\Localizations\hu-HU\Sophia.psd1",
+	"$PSScriptRoot\Localizations\it-IT\Sophia.psd1",
+	"$PSScriptRoot\Localizations\pl-PL\Sophia.psd1",
+	"$PSScriptRoot\Localizations\pt-BR\Sophia.psd1",
+	"$PSScriptRoot\Localizations\ru-RU\Sophia.psd1",
+	"$PSScriptRoot\Localizations\tr-TR\Sophia.psd1",
+	"$PSScriptRoot\Localizations\uk-UA\Sophia.psd1",
+	"$PSScriptRoot\Localizations\zh-CN\Sophia.psd1",
+	"$PSScriptRoot\Module\Sophia.psm1",
+	"$PSScriptRoot\Manifest\Sophia.psd1"
+)
+if (($ScriptFiles | Test-Path) -contains $false)
+{
+	Write-Information -MessageData "" -InformationAction Continue
+	Write-Warning -Message "There are no files in the script folder. Please, re-download the archive and follow the guide: https://github.com/farag2/Sophia-Script-for-Windows?tab=readme-ov-file#how-to-use."
+	Write-Information -MessageData "" -InformationAction Continue
+
+	Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
+	Write-Verbose -Message "https://discord.gg/sSryhaEv79" -Verbose
+
+	exit
+}
 
 Remove-Module -Name Sophia -Force -ErrorAction Ignore
 
@@ -85,14 +114,14 @@ catch
 	Import-LocalizedData -BindingVariable Global:Localization -UICulture en-US -BaseDirectory $PSScriptRoot\Localizations -FileName Sophia
 }
 
-# Check whether script is not running via PowerShell (x86)
+# Checking whether script is the correct PowerShell version
 try
 {
 	Import-Module -Name $PSScriptRoot\Manifest\Sophia.psd1 -PassThru -Force -ErrorAction Stop
 }
 catch [System.InvalidOperationException]
 {
-	Write-Warning -Message $Localization.PowerShellx86Warning
+	Write-Warning -Message $Localization.UnsupportedPowerShell
 
 	Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
 	Write-Verbose -Message "https://discord.gg/sSryhaEv79" -Verbose
@@ -325,11 +354,11 @@ OpenFileExplorerTo -ThisPC
 # Открывать проводник для "Быстрый доступ" (значение по умолчанию)
 # OpenFileExplorerTo -QuickAccess
 
-# Expand the File Explorer ribbon
+# Expand File Explorer ribbon
 # Развернуть ленту проводника
 FileExplorerRibbon -Expanded
 
-# Minimize the File Explorer ribbon (default value)
+# Minimize File Explorer ribbon (default value)
 # Свернуть ленту проводника (значение по умолчанию)
 # FileExplorerRibbon -Minimized
 
@@ -417,14 +446,6 @@ CortanaButton -Hide
 # Показать кнопку Кортаны на панели задач (значение по умолчанию)
 # CortanaButton -Show
 
-# Hide Copilot button on the taskbar
-# Скрыть кнопку Copilot с панели задач
-CopilotButton -Hide
-
-# Show Copilot button on the taskbar (default value)
-# Отобразить кнопку Copilot на панели задач (значение по умолчанию)
-# CopilotButton -Show
-
 # Hide the Task View button on the taskbar
 # Скрыть кнопку Просмотра задач
 TaskViewButton -Hide
@@ -480,6 +501,18 @@ SecondsInSystemClock -Show
 # Hide seconds on the taskbar clock (default value)
 # Скрыть секунды в системных часах на панели задач (значение по умолчанию)
 # SecondsInSystemClock -Hide
+
+# Combine taskbar buttons and always hide labels (default value)
+# Объединить кнопки панели задач и всегда скрывать метки (значение по умолчанию)
+TaskbarCombine -Always
+
+# Combine taskbar buttons and hide labels when taskbar is full
+# Объединить кнопки панели задач и скрывать метки при переполнении панели задач
+# TaskbarCombine -Full
+
+# Combine taskbar buttons and never hide labels
+# Объединить кнопки панели задач и никогда не скрывать метки
+# TaskbarCombine -Never
 
 # Unpin the "Microsoft Edge", "Microsoft Store", or "Mail" shortcuts from the taskbar
 # Открепить ярлыки "Microsoft Edge", "Microsoft Store" или "Почта" от панели задач
@@ -621,7 +654,6 @@ NavigationPaneExpand -Disable
 #endregion OneDrive
 
 #region System
-#region StorageSense
 # Turn on Storage Sense
 # Включить Контроль памяти
 StorageSense -Enable
@@ -629,23 +661,6 @@ StorageSense -Enable
 # Turn off Storage Sense (default value)
 # Выключить Контроль памяти (значение по умолчанию)
 # StorageSense -Disable
-
-# Run Storage Sense every month
-# Запускать Контроль памяти каждый месяц
-StorageSenseFrequency -Month
-
-# Run Storage Sense during low free disk space (default value)
-# Запускать Контроль памяти, когда остается мало место на диске (значение по умолчанию)
-# StorageSenseFrequency -Default
-
-# Delete temporary files that apps aren't using
-# Удалять временные файлы, не используемые в приложениях
-StorageSenseTempFiles -Enable
-
-# Do not delete temporary files that apps aren't using (default value)
-# Не удалять временные файлы, не используемые в приложениях (значение по умолчанию)
-# StorageSenseTempFiles -Disable
-#endregion StorageSense
 
 # Disable hibernation. It isn't recommended to turn off for laptops
 # Отключить режим гибернации. Не рекомендуется выключать на ноутбуках
@@ -678,14 +693,6 @@ AdminApprovalMode -Never
 # Choose when to be notified about changes to your computer: notify me only when apps try to make changes to my computer (default value)
 # Настройка уведомления об изменении параметров компьютера: уведомлять меня только при попытках приложений внести изменения в компьютер (значение по умолчанию)
 # AdminApprovalMode -Default
-
-# Turn on access to mapped drives from app running with elevated permissions with Admin Approval Mode enabled
-# Включить доступ к сетевым дискам при включенном режиме одобрения администратором при доступе из программ, запущенных с повышенными правами
-MappedDrivesAppElevatedAccess -Enable
-
-# Turn off access to mapped drives from app running with elevated permissions with Admin Approval Mode enabled (default value)
-# Выключить доступ к сетевым дискам при включенном режиме одобрения администратором при доступе из программ, запущенных с повышенными правами (значение по умолчанию)
-# MappedDrivesAppElevatedAccess -Disable
 
 # Turn off Delivery Optimization
 # Выключить оптимизацию доставки
@@ -972,7 +979,7 @@ NetworkDiscovery -Enable
 
 <#
 	Uninstall the "PC Health Check" app and prevent it from installing in the future
-	This application is installed with the KB5005463 update to Check whether PC meets the system requirements of Windows 11
+	This application is installed with the KB5005463 update to сheck whether PC meets the system requirements of Windows 11
 
 	Удалить приложение "Проверка работоспособности ПК Windows" и заблокировать его установку в будущем
 	Данное приложение устанавливается обновлением KB5005463 для проверки соответствия компьютера системным требованиям Windows 11
@@ -1097,7 +1104,7 @@ UninstallUWPApps
 HEVC -Install
 
 <#
-	Open Microsoft Store "HEVC Video Extensions from Device Manufacturer" page to install this extension manually to be able to open .heic and .heif formats
+	Open the Microsoft Store "HEVC Video Extensions from Device Manufacturer" page to install this extension manually to be able to open .heic and .heif formats
 	The extension can be installed without an Microsoft account
 
 	Открыть страницу "Расширения для видео HEVC от производителя устройства" в Microsoft Store, чтобы вручную установить расширение для открытия форматов .heic и .heif
@@ -1350,6 +1357,14 @@ EditWithPaint3DContext -Hide
 # Show the "Edit with Paint 3D" item in the media files context menu (default value)
 # Отобразить пункт "Изменить с помощью Paint 3D" в контекстном меню медиа-файлов (значение по умолчанию)
 # EditWithPaint3DContext -Show
+
+# Hide the "Edit" item from the images context menu
+# Скрыть пункт "Изменить" из контекстного меню изображений
+ImagesEditContext -Hide
+
+# Show the "Edit" item in images context menu (default value)
+# Отобразить пункт "Изменить" в контекстном меню изображений (значение по умолчанию)
+# ImagesEditContext -Show
 
 # Hide the "Print" item from the .bat and .cmd context menu
 # Скрыть пункт "Печать" из контекстного меню .bat и .cmd файлов

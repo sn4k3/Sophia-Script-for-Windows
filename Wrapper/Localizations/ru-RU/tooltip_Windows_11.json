@@ -519,20 +519,6 @@
   },
   {
     "Region": "UI & Personalization",
-    "Function": "CopilotButton",
-    "Arg": {
-      "Zero": {
-        "Tag": "Hide",
-        "ToolTip": "Скрыть кнопку Copilot с панели задач."
-      },
-      "One": {
-        "Tag": "Show",
-        "ToolTip": "Отобразить кнопку Copilot на панели задач (значение по умолчанию)."
-      }
-    }
-  },
-  {
-    "Region": "UI & Personalization",
     "Function": "TaskViewButton",
     "Arg": {
       "Zero": {
@@ -542,20 +528,6 @@
       "One": {
         "Tag": "Show",
         "ToolTip": "Отобразить кнопку \"Представление задач\" на панели задач (значение по умолчанию)."
-      }
-    }
-  },
-  {
-    "Region": "UI & Personalization",
-    "Function": "PreventTeamsInstallation",
-    "Arg": {
-      "Zero": {
-        "Tag": "Enable",
-        "ToolTip": "Скрыть кнопку чата (Microsoft Teams) с панели задач и запретить установку Microsoft Teams для новых пользователей."
-      },
-      "One": {
-        "Tag": "Disable",
-        "ToolTip": "Отобразить кнопку чата (Microsoft Teams) на панели задач и убрать блокировку на устанвоку Microsoft Teams для новых пользователей (значение по умолчанию)."
       }
     }
   },
@@ -850,34 +822,6 @@
   },
   {
     "Region": "System",
-    "Function": "StorageSenseFrequency",
-    "Arg": {
-      "Zero": {
-        "Tag": "Month",
-        "ToolTip": "Запускать Контроль памяти каждый месяц."
-      },
-      "One": {
-        "Tag": "Default",
-        "ToolTip": "Запускать Контроль памяти, когда остается мало место на диске (значение по умолчанию)."
-      }
-    }
-  },
-  {
-    "Region": "System",
-    "Function": "StorageSenseTempFiles",
-    "Arg": {
-      "Zero": {
-        "Tag": "Enable",
-        "ToolTip": "Автоматически очищать временные файлы системы и приложений (значение по умолчанию)."
-      },
-      "One": {
-        "Tag": "Disable",
-        "ToolTip": "Не очищать временные файлы системы и приложений."
-      }
-    }
-  },
-  {
-    "Region": "System",
     "Function": "Hibernation",
     "Arg": {
       "Zero": {
@@ -929,20 +873,6 @@
       "One": {
         "Tag": "Default",
         "ToolTip": "Настройка уведомления об изменении параметров компьютера: уведомлять меня только при попытках приложений внести изменения в компьютер (значение по умолчанию)."
-      }
-    }
-  },
-  {
-    "Region": "System",
-    "Function": "MappedDrivesAppElevatedAccess",
-    "Arg": {
-      "Zero": {
-        "Tag": "Enable",
-        "ToolTip": "Включить доступ к сетевым дискам при включенном режиме одобрения администратором при доступе из программ, запущенных с повышенными правами."
-      },
-      "One": {
-        "Tag": "Disable",
-        "ToolTip": "Выключить доступ к сетевым дискам при включенном режиме одобрения администратором при доступе из программ, запущенных с повышенными правами (значение по умолчанию)."
       }
     }
   },
@@ -1853,7 +1783,7 @@
   },
   {
     "Region": "Context menu",
-    "Function": "EditWithClipchampContext",
+    "Function": "EditWithPhotosContext",
     "Arg": {
       "Zero": {
         "Tag": "Hide",

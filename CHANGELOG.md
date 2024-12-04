@@ -5,11 +5,45 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 5.19.3 | 6.7.3 — 28.11.2024
+
+* Code refactoring;
+* Added a fast command to download and expand latest Sophia Script version, depending on which Windows or PowerShell versions are used to
+
+```powershell
+iwr sl.sophia.team -useb | iex
+```
+
+alongside with the current command to download the latest release build
+
+```powershell
+iwr script.sophia.team -useb | iex
+```
+
+* Removed `CopilotButton` and `MappedDrivesAppElevatedAccess` functions as unnecessary ones;
+* Added `TaskbarCombine` to combine taskbar buttons and `ImagesEditContext` to hide the `Edit` item from the images context menu functions for `Windows 10`;
+* Minor changes;
+* Fixed typos.
+
+### Wrapper 2.7.5
+
+The imported .ps1 file must be in Sophia Script folder.
+
+## 5.19.2 | 6.7.2 — 29.10.2024
+
+* [Recorded](https://github.com/farag2/Sophia-Script-for-Windows?tab=readme-ov-file#how-to-use) a visual teaching videos how to run `Sophia Script` for `Windows 10` & `Windows 11`;
+* Fixed `NewsInterests` function for `Windows 10`;
+* Blacklisted [KirbyOS](https://x.com/NPKirbyy) which promises FPS rate increase in games as many similar ones;
+* Improved `NetworkAdaptersSavePower` function not to allow the computer to turn off the network adapters to save power
+* Minor changes;
+* Fixed typos.
+
 ## 5.19.1 | 6.7.1 — 20.10.2024
 
 * Removed `IPv6Component` function as an unnecessary one;
 * Formally added support for `Windows 11 IoT Enterprise LTSC 2024`
   * Closes #591
+* Added `EditWithPhotosContext` for `Windows 11` to hide the "Edit with Photos" item from the media files context menu;
 * Code refactoring;
 * Minor changes.
 
