@@ -5,6 +5,57 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 5.20.1 | 6.8.1 — 19.01.2025
+
+* Added a tutorial video how to run the specific function(s) via `Functions.ps1` script;
+  * <https://github.com/farag2/Sophia-Script-for-Windows?tab=readme-ov-file#how-to-run-the-specific-functions>
+* Updated cursor pack for `Cursor` function up to the latest available version from <https://www.deviantart.com/jepricreations/art/Windows-11-Cursors-Concept-886489356>;
+* Changed names for functions, having added parameter values to choose:
+  * `Install-VCRedist -Redistributables 2015_2022_x86, 2015_2022_x64`
+  * `Install-DotNetRuntimes -Runtimes NET8x64, NET9x64`
+* `StartRecommendedSection` function now supports all Windows editions except `Home` one;
+* `UnpinTaskbarShortcuts` function now supports new `Outlook` argument value;
+* Added `EditWithPaintContext` function for only `Windows 11` to hide/show "Edit with Paint" item from the media files context menu;
+* Minor changes.
+
+Thanks to WindR and homeless
+
+## Wrapper 2.7.8
+
+* Fixed bugs: .NET Runtimes options cutting off.
+
+## 5.20.0 | 6.8.0 — 29.12.2024
+
+***
+
+Happy New Year. Team Sophia wishes you the best in the coming year. Hopefully, in a few months we can release the first public preview of `SophiApp 2.0`. 
+
+![deds](https://github.com/user-attachments/assets/601fd302-92da-4898-80f3-31c8fc324dff)
+
+***
+
+* Code refactoring continues;
+* Changed DNS records for `Comss.one DNS to `195.133.25.16`, `195.133.25.99`. Applicable for Russia only;
+* `StorageSenseTempFiles` & `StorageSenseFrequency` functions merged into one `StorageSense`;
+* Added checkings for `InstallVCRedist` function whether the latest VC Redistributable packages were already installed to skip downloding them;
+* Added checkings for `InstallDotNetRuntimes` function whether the latest .NET 8 and 9 installed;
+  * Moved to .NET 8 & 9. 
+* Now before configuring any functions related function olicies will be reset in order to avoid situations when a user has a blocked UI features due to harmful tweaks usage.
+  * E.g. before `RecycleBinDeleteConfirmation` function will be applied `ConfirmFileDelete` policy will be reset via LGPO.
+* Fixed `UpdateMicrosoftProducts` function for Windows 11;
+  * Please re-apply using this manual: https://github.com/farag2/Sophia-Script-for-Windows?tab=readme-ov-file#how-to-run-the-specific-functions
+* Minor changes;
+* Fixed and improved translations;
+
+Thanks to A5, l1ghtovskiy, DirtBikeChad, and Rahul Setia.
+
+# Wrapper 2.7.7
+
+* Code refactoring;
+* Renamed variable for messagebox saying imported ps1 script needs to be in Sophia Script folder;
+* Fixed LTSC loading differences;
+* Fixed crashing because of StorageSense option, Refactor, CheckFileExists uses entire path internally
+
 ## 5.19.3 | 6.7.3 — 28.11.2024
 
 * Code refactoring;

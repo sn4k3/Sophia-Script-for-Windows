@@ -107,7 +107,7 @@ jobs:
       - name: Uploading
         uses: softprops/action-gh-release@master
         with:
-          name: ${{ env.RELEASE_NAME }}
+          name: ${{ steps.read_release.outputs.RELEASE_NAME }}
           token: ${{ github.token }}
           files: |
             Sophia*.zip

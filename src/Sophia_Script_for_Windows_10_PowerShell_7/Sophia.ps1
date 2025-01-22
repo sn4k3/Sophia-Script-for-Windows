@@ -2,11 +2,16 @@
 	.SYNOPSIS
 	Default preset file for "Sophia Script for Windows 10 (PowerShell 7)"
 
-	Version: 5.19.3
-	Date: 28.11.2024
+	.VERSION
+	5.20.1
 
-	Copyright (c) 2014—2024 farag, Inestic & lowl1f3
+	.DATE
+	19.01.2025
 
+	.COPYRIGHT
+	(c) 2014—2025 farag, Inestic & lowl1f3
+
+	.THANKS
 	Thanks to all https://forum.ru-board.com members involved
 
 	.DESCRIPTION
@@ -22,6 +27,9 @@
 
 	.EXAMPLE Download and expand the latest Sophia Script version archive (without running) according which Windows and PowerShell versions it is run on
 	iwr script.sophia.team -useb | iex
+
+	.EXAMPLE The command will download and expand the latest Sophia Script archive (without running) from the last commit available according which Windows and PowerShell versions it is run on
+	iwr sl.sophia.team -useb | iex
 
 	.NOTES
 	Supported Windows 10 versions
@@ -50,7 +58,7 @@
 	https://forums.mydigitallife.net/threads/powershell-sophia-script-for-windows-10-windows-11-5-17-8-6-5-8-x64-2023.81675/
 	https://www.reddit.com/r/PowerShell/comments/go2n5v/powershell_script_setup_windows_10/
 
-	.LINK Authors
+	.LINK
 	https://github.com/farag2
 	https://github.com/Inestic
 	https://github.com/lowl1f3
@@ -69,7 +77,7 @@ param
 
 Clear-Host
 
-$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 10 v5.19.3 (PowerShell 7) | Made with $([System.Char]::ConvertFromUtf32(0x1F497)) of Windows | $([System.Char]0x00A9) farag, Inestic & lowl1f3, 2014$([System.Char]0x2013)2024"
+$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 10 v5.20.1 (PowerShell 7) | Made with $([System.Char]::ConvertFromUtf32(0x1F497)) of Windows | $([System.Char]0x00A9) farag, Inestic & lowl1f3, 2014$([System.Char]0x2013)2025"
 
 # Checking whether all files were expanded before running
 $ScriptFiles = @(
@@ -128,6 +136,11 @@ catch [System.InvalidOperationException]
 
 	exit
 }
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# Preset configuration starts here
+# Отсюда начинается настройка пресета
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 <#
 	.SYNOPSIS
@@ -610,12 +623,14 @@ AeroShaking -Enable
 # При захвате заголовка окна и встряхивании не сворачиваются все остальные окна
 # AeroShaking -Disable
 
-# Download and install free dark "Windows 11 Cursors Concept v2" cursors from Jepri Creations
-# Скачать и установить бесплатные темные курсоры "Windows 11 Cursors Concept v2" от Jepri Creations
+# Download and install free dark "Windows 11 Cursors Concept" cursors from Jepri Creations
+# Скачать и установить бесплатные темные курсоры "Windows 11 Cursors Concept" от Jepri Creations
+# https://www.deviantart.com/jepricreations/art/Windows-11-Cursors-Concept-886489356
 Cursors -Dark
 
-# Download and install free light "Windows 11 Cursors Concept v2" cursors from Jepri Creations
-# Скачать и установить бесплатные светлые курсоры "Windows 11 Cursors Concept v2" от Jepri Creations
+# Download and install free light "Windows 11 Cursors Concept" cursors from Jepri Creations
+# Скачать и установить бесплатные светлые курсоры "Windows 11 Cursors Concept" от Jepri Creations
+# https://www.deviantart.com/jepricreations/art/Windows-11-Cursors-Concept-886489356
 # Cursors -Light
 
 # Set default cursors
@@ -988,21 +1003,13 @@ NetworkDiscovery -Enable
 #>
 UninstallPCHealthCheck
 
-<#
-	Install the latest Microsoft Visual C++ Redistributable Packages 2015–2022 (x86/x64)
-	Установить последнюю версию распространяемых пакетов Microsoft Visual C++ 2015–2022 (x86/x64)
+# Install the latest Microsoft Visual C++ Redistributable Packages 2015–2022 (x86/x64)
+# Установить последнюю версию распространяемых пакетов Microsoft Visual C++ 2015–2022 (x86/x64)
+Install-VCRedist -Redistributables 2015_2022_x86, 2015_2022_x64
 
-	https://docs.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist
-#>
-InstallVCRedist
-
-<#
-	Install the latest .NET Desktop Runtime 6, 8 x64
-	Установить последнюю версию .NET Desktop Runtime 6, 8 x64
-
-	https://dotnet.microsoft.com/en-us/download/dotnet
-#>
-InstallDotNetRuntimes -Runtimes NET6x64, NET8x64
+# Install the latest .NET Desktop Runtime 8, 9 x64
+#Установить последнюю версию .NET Desktop Runtime 8, 9 x64
+Install-DotNetRuntimes -Runtimes NET8x64, NET9x64
 
 # Enable proxying only blocked sites from the unified registry of Roskomnadzor. The function is applicable for Russia only
 # Включить проксирование только заблокированных сайтов из единого реестра Роскомнадзора. Функция применима только для России
@@ -1021,14 +1028,6 @@ PreventEdgeShortcutCreation -Channels Stable, Beta, Dev, Canary
 # Do not prevent desktop shortcut creation upon Microsoft Edge update (default value)
 # Не предотвращать создание ярлыков на рабочем столе при обновлении Microsoft Edge (значение по умолчанию)
 # PreventEdgeShortcutCreation -Disable
-
-# Prevent all internal SATA drives from showing up as removable media in the taskbar notification area
-# Запретить отображать все внутренние SATA-диски как съемные носители в области уведомлений на панели задач
-SATADrivesRemovableMedia -Disable
-
-# Show up all internal SATA drives as removeable media in the taskbar notification area (default value)
-# Отображать все внутренние SATA-диски как съемные носители в области уведомлений на панели задач (значение по умолчанию)
-# SATADrivesRemovableMedia -Default
 
 # Back up the system registry to %SystemRoot%\System32\config\RegBack folder when PC restarts and create a RegIdleBackup in the Task Scheduler task to manage subsequent backups
 # Создавать копии реестра при перезагрузки ПК и создавать задание RegIdleBackup в Планировщике задания для управления последующими резервными копиями
@@ -1291,12 +1290,12 @@ SaveZoneInformation -Disable
 # Включить Windows Script Host (значение по умолчанию)
 # WindowsScriptHost -Enable
 
-# Enable Windows Sandbox
-# Включить Windows Sandbox
+# Enable Windows Sandbox. Applicable only to Professional, Enterprise and Education editions
+# Включить Windows Sandbox. Применимо только к редакциям Professional, Enterprise и Education
 # WindowsSandbox -Enable
 
-# Disable Windows Sandbox (default value)
-# Выключить Windows Sandbox (значение по умолчанию)
+# Disable Windows Sandbox (default value). Applicable only to Professional, Enterprise and Education editions
+# Выключить Windows Sandbox (значение по умолчанию). Применимо только к редакциям Professional, Enterprise и Education
 # WindowsSandbox -Disable
 
 <#

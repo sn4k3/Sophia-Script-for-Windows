@@ -6,7 +6,15 @@
 
 **Sophia Script für Windows ist das leistungsstärkste PowerShell-Modul zur Feinabstimmung von Windows**
 
-![downloads](https://img.shields.io/github/downloads/farag2/Sophia-Script-for-Windows/total?label=downloads%20%28since%20May%202020%29) [![chocolatey](https://img.shields.io/chocolatey/dt/sophia?color=blue&label=chocolatey%20package)](https://community.chocolatey.org/packages/sophia) [![lines](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/farag2/9852d6b9569a91bf69ceba8a94cc97f4/raw/SophiaScript.json)](https://github.com/farag2/Sophia-Script-for-Windows)
+[downloads-badge]: https://img.shields.io/github/downloads/farag2/Sophia-Script-for-Windows/total?label=downloads%20%28since%20May%202020%29
+[chocolatey-badge]: https://img.shields.io/chocolatey/dt/sophia?color=blue&label=chocolatey%20package
+[chocolatey-link]: https://community.chocolatey.org/packages/sophia
+[lines-badge]: https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/farag2/9852d6b9569a91bf69ceba8a94cc97f4/raw/SophiaScript.json
+[lines-link]: https://github.com/farag2/Sophia-Script-for-Windows
+
+![downloads][downloads-badge]
+[![chocolatey][chocolatey-badge]][chocolatey-link]
+[![lines][lines-badge]][lines-link]
 
 [telegram-news-badge]: https://img.shields.io/badge/Sophia%20News-Telegram-blue?style=flat&logo=Telegram
 [telegram-news]: https://t.me/sophianews
@@ -41,8 +49,8 @@ Mit <img src="https://raw.githubusercontent.com/farag2/Sophia-Script-for-Windows
 * [Verwendung](#verwendung)
   * [Herunterladen über PowerShell](#herunterladen-über-powershell)
   * [Manuelle Methode](#manuelle-methode)
-  * [Wrapper](#wrapper)
   * [Verwendung von spezifischen Funktionen](#verwendung-von-spezifischen-funktionen)
+  * [Wrapper](#wrapper)
 * [Spenden](#spenden)
 * [System-Voraussetzungen](#system-voraussetzungen)
 * [Haupt-Features](#haupt-features)
@@ -98,36 +106,20 @@ iwr sl.sophia.team -useb | iex
 * Geben Sie `.\Sophia.ps1` ein und drücken Sie <kbd>Enter</kbd>;
 
 ```powershell
-  .Sophia.ps1
+  .\Sophia.ps1
 ```
 
 ### Windows 11
 
-https://github.com/user-attachments/assets/2654b005-9577-4e56-ac9e-501d3e8a18bd
+<https://github.com/user-attachments/assets/2654b005-9577-4e56-ac9e-501d3e8a18bd>
 
 ### Windows 10
 
-https://github.com/user-attachments/assets/f5bda68f-9509-41dc-b3b1-1518aeaee36f
-
-## Wrapper
-
-* Laden Sie die (neueste)(<https://github.com/farag2/Sophia-Script-for-Windows/releases/latest>) Wrapper-Version herunter.
-* Das Archiv extrahieren;
-* Führe `SophiaScriptWrapper.exe` aus und importiere `Sophia.ps1`;
-  * `Sophia.ps1`muss im `Sophia Script` Ordner enthalten sein;
-  * Der Wrapper hat ein Echtzeit-UI-Rendering;
-* Konfiguriere jede Funktion;
-* Öffne das `Console Output` Tab und drücke `Run PowerShell`.
+<https://github.com/user-attachments/assets/f5bda68f-9509-41dc-b3b1-1518aeaee36f>
 
 ### Verwendung von spezifischen Funktionen
 
 * Führen Sie alle Schritte aus dem Abschnitt [Manuelle Methode](#manuelle-methode) aus und stoppen Sie bei den Einstellungen der Ausführungsrichtlinie in PowerShell.
-* Legen Sie die Ausführungsrichtlinie so fest, dass Skripts nur in der aktuellen PowerShell-Sitzung ausgeführt werden können;
-
-```powershell
-  Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
-```
-
 * Um spezifische Funktionen auszuführen [dot source](https://docs.microsoft.com/ru-ru/powershell/module/microsoft.powershell.core/about/about_operators#dot-sourcing-operator) die `Functions.ps1` datei zuerst:
 
 ```powershell
@@ -147,11 +139,27 @@ Sophia -Functions "DiagTrackService -Disable", "DiagnosticDataLevel -Minimal", U
 UninstallUWPApps, "PinToStart -UnpinAll"
 ```
 
-Oder verwenden Sie ein Format im alten Stil ohne die TAB-Funktionen zum automatischen Ausfüllen (die Anführungszeichen sind erforderlich)
+Oder verwenden Sie ein Format im alten Stil ohne die <kbd>TAB</kbd>-Funktionen zum automatischen Ausfüllen (die Anführungszeichen sind erforderlich)
 
 ```powershell
 .\Sophia.ps1 -Functions CreateRestorePoint, "ScheduledTasks -Disable", "WindowsCapabilities -Uninstall"
 ```
+
+<https://github.com/user-attachments/assets/ea90122a-bdb3-4687-bf8b-9b6e7af46826>
+
+## Wrapper
+
+![Wrapper](https://i.imgur.com/AiuCUvW.png)
+
+@BenchTweakGaming
+
+* Laden Sie die (neueste)(<https://github.com/farag2/Sophia-Script-for-Windows/releases/latest>) Wrapper-Version herunter.
+* Das Archiv extrahieren;
+* Führe `SophiaScriptWrapper.exe` aus und importiere `Sophia.ps1`;
+  * `Sophia.ps1`muss im `Sophia Script` Ordner enthalten sein;
+  * Der Wrapper hat ein Echtzeit-UI-Rendering;
+* Konfiguriere jede Funktion;
+* Öffne das `Console Output` Tab und drücke `Run PowerShell`.
 
 ## Spenden
 
@@ -177,6 +185,7 @@ Oder verwenden Sie ein Format im alten Stil ohne die TAB-Funktionen zum automati
 
 ## Haupt-Features
 
+* Alle Archive werden [automatisch](https://github.com/farag2/Sophia-Script-for-Windows/actions) über GitHub Actions erstellt.
 * Datenschutz und Telemetrie einrichten;
 * DNS-über-HTTPS für IPv4 aktivieren;
 * Deaktivieren Sie die Diagnoseverfolgung geplanter Aufgaben mit einem in [WPF] geschriebenen Popup-Formular (#screenshots);
@@ -236,10 +245,6 @@ https://user-images.githubusercontent.com/10544660/253818031-b7ce6bf1-d968-41ea-
 ### Native interaktive Toasts für die geplanten Aufgaben
 
 ![Image](https://github.com/farag2/Sophia-Script-for-Windows/raw/master/img/Toasts.png)
-
-### @BenchTweakGaming Sophia Script Wrapper
-
-![Wrapper](https://i.imgur.com/AiuCUvW.png)
 
 ## Videos
 

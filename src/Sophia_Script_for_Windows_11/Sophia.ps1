@@ -2,11 +2,16 @@
 	.SYNOPSIS
 	Default preset file for "Sophia Script for Windows 11"
 
-	Version: 6.7.3
-	Date: 28.11.2024
+	.VERSION
+	6.8.1
 
-	Copyright (c) 2014—2024 farag, Inestic & lowl1f3
+	.DATE
+	19.01.2025
 
+	.COPYRIGHT
+	(c) 2014—2025 farag, Inestic & lowl1f3
+
+	.THANKS
 	Thanks to all https://forum.ru-board.com members involved
 
 	.DESCRIPTION
@@ -49,7 +54,7 @@
 	https://forums.mydigitallife.net/threads/powershell-sophia-script-for-windows-10-windows-11-5-17-8-6-5-8-x64-2023.81675/
 	https://www.reddit.com/r/PowerShell/comments/go2n5v/powershell_script_setup_windows_10/
 
-	.LINK Authors
+	.LINK
 	https://github.com/farag2
 	https://github.com/Inestic
 	https://github.com/lowl1f3
@@ -68,7 +73,7 @@ param
 
 Clear-Host
 
-$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 11 v6.7.3 | Made with $([System.Char]::ConvertFromUtf32(0x1F497)) of Windows | $([System.Char]0x00A9) farag, Inestic & lowl1f3, 2014$([System.Char]0x2013)2024"
+$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 11 v6.8.1 | Made with $([System.Char]::ConvertFromUtf32(0x1F497)) of Windows | $([System.Char]0x00A9) farag, Inestic & lowl1f3, 2014$([System.Char]0x2013)2025"
 
 # Checking whether all files were expanded before running
 $ScriptFiles = @(
@@ -123,6 +128,11 @@ catch [System.InvalidOperationException]
 
 	exit
 }
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# Preset configuration starts here
+# Отсюда начинается настройка пресета
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 <#
 	.SYNOPSIS
@@ -481,9 +491,9 @@ TaskbarCombine -Always
 # Объединить кнопки панели задач и никогда не скрывать метки
 # TaskbarCombine -Never
 
-# Unpin the "Microsoft Edge", "Microsoft Store" shortcuts from the taskbar
-# Открепить ярлыки "Microsoft Edge", "Microsoft Store" от панели задач
-UnpinTaskbarShortcuts -Shortcuts Store
+# Unpin Microsoft Edge, Microsoft Store, and Outlook shortcuts from the taskbar
+# Открепить ярлыки Microsoft Edge, Microsoft Store и Outlook от панели задач
+UnpinTaskbarShortcuts -Shortcuts Store, Outlook
 
 # Enable end task in taskbar by right click
 # Включить завершение задачи на панели задач правой кнопкой мыши
@@ -570,13 +580,15 @@ AeroShaking -Enable
 # При захвате заголовка окна и встряхивании не сворачиваются все остальные окна (значение по умолчанию)
 # AeroShaking -Disable
 
-# Download and install free dark "Windows 11 Cursors Concept v2" cursors from Jepri Creations
-# Скачать и установить бесплатные темные курсоры "Windows 11 Cursors Concept v2" от Jepri Creations
-#Cursors -Dark
+# Download and install free dark "Windows 11 Cursors Concept" cursors from Jepri Creations
+# Скачать и установить бесплатные темные курсоры "Windows 11 Cursors Concept" от Jepri Creations
+# https://www.deviantart.com/jepricreations/art/Windows-11-Cursors-Concept-886489356
+# Cursors -Dark
 
-# Download and install free light "Windows 11 Cursors Concept v2" cursors from Jepri Creations
-# Скачать и установить бесплатные светлые курсоры "Windows 11 Cursors Concept v2" от Jepri Creations
-# Cursors -Light
+# Download and install free light "Windows 11 Cursors Concept" cursors from Jepri Creations
+# Скачать и установить бесплатные светлые курсоры "Windows 11 Cursors Concept" от Jepri Creations
+# https://www.deviantart.com/jepricreations/art/Windows-11-Cursors-Concept-886489356
+Cursors -Light
 
 # Set default cursors
 # Установить курсоры по умолчанию
@@ -597,6 +609,14 @@ NavigationPaneExpand -Disable
 # Expand to open folder on navigation pane
 # Развернуть до открытой папки область навигации
 # NavigationPaneExpand -Enable
+
+# Remove Recommended section in Start Menu. Applicable only to Enterprise and Education editions, but not to IoT Enterprise
+# Удалить раздел "Рекомендуем" в меню "Пуск". Применимо только к редакциям Enterprise и Education, но не к IoT Enterprise
+StartRecommendedSection -Hide
+
+# Show Recommended section in Start Menu (default value). Applicable only to Enterprise and Education editions, but not to IoT Enterprise
+# Показывать раздел "Рекомендуем" в меню "Пуск" (значение по умолчанию). Применимо только к редакциям Enterprise и Education, но не к IoT Enterprise
+# StartRecommendedSection -Show
 #endregion UI & Personalization
 
 #region OneDrive
@@ -945,21 +965,13 @@ DefaultTerminalApp -WindowsTerminal
 # Установить Windows Console Host как приложение терминала по умолчанию для размещения пользовательского интерфейса для приложений командной строки (значение по умолчанию)
 # DefaultTerminalApp -ConsoleHost
 
-<#
-	Install the latest Microsoft Visual C++ Redistributable Packages 2015–2022 (x86/x64)
-	Установить последнюю версию распространяемых пакетов Microsoft Visual C++ 2015–2022 (x86/x64)
+# Install the latest Microsoft Visual C++ Redistributable Packages 2015–2022 (x86/x64)
+# Установить последнюю версию распространяемых пакетов Microsoft Visual C++ 2015–2022 (x86/x64)
+Install-VCRedist -Redistributables 2015_2022_x86, 2015_2022_x64
 
-	https://docs.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist
-#>
-#InstallVCRedist
-
-<#
-	Install the latest .NET Desktop Runtime 6, 8 x64
-	Установить последнюю версию .NET Desktop Runtime 6, 8 x64
-
-	https://dotnet.microsoft.com/en-us/download/dotnet
-#>
-#InstallDotNetRuntimes -Runtimes NET6x64, NET8x64
+# Install the latest .NET Desktop Runtime 8, 9 x64
+#Установить последнюю версию .NET Desktop Runtime 8, 9 x64
+Install-DotNetRuntimes -Runtimes NET8x64, NET9x64
 
 # Enable proxying only blocked sites from the unified registry of Roskomnadzor. The function is applicable for Russia only
 # Включить проксирование только заблокированных сайтов из единого реестра Роскомнадзора. Функция применима только для России
@@ -978,14 +990,6 @@ PreventEdgeShortcutCreation -Channels Stable, Beta, Dev, Canary
 # Do not prevent desktop shortcut creation upon Microsoft Edge update (default value)
 # Не предотвращать создание ярлыков на рабочем столе при обновлении Microsoft Edge (значение по умолчанию)
 # PreventEdgeShortcutCreation -Disable
-
-# Prevent all internal SATA drives from showing up as removable media in the taskbar notification area
-# Запретить отображать все внутренние SATA-диски как съемные носители в области уведомлений на панели задач
-SATADrivesRemovableMedia -Disable
-
-# Show up all internal SATA drives as removeable media in the taskbar notification area (default value)
-# Отображать все внутренние SATA-диски как съемные носители в области уведомлений на панели задач (значение по умолчанию)
-# SATADrivesRemovableMedia -Default
 
 # Back up the system registry to %SystemRoot%\System32\config\RegBack folder when PC restarts and create a RegIdleBackup in the Task Scheduler task to manage subsequent backups
 # Создавать копии реестра при перезагрузки ПК и создавать задание RegIdleBackup в Планировщике задания для управления последующими резервными копиями
@@ -1042,36 +1046,28 @@ CortanaAutostart -Disable
 # Enable Cortana autostarting (default value)
 # Включить автозагрузку Кортана (значение по умолчанию)
 # CortanaAutostart -Enable
-
-# Disable Microsoft Teams autostarting
-# Выключить автозагрузку Microsoft Teams
-TeamsAutostart -Disable
-
-# Enable Microsoft Teams autostarting (default value)
-# Включить автозагрузку Microsoft Teams (значение по умолчанию)
-# TeamsAutostart -Enable
 #endregion UWP apps
 
 #region Gaming
 <#
-	Disable Game Bar
-	To prevent popping up the "You'll need a new app to open this ms-gamingoverlay" warning, you need to disable the Game Bar app, even if you uninstalled it before
+	Disable Xbox Game Bar
+	To prevent popping up the "You'll need a new app to open this ms-gamingoverlay" warning, you need to disable the Xbox Game Bar app, even if you uninstalled it before
 
-	Отключить Game Bar
-	Чтобы предотвратить появление предупреждения "Вам понадобится новое приложение, чтобы открыть этот ms-gamingoverlay", вам необходимо отключить приложение Game Bar, даже если вы удалили его раньше
+	Отключить Xbox Game Bar
+	Чтобы предотвратить появление предупреждения "Вам понадобится новое приложение, чтобы открыть этот ms-gamingoverlay", вам необходимо отключить приложение Xbox Game Bar, даже если вы удалили его раньше
 #>
 #XboxGameBar -Disable
 
-# Enable Game Bar (default value)
-# Включить Game Bar (значение по умолчанию)
+# Enable Xbox Game Bar (default value)
+# Включить Xbox Game Bar (значение по умолчанию)
 # XboxGameBar -Enable
 
-# Disable Game Bar tips
-# Отключить советы Game Bar
+# Disable Xbox Game Bar tips
+# Отключить советы Xbox Game Bar
 XboxGameTips -Disable
 
-# Enable Game Bar tips (default value)
-# Включить советы Game Bar (значение по умолчанию)
+# Enable Xbox Game Bar tips (default value)
+# Включить советы Xbox Game Bar (значение по умолчанию)
 # XboxGameTips -Enable
 
 # Choose an app and set the "High performance" graphics performance for it. Only if you have a dedicated GPU
@@ -1214,12 +1210,12 @@ SaveZoneInformation -Disable
 # Включить Windows Script Host (значение по умолчанию)
 # WindowsScriptHost -Enable
 
-# Enable Windows Sandbox
-# Включить Windows Sandbox
+# Enable Windows Sandbox. Applicable only to Professional, Enterprise and Education editions
+# Включить Windows Sandbox. Применимо только к редакциям Professional, Enterprise и Education
 # WindowsSandbox -Enable
 
-# Disable Windows Sandbox (default value)
-# Выключить Windows Sandbox (значение по умолчанию)
+# Disable Windows Sandbox (default value). Applicable only to Professional, Enterprise and Education editions
+# Выключить Windows Sandbox (значение по умолчанию). Применимо только к редакциям Professional, Enterprise и Education
 # WindowsSandbox -Disable
 
 <#
@@ -1281,6 +1277,14 @@ EditWithPhotosContext -Hide
 # Show the "Edit with Photos" item in the media files context menu (default value)
 # Отобразить пункт "Изменить с помощью приложения "Фотографии"" в контекстном меню (значение по умолчанию)
 # EditWithPhotosContext -Show
+
+# Hide the "Edit with Paint" item from the media files context menu
+# Скрыть пункт "Изменить с помощью приложения "Paint"" из контекстного меню
+EditWithPaintContext -Hide
+
+# Show the "Edit with Paint" item in the media files context menu (default value)
+# Отобразить пункт "Изменить с помощью приложения "Paint"" в контекстном меню (значение по умолчанию)
+# EditWithPaintContext -Show
 
 # Hide the "Print" item from the .bat and .cmd context menu
 # Скрыть пункт "Печать" из контекстного меню .bat и .cmd файлов

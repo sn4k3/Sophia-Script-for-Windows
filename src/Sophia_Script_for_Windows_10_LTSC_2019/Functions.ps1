@@ -2,10 +2,10 @@
 	.SYNOPSIS
 	The TAB completion for functions and their arguments
 
-	Version: 5.9.3
-	Date: 28.11.2024
+	Version: 5.10.1
+	Date: 19.01.2025
 
-	Copyright (c) 2014—2024 farag, Inestic & lowl1f3
+	Copyright (c) 2014—2025 farag, Inestic & lowl1f3
 
 	Thanks to all https://forum.ru-board.com members involved
 
@@ -49,7 +49,7 @@ function Sophia
 
 Clear-Host
 
-$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 10 LTSC 2019 v5.9.3 | Made with $([System.Char]::ConvertFromUtf32(0x1F497)) of Windows 10 | $([System.Char]0x00A9) farag, Inestic & lowl1f3, 2014$([System.Char]0x2013)2024"
+$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 10 LTSC 2019 v5.10.1 | Made with $([System.Char]::ConvertFromUtf32(0x1F497)) of Windows 10 | $([System.Char]0x00A9) farag, Inestic & lowl1f3, 2014$([System.Char]0x2013)2025"
 
 Remove-Module -Name Sophia -Force -ErrorAction Ignore
 Import-Module -Name $PSScriptRoot\Manifest\Sophia.psd1 -PassThru -Force
@@ -78,8 +78,32 @@ $Parameters = @{
 		{
 			$ParameterSets = (Get-Command -Name $Command).Parametersets.Parameters | Where-Object -FilterScript {$null -eq $_.Attributes.AliasNames}
 
-			# If a module command is InstallDotNetRuntimes
-			if ($Command -eq "InstallDotNetRuntimes")
+			# If a module command is Install-VCRedist
+			if ($Command -eq "Install-VCRedist")
+			{
+				# Get all command arguments, excluding defaults
+				foreach ($ParameterSet in $ParameterSets.Name)
+				{
+					# If an argument is Redistributables
+					if ($ParameterSet -eq "Redistributables")
+					{
+						$ValidValues = ((Get-Command -Name Install-VCRedist).Parametersets.Parameters | Where-Object -FilterScript {$null -eq $_.Attributes.AliasNames}).Attributes.ValidValues
+						foreach ($ValidValue in $ValidValues)
+						{
+							# The "Install-VCRedist -Redistributables <function>" construction
+							"Install-VCRedist" + " " + "-" + $ParameterSet + " " + $ValidValue | Where-Object -FilterScript {$_ -like "*$wordToComplete*"} | ForEach-Object -Process {"`"$_`""}
+						}
+
+						# The "Install-VCRedist -Redistributables <functions>" construction
+						"Install-VCRedist" + " " + "-" + $ParameterSet + " " + ($ValidValues -join ", ") | Where-Object -FilterScript {$_ -like "*$wordToComplete*"} | ForEach-Object -Process {"`"$_`""}
+					}
+
+					continue
+				}
+			}
+
+			# If a module command is Install-DotNetRuntimes
+			if ($Command -eq "Install-DotNetRuntimes")
 			{
 				# Get all command arguments, excluding defaults
 				foreach ($ParameterSet in $ParameterSets.Name)
@@ -87,15 +111,15 @@ $Parameters = @{
 					# If an argument is Runtimes
 					if ($ParameterSet -eq "Runtimes")
 					{
-						$ValidValues = ((Get-Command -Name InstallDotNetRuntimes).Parametersets.Parameters | Where-Object -FilterScript {$null -eq $_.Attributes.AliasNames}).Attributes.ValidValues
+						$ValidValues = ((Get-Command -Name Install-DotNetRuntimes).Parametersets.Parameters | Where-Object -FilterScript {$null -eq $_.Attributes.AliasNames}).Attributes.ValidValues
 						foreach ($ValidValue in $ValidValues)
 						{
-							# The "InstallDotNetRuntimes -Runtimes <function>" construction
-							"InstallDotNetRuntimes" + " " + "-" + $ParameterSet + " " + $ValidValue | Where-Object -FilterScript {$_ -like "*$wordToComplete*"} | ForEach-Object -Process {"`"$_`""}
+							# The "Install-DotNetRuntimes -Runtimes <function>" construction
+							"Install-DotNetRuntimes" + " " + "-" + $ParameterSet + " " + $ValidValue | Where-Object -FilterScript {$_ -like "*$wordToComplete*"} | ForEach-Object -Process {"`"$_`""}
 						}
 
-						# The "InstallDotNetRuntimes -Runtimes <functions>" construction
-						"InstallDotNetRuntimes" + " " + "-" + $ParameterSet + " " + ($ValidValues -join ", ") | Where-Object -FilterScript {$_ -like "*$wordToComplete*"} | ForEach-Object -Process {"`"$_`""}
+						# The "Install-DotNetRuntimes -Runtimes <functions>" construction
+						"Install-DotNetRuntimes" + " " + "-" + $ParameterSet + " " + ($ValidValues -join ", ") | Where-Object -FilterScript {$_ -like "*$wordToComplete*"} | ForEach-Object -Process {"`"$_`""}
 					}
 
 					continue
