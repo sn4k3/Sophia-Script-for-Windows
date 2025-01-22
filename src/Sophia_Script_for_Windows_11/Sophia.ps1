@@ -205,7 +205,7 @@ FeedbackFrequency -Never
 
 # Turn off the diagnostics tracking scheduled tasks
 # Отключить задания диагностического отслеживания
-ScheduledTasks -Disable
+# ScheduledTasks -Disable
 
 # Turn on the diagnostics tracking scheduled tasks (default value)
 # Включить задания диагностического отслеживания (значение по умолчанию)
