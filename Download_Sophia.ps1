@@ -12,8 +12,6 @@ Clear-Host
 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
-Remove-Variable * -ErrorAction Ignore
-
 # Checking whether the logged-in user is an admin
 $CurrentUserName = (Get-CimInstance -ClassName Win32_Process -Filter ProcessId=$PID | Invoke-CimMethod -MethodName GetOwner | Select-Object -First 1).User
 $LoginUserName = (Get-CimInstance -ClassName Win32_Process -Filter "name='explorer.exe'" | Invoke-CimMethod -MethodName GetOwner | Select-Object -First 1).User
@@ -27,7 +25,8 @@ if ($CurrentUserName -ne $LoginUserName)
 	Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
 	Write-Verbose -Message "https://discord.gg/sSryhaEv79" -Verbose
 
-	break
+	pause
+	exit
 }
 
 if ($Host.Version.Major -eq 5)

@@ -3,13 +3,13 @@
 	Default preset file for "Sophia Script for Windows 11 LTSC 2024"
 
 	.VERSION
-	6.8.2
+	6.8.3
 
 	.DATE
-	26.01.2025
+	06.02.2025
 
 	.COPYRIGHT
-	(c) 2014—2025 farag, Inestic & lowl1f3
+	(c) 2014—2025 Team Sophia
 
 	.THANKS
 	Thanks to all https://forum.ru-board.com members involved
@@ -74,7 +74,7 @@ param
 
 Clear-Host
 
-$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 11 LTSC 2024 v6.8.2 | Made with $([System.Char]::ConvertFromUtf32(0x1F497)) of Windows | $([System.Char]0x00A9) farag, Inestic & lowl1f3, 2014$([System.Char]0x2013)2025"
+$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 11 LTSC 2024 v6.8.3 | Made with $([System.Char]::ConvertFromUtf32(0x1F497)) of Windows | $([System.Char]0x00A9) Team Sophia, 2014$([System.Char]0x2013)2025"
 
 # Checking whether all files were expanded before running
 $ScriptFiles = @(
@@ -122,7 +122,7 @@ try
 }
 catch [System.InvalidOperationException]
 {
-	Write-Warning -Message $Localization.UnsupportedPowerShell
+	Write-Warning -Message ($Localization.UnsupportedPowerShell -f $PSVersionTable.PSVersion.Major, $PSVersionTable.PSVersion.Minor)
 
 	Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
 	Write-Verbose -Message "https://discord.gg/sSryhaEv79" -Verbose
@@ -598,12 +598,12 @@ NavigationPaneExpand -Disable
 # Развернуть до открытой папки область навигации
 # NavigationPaneExpand -Enable
 
-# Remove Recommended section in Start Menu. Applicable only to Enterprise and Education editions, but not to IoT Enterprise
-# Удалить раздел "Рекомендуем" в меню "Пуск". Применимо только к редакциям Enterprise и Education, но не к IoT Enterprise
+# Remove Recommended section in Start Menu
+# Удалить раздел "Рекомендуем" в меню "Пуск"
 StartRecommendedSection -Hide
 
-# Show Recommended section in Start Menu (default value). Applicable only to Enterprise and Education editions, but not to IoT Enterprise
-# Показывать раздел "Рекомендуем" в меню "Пуск" (значение по умолчанию). Применимо только к редакциям Enterprise и Education, но не к IoT Enterprise
+# Show Recommended section in Start Menu (default value)
+# Показывать раздел "Рекомендуем" в меню "Пуск" (значение по умолчанию)
 # StartRecommendedSection -Show
 #endregion UI & Personalization
 

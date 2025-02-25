@@ -21,7 +21,7 @@ jobs:
           # By default, GitHub parses only first page
           $Token = "${{ secrets.GITHUB_TOKEN }}"
           $Headers = @{
-              Accept        = "application/json"
+              Accept        = "application/vnd.github+json"
               Authorization = "Bearer $Token"
           }
           $Parameters = @{
@@ -34,7 +34,7 @@ jobs:
           # Count downloads for the second page of the repo
           $Token = "${{ secrets.GITHUB_TOKEN }}"
           $Headers = @{
-              Accept        = "application/json"
+              Accept        = "application/vnd.github+json"
               Authorization = "Bearer $Token"
               Verbose = $true
           }
@@ -47,6 +47,7 @@ jobs:
 
           $Summary = $page1 + $page2
           $Summary = "{0:N1}k" -f ($Summary/1000)
+          # "{0:N1} million" -f ($Summary/1000000)
 
           Write-Verbose -Message $Summary -Verbose
 

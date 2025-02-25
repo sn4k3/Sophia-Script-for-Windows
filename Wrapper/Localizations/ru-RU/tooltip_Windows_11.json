@@ -778,11 +778,11 @@
     "Arg": {
       "Zero": {
         "Tag": "Hide",
-        "ToolTip": "Удалить раздел \"Рекомендуем\" в меню \"Пуск\". Применимо только к редакциям Enterprise и Education, но не к IoT Enterprise."
+        "ToolTip": "Удалить раздел \"Рекомендуем\" в меню \"Пуск\". Неприменимо к редакции Home."
       },
       "One": {
         "Tag": "Show",
-        "ToolTip": "Показывать раздел \"Рекомендуем\" в меню \"Пуск\". Применимо только к редакциям Enterprise и Education, но не к IoT Enterprise."
+        "ToolTip": "Показывать раздел \"Рекомендуем\" в меню \"Пуск\". Неприменимо к редакции Home."
       }
     }
   },
@@ -1307,6 +1307,7 @@
   {
     "Region": "System",
     "Function": "Install-VCRedist -Redistributables",
+    "ToolTip": "Установить последнюю версию Microsoft Visual C++ Redistributable Packages x86, x64",
     "Arg": {
       "Zero": {
         "Tag": "2015_2022_x86",

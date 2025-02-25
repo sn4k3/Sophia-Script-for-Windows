@@ -778,11 +778,11 @@
     "Arg": {
       "Zero": {
         "Tag": "Hide",
-        "ToolTip": "Entfernen Sie den Abschnitt Empfohlen im Startmenü. Gilt nur für die Editionen Enterprise und Education, aber nicht für IoT Enterprise."
+        "ToolTip": "Entfernen Sie den Abschnitt Empfohlen im Startmenü. Gilt nicht für die Home-Edition."
       },
       "One": {
         "Tag": "Show",
-        "ToolTip": "Abschnitt Empfohlen im Startmenü anzeigen (Standardwert). Gilt nur für die Editionen Enterprise und Education, aber nicht für IoT Enterprise."
+        "ToolTip": "Abschnitt Empfohlen im Startmenü anzeigen (Standardwert). Gilt nicht für die Home-Edition."
       }
     }
   },
@@ -1306,7 +1306,8 @@
   },
   {
     "Region": "System",
-    "Function": "Install-VCRedist",
+    "Function": "Install-VCRedist -Redistributables",
+    "ToolTip": "Installieren Sie die neueste Microsoft Visual C++ Redistributable Packages x86, x64",
     "Arg": {
       "Zero": {
         "Tag": "2015_2022_x86",

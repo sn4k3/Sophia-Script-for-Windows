@@ -12,8 +12,6 @@ Clear-Host
 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
-Remove-Variable * -ErrorAction Ignore
-
 # Checking whether the logged-in user is an admin
 $CurrentUserName = (Get-CimInstance -ClassName Win32_Process -Filter ProcessId=$PID | Invoke-CimMethod -MethodName GetOwner | Select-Object -First 1).User
 $LoginUserName = (Get-CimInstance -ClassName Win32_Process -Filter "name='explorer.exe'" | Invoke-CimMethod -MethodName GetOwner | Select-Object -First 1).User
@@ -27,7 +25,8 @@ if ($CurrentUserName -ne $LoginUserName)
 	Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
 	Write-Verbose -Message "https://discord.gg/sSryhaEv79" -Verbose
 
-	break
+	pause
+	exit
 }
 
 if ($Host.Version.Major -eq 5)
@@ -143,7 +142,8 @@ switch ((Get-CimInstance -ClassName Win32_OperatingSystem).BuildNumber)
 if (Test-Path -Path "$DownloadsFolder\SophiaScriptTemp")
 {
 	Write-Verbose -Message "Please remove `"$DownloadsFolder\SophiaScriptTemp`" manually and try to use script again." -Verbose
-
+	Remove-Item -Path "$DownloadsFolder\master.zip" -Force
+ 
 	pause
 	exit
 }
@@ -151,6 +151,7 @@ if (Test-Path -Path "$DownloadsFolder\SophiaScriptTemp")
 if (Test-Path -Path "$DownloadsFolder\$($Version)_Latest")
 {
 	Write-Verbose -Message "Please remove `"$DownloadsFolder\$($Version)_Latest`" manually and try to use script again." -Verbose
+	Remove-Item -Path "$DownloadsFolder\master.zip" -Force
 
 	pause
 	exit

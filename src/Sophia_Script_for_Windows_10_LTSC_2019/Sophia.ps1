@@ -3,13 +3,13 @@
 	Default preset file for "Sophia Script for Windows 10 LTSC 2019"
 
 	.VERSION
-	5.10.2
+	5.10.3
 
 	.DATE
-	26.01.2025
+	06.02.2025
 
 	.COPYRIGHT
-	(c) 2014—2025 farag, Inestic & lowl1f3
+	(c) 2014—2025 Team Sophia
 
 	.THANKS
 	Thanks to all https://forum.ru-board.com members involved
@@ -75,7 +75,7 @@ param
 
 Clear-Host
 
-$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 10 LTSC 2019 v5.10.2 | Made with $([System.Char]::ConvertFromUtf32(0x1F497)) of Windows | $([System.Char]0x00A9) farag, Inestic & lowl1f3, 2014$([System.Char]0x2013)2025"
+$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 10 LTSC 2019 v5.10.3 | Made with $([System.Char]::ConvertFromUtf32(0x1F497)) of Windows | $([System.Char]0x00A9) Team Sophia, 2014$([System.Char]0x2013)2025"
 
 # Checking whether all files were expanded before running
 $ScriptFiles = @(
@@ -123,7 +123,7 @@ try
 }
 catch [System.InvalidOperationException]
 {
-	Write-Warning -Message $Localization.UnsupportedPowerShell
+	Write-Warning -Message ($Localization.UnsupportedPowerShell -f $PSVersionTable.PSVersion.Major, $PSVersionTable.PSVersion.Minor)
 
 	Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
 	Write-Verbose -Message "https://discord.gg/sSryhaEv79" -Verbose
