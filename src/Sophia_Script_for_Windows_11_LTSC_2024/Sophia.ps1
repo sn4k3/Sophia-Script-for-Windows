@@ -755,7 +755,7 @@ InputMethod -English
 # InputMethod -Default
 
 <#
-	Change user folders location to the root of any drive using the interactive menu
+	Change user folders location to the root of any drive using an interactive menu
 	User files or folders won't be moved to a new location. Move them manually
 	They're located in the %USERPROFILE% folder by default
 

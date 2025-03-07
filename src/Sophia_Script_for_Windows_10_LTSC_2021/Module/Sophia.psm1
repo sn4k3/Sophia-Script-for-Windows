@@ -5844,7 +5844,7 @@ function InputMethod
 	Change User folders location
 
 	.PARAMETER Root
-	Change user folders location to the root of any drive using the interactive menu
+	Change user folders location to the root of any drive using an interactive menu
 
 	.PARAMETER Custom
 	Select folders for user folders location manually using a folder browser dialog
@@ -8581,7 +8581,6 @@ function Export-Associations
 			# ProgrammPath
 			if (Test-Path -Path "HKCU:\Software\Classes\$($_.ProgId)\Shell\Open\Command")
 			{
-
 				if ([Microsoft.Win32.Registry]::GetValue("HKEY_CURRENT_USER\Software\Classes\$($_.ProgId)\shell\open\command", "DelegateExecute", $null))
 				{
 					$ProgramPath, $Icon = ""
@@ -8705,7 +8704,10 @@ function Export-Associations
 		}
 
 		$_.ProgId = $_.ProgId.Replace("\", "\\")
-		$ProgramPath = $ProgramPath.Replace("\", "\\").Replace('"', '\"')
+		if ($ProgramPath)
+		{
+			$ProgramPath = $ProgramPath.Replace("\", "\\").Replace('"', '\"')
+		}
 		if ($Icon)
 		{
 			$Icon = $Icon.Replace("\", "\\").Replace('"', '\"')
@@ -10596,13 +10598,6 @@ function SoftwareDistributionTask
 				$ScheduleService.GetFolder("\").DeleteFolder("SophiApp", $null)
 			}
 
-			# Persist Sophia notifications to prevent to immediately disappear from Action Center
-			if (-not (Test-Path -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings\Sophia))
-			{
-				New-Item -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings\Sophia -Force
-			}
-			New-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings\Sophia -Name ShowInActionCenter -PropertyType DWord -Value 1 -Force
-
 			if (-not (Test-Path -Path Registry::HKEY_CLASSES_ROOT\AppUserModelId\Sophia))
 			{
 				New-Item -Path Registry::HKEY_CLASSES_ROOT\AppUserModelId\Sophia -Force
@@ -10910,13 +10905,6 @@ function TempTask
 			{
 				$ScheduleService.GetFolder("\").DeleteFolder("SophiApp", $null)
 			}
-
-			# Persist Sophia notifications to prevent to immediately disappear from Action Center
-			if (-not (Test-Path -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings\Sophia))
-			{
-				New-Item -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings\Sophia -Force
-			}
-			New-ItemProperty -Path HKCU:\Software\Microsoft\Windows\CurrentVersion\Notifications\Settings\Sophia -Name ShowInActionCenter -PropertyType DWord -Value 1 -Force
 
 			if (-not (Test-Path -Path Registry::HKEY_CLASSES_ROOT\AppUserModelId\Sophia))
 			{
