@@ -612,7 +612,7 @@ NavigationPaneExpand -Disable
 
 # Remove Recommended section in Start Menu. Not applicable to Home edition
 # Удалить раздел "Рекомендуем" в меню "Пуск". Неприменимо к редакции Home
-StartRecommendedSection -Hide
+# StartRecommendedSection -Hide
 
 # Show Recommended section in Start Menu (default value). Not applicable to Home edition
 # Показывать раздел "Рекомендуем" в меню "Пуск" (значение по умолчанию). Неприменимо к редакции Home
@@ -1225,8 +1225,9 @@ SaveZoneInformation -Disable
 	Включить DNS-over-HTTPS для IPv4
 	Действительные IPv4-адреса: 1.0.0.1, 1.1.1.1, 149.112.112.112, 8.8.4.4, 8.8.8.8, 9.9.9.9
 #>
-#TIAGO-PC
-DNSoverHTTPS -Enable -PrimaryDNS 9.9.9.9 -SecondaryDNS 149.112.112.112
+#TIAGO-PC 
+# ControlD: Ads & Tracking
+DNSoverHTTPS -Enable -PrimaryDNS 76.76.2.2 -SecondaryDNS 76.76.10.2
 
 # Disable DNS-over-HTTPS for IPv4 (default value)
 # Выключить DNS-over-HTTPS для IPv4 (значение по умолчанию)
@@ -1328,7 +1329,7 @@ OpenWindowsTerminalContext -Show
 
 # Open Windows Terminal in context menu as administrator by default
 # Открывать Windows Terminal из контекстного меню от имени администратора по умолчанию
-OpenWindowsTerminalAdminContext -Enable
+# OpenWindowsTerminalAdminContext -Enable
 
 # Do not open Windows Terminal in context menu as administrator by default (default value)
 # Не открывать Windows Terminal из контекстного меню от имени администратора по умолчанию (значение по умолчанию)
