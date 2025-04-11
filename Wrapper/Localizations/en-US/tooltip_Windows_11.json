@@ -830,7 +830,7 @@
     "Arg": {
       "Zero": {
         "Tag": "Disable",
-        "ToolTip": "Disable hibernation. It isn't recommended to turn off for laptops."
+        "ToolTip": "Disable hibernation. Not recommended for laptops."
       },
       "One": {
         "Tag": "Enable",
@@ -1012,7 +1012,7 @@
     "Arg": {
       "Zero": {
         "Tag": "High",
-        "ToolTip": "Set power plan on \"High performance\". It isn't recommended to turn on for laptops."
+        "ToolTip": "Set power plan on \"High performance\". Not recommended for laptops."
       },
       "One": {
         "Tag": "Balanced",
@@ -1026,7 +1026,7 @@
     "Arg": {
       "Zero": {
         "Tag": "Disable",
-        "ToolTip": "Do not allow the computer to turn off the network adapters to save power. It isn't recommended to turn off for laptops."
+        "ToolTip": "Do not allow the computer to turn off the network adapters to save power. Not recommended for laptops."
       },
       "One": {
         "Tag": "Enable",
@@ -1251,10 +1251,29 @@
   {
     "Region": "System",
     "Function": "Set-Association",
+    "ToolTip": "Register app, calculate hash, and associate with an extension with the 'How do you want to open this' pop-up hidden.",
+    "Arg": {      
+    "Zero": {
+      "Tag": "ProgramPath",
+      "ToolTip": "Path to executable file."
+      },
+      "One": {
+        "Tag": "Extension",
+        "ToolTip": "Extension."
+      },
+      "Two": {
+        "Tag": "Icon",
+        "ToolTip": "Path to icon."
+      }
+    }
+  },
+  {
+    "Region": "System",
+    "Function": "Get-Association",
     "Arg": {
       "Zero": {
         "Tag": "",
-        "ToolTip": "Register app, calculate hash, and associate with an extension with the 'How do you want to open this' pop-up hidden."
+        "ToolTip": "Get app, calculate hash, and associate with an extension with the 'How do you want to open this' pop-up hidden."
       },
       "One": {
         "Tag": "ProgramPath",

@@ -7,14 +7,11 @@
 **Sophia Script for Windows це найпотужніший PowerShell-модуль для тонкого налаштування Windows**
 
 [downloads-badge]: https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/farag2/25ddc72387f298503b752ad5b8d16eed/raw/SophiaScriptDownloadsCount.json
-[chocolatey-badge]: https://img.shields.io/chocolatey/dt/sophia?color=blue&label=chocolatey%20package
-[chocolatey-link]: https://community.chocolatey.org/packages/sophia
 [lines-badge]: https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/farag2/9852d6b9569a91bf69ceba8a94cc97f4/raw/SophiaScript.json
 [lines-link]: https://github.com/farag2/Sophia-Script-for-Windows
 [badge-code]: https://github.com/farag2/Sophia-Script-for-Windows/blob/master/.github/workflows/Badge_downloads.yml
 
 [![downloads][downloads-badge]][badge-code]
-[![chocolatey][chocolatey-badge]][chocolatey-link]
 [![lines][lines-badge]][lines-link]
 
 [telegram-news-badge]: https://img.shields.io/badge/Sophia%20News-Telegram-blue?style=flat&logo=Telegram
@@ -29,7 +26,7 @@
 [![Discord][discord-news-badge]][discord-link]
 
 [![build](https://img.shields.io/github/actions/workflow/status/farag2/Sophia-Script-for-Windows/Sophia.yml?label=build&logo=GitHub)](https://github.com/farag2/Sophia-Script-for-Windows/actions)
-[![GitHub Release](https://img.shields.io/github/v/release/farag2/Sophia-Script-for-Windows)](https://github.com/farag2/Sophia-Script-for-Windows/releases/latest)
+[![GitHub Release](https://img.shields.io/github/v/release/farag2/Sophia-Script-for-Windows?logo=GitHub)](https://github.com/farag2/Sophia-Script-for-Windows/releases/latest)
 
 [![en-US](https://img.shields.io/badge/lang-en--us-green)](../README.md)
 [![de](https://img.shields.io/badge/lang-de-black)](./README_de-de.md)
@@ -48,7 +45,8 @@
 ## Зміст
 
 * [Як користуватися](#як-користуватися)
-  * [Як завантажити Sophia Script через PowerShell](#завантажити-через-powershell)
+  * [Завантажити через PowerShell](#завантажити-через-powershell)
+  * [Завантажити через Chocolatey](#завантажити-через-chocolatey)
   * [Вручну](#вручну)
   * [Як запустити певну функцію(ї)](#як-запустити-певну-функціюї)
   * [Wrapper](#wrapper)
@@ -71,7 +69,7 @@
 >
 > `Sophia Script для Windows` може не працювати на "самопальних" збірках Windows. Особливо, якщо збірка була створена так, що в ній спеціально було зламано Microsoft Defender і вимкнено телеметрію, вирізавши системні компоненти.
 
-## Завантажити через PowerShell
+### Завантажити через PowerShell
 
 Команда завантажить і розпакує останній архів Sophia Script (`без запуску`) відповідно до того, під якою версією Windows і PowerShell він запускається. Якщо запустити її, наприклад, в Windows 11 через PowerShell 5.1, вона завантажить Sophia Script для `Windows 11 PowerShell 5.1`.
 
@@ -83,6 +81,20 @@ iwr script.sophia.team -useb | iex
 
 ```powershell
 iwr sl.sophia.team -useb | iex
+```
+
+### Завантажити через Chocolatey
+
+TКоманда завантажить і розпакує останню версію архіву Sophia Script (`без подальшого запуску`) згідно з версією Windows, на якій вона запускалася. Припустимо, якщо ви запустите її на Windows 11, то завантажиться Sophia Script для `Windows 11`. За замовчуванням для `PowerShell 5.1`, якщо не вказано зворотне.
+
+```powershell
+choco install sophia --force -y
+```
+
+Завантажити `Sophia Script for Windows` для `PowerShell 7`.
+
+```powershell
+choco install sophia --params "/PS7" --force -y
 ```
 
 ### Вручну

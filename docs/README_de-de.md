@@ -7,14 +7,11 @@
 **Sophia Script für Windows ist das leistungsstärkste PowerShell-Modul zur Feinabstimmung von Windows**
 
 [downloads-badge]: https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/farag2/25ddc72387f298503b752ad5b8d16eed/raw/SophiaScriptDownloadsCount.json
-[chocolatey-badge]: https://img.shields.io/chocolatey/dt/sophia?color=blue&label=chocolatey%20package
-[chocolatey-link]: https://community.chocolatey.org/packages/sophia
 [lines-badge]: https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/farag2/9852d6b9569a91bf69ceba8a94cc97f4/raw/SophiaScript.json
 [lines-link]: https://github.com/farag2/Sophia-Script-for-Windows
 [badge-code]: https://github.com/farag2/Sophia-Script-for-Windows/blob/master/.github/workflows/Badge_downloads.yml
 
 [![downloads][downloads-badge]][badge-code]
-[![chocolatey][chocolatey-badge]][chocolatey-link]
 [![lines][lines-badge]][lines-link]
 
 [telegram-news-badge]: https://img.shields.io/badge/Sophia%20News-Telegram-blue?style=flat&logo=Telegram
@@ -29,7 +26,7 @@
 [![Discord][discord-news-badge]][discord-link]
 
 [![build](https://img.shields.io/github/actions/workflow/status/farag2/Sophia-Script-for-Windows/Sophia.yml?label=build&logo=GitHub)](https://github.com/farag2/Sophia-Script-for-Windows/actions)
-[![GitHub Release](https://img.shields.io/github/v/release/farag2/Sophia-Script-for-Windows)](https://github.com/farag2/Sophia-Script-for-Windows/releases/latest)
+[![GitHub Release](https://img.shields.io/github/v/release/farag2/Sophia-Script-for-Windows?logo=GitHub)](https://github.com/farag2/Sophia-Script-for-Windows/releases/latest)
 
 [![en-US](https://img.shields.io/badge/lang-en--us-green)](../README.md)
 [![uk-UA](https://img.shields.io/badge/lang-uk--UA-blue)](./README_uk-ua.md)
@@ -49,6 +46,7 @@ Mit <img src="https://raw.githubusercontent.com/farag2/Sophia-Script-for-Windows
 
 * [Verwendung](#verwendung)
   * [Herunterladen über PowerShell](#herunterladen-über-powershell)
+  * [Herunterladen über Chocolatey](#herunterladen-über-chocolatey)
   * [Manuelle Methode](#manuelle-methode)
   * [Verwendung von spezifischen Funktionen](#verwendung-von-spezifischen-funktionen)
   * [Wrapper](#wrapper)
@@ -79,10 +77,24 @@ Der Befehl lädt das neueste Sophia Script-Archiv herunter und extrahiert es (`o
 iwr script.sophia.team -useb | iex
 ```
 
-Der Befehl lädt das neueste Sophia Script-Archiv (ohne es auszuführen) aus dem letzten verfügbaren Commit herunter und erweitert es, je nachdem, auf welchen Windows- und PowerShell-Versionen es ausgeführt wird.
+Der Befehl lädt das neueste Sophia Script-Archiv (`ohne es auszuführen`) aus dem letzten verfügbaren Commit herunter und erweitert es, je nachdem, auf welchen Windows- und PowerShell-Versionen es ausgeführt wird.
 
 ```powershell
 iwr sl.sophia.team -useb | iex
+```
+
+### Herunterladen über Chocolatey
+
+Der Befehl lädt das neueste Sophia Script-Archiv herunter und erweitert es (`ohne es auszuführen)`, je nachdem, unter welchem Windows er ausgeführt wird. Wenn Sie ihn unter Windows 11 ausführen, wird Sophia Script für `Windows 11` heruntergeladen. Für `PowerShell 5.1` ist standardmäßig nichts anderes angegeben.
+
+```powershell
+choco install sophia --force -y
+```
+
+Download `Sophia Script for Windows` for `PowerShell 7`.
+
+```powershell
+choco install sophia --params "/PS7" --force -y
 ```
 
 ### Manuelle Methode

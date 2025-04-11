@@ -529,20 +529,6 @@
   },
   {
     "Region": "UI & Personalization",
-    "Function": "PeopleTaskbar",
-    "Arg": {
-      "Zero": {
-        "Tag": "Hide",
-        "ToolTip": "Hide People on the taskbar."
-      },
-      "One": {
-        "Tag": "Show",
-        "ToolTip": "Show People on the taskbar (default value)."
-      }
-    }
-  },
-  {
-    "Region": "UI & Personalization",
     "Function": "MeetNow",
     "Arg": {
       "Zero": {
@@ -892,7 +878,7 @@
     "Arg": {
       "Zero": {
         "Tag": "Disable",
-        "ToolTip": "Disable hibernation. It isn't recommended to turn off for laptops."
+        "ToolTip": "Disable hibernation. Not recommended for laptops."
       },
       "One": {
         "Tag": "Enable",
@@ -1074,7 +1060,7 @@
     "Arg": {
       "Zero": {
         "Tag": "High",
-        "ToolTip": "Set power plan on \"High performance\". It isn't recommended to turn on for laptops."
+        "ToolTip": "Set power plan on \"High performance\". Not recommended for laptops."
       },
       "One": {
         "Tag": "Balanced",
@@ -1088,7 +1074,7 @@
     "Arg": {
       "Zero": {
         "Tag": "Disable",
-        "ToolTip": "Do not allow the computer to turn off the network adapters to save power. It isn't recommended to turn off for laptops."
+        "ToolTip": "Do not allow the computer to turn off the network adapters to save power. Not recommended for laptops."
       },
       "One": {
         "Tag": "Enable",
@@ -1313,20 +1299,17 @@
   {
     "Region": "System",
     "Function": "Set-Association",
-    "Arg": {
+    "ToolTip": "Register app, calculate hash, and associate with an extension with the 'How do you want to open this' pop-up hidden.",
+    "Arg": {      
       "Zero": {
-        "Tag": "",
-        "ToolTip": "Register app, calculate hash, and associate with an extension with the 'How do you want to open this' pop-up hidden."
-      },
-      "One": {
         "Tag": "ProgramPath",
         "ToolTip": "Path to executable file."
       },
-      "Two": {
+      "One": {
         "Tag": "Extension",
         "ToolTip": "Extension."
       },
-      "Three": {
+      "Two": {
         "Tag": "Icon",
         "ToolTip": "Path to icon."
       }
@@ -1514,10 +1497,11 @@
   {
     "Region": "UWP apps",
     "Function": "UninstallUWPApps -ForAllUsers",
+    "ToolTip": "Uninstall UWP apps using the pop-up dialog box. If the \"For all users\" is checked apps packages will not be installed for new users. The \"ForAllUsers\" argument sets a checkbox to unistall packages for all users.",     
     "Arg": {
       "Zero": {
         "Tag": "",
-        "ToolTip": "Uninstall UWP apps using the pop-up dialog box. If the \"For all users\" is checked apps packages will not be installed for new users. The \"ForAllUsers\" argument sets a checkbox to unistall packages for all users."
+        "ToolTip": ""
       }
     }
   },

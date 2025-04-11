@@ -3,10 +3,10 @@
 	Default preset file for "Sophia Script for Windows 10"
 
 	.VERSION
-	5.20.3
+	5.20.4
 
 	.DATE
-	06.02.2025
+	05.04.2025
 
 	.COPYRIGHT
 	(c) 2014—2025 Team Sophia
@@ -77,7 +77,7 @@ param
 
 Clear-Host
 
-$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 10 v5.20.3 | Made with $([System.Char]::ConvertFromUtf32(0x1F497)) of Windows | $([System.Char]0x00A9) Team Sophia, 2014$([System.Char]0x2013)2025"
+$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 10 v5.20.4 | Made with $([System.Char]::ConvertFromUtf32(0x1F497)) of Windows | $([System.Char]0x00A9) Team Sophia, 2014$([System.Char]0x2013)2025"
 
 # Checking whether all files were expanded before running
 $ScriptFiles = @(
@@ -471,14 +471,6 @@ NewsInterests -Disable
 # Включить "Новости и интересы" на панели задач (значение по умолчанию)
 # NewsInterests -Enable
 
-# Hide People on the taskbar
-# Скрыть панель "Люди" на панели задач
-PeopleTaskbar -Hide
-
-# Show People on the taskbar (default value)
-# Отобразить панель "Люди" на панели задач (значение по умолчанию)
-# PeopleTaskbar -Show
-
 # Hide the Meet Now icon in the notification area
 # Скрыть иконку "Провести собрание" в области уведомлений
 MeetNow -Hide
@@ -673,8 +665,8 @@ StorageSense -Enable
 # Выключить Контроль памяти (значение по умолчанию)
 # StorageSense -Disable
 
-# Disable hibernation. It isn't recommended to turn off for laptops
-# Отключить режим гибернации. Не рекомендуется выключать на ноутбуках
+# Disable hibernation. Not recommended for laptops
+# Отключить режим гибернации. Не рекомендуется для ноутбуков
 Hibernation -Disable
 
 # Enable hibernate (default value)
@@ -787,16 +779,16 @@ WindowsLatestUpdate -Disable
 # Получайте последние обновления, как только они будут доступны
 # WindowsLatestUpdate -Enable
 
-# Set power plan on "High performance". It isn't recommended to turn on for laptops
-# Установить схему управления питанием на "Высокая производительность". Не рекомендуется включать на ноутбуках
+# Set power plan on "High performance". Not recommended for laptops
+# Установить схему управления питанием на "Высокая производительность". Не рекомендуется для ноутбуков
 PowerPlan -High
 
 # Set power plan on "Balanced" (default value)
 # Установить схему управления питанием на "Сбалансированная" (значение по умолчанию)
 # PowerPlan -Balanced
 
-# Do not allow the computer to turn off the network adapters to save power. It isn't recommended to turn off for laptops
-# Запретить отключение всех сетевых адаптеров для экономии энергии. Не рекомендуется выключать на ноутбуках
+# Do not allow the computer to turn off the network adapters to save power. Not recommended for laptops
+# Запретить отключение всех сетевых адаптеров для экономии энергии. Не рекомендуется для ноутбуков
 NetworkAdaptersSavePower -Disable
 
 # Allow the computer to turn off the network adapters to save power (default value)
@@ -1026,11 +1018,11 @@ PreventEdgeShortcutCreation -Channels Stable, Beta, Dev, Canary
 # PreventEdgeShortcutCreation -Disable
 
 # Back up the system registry to %SystemRoot%\System32\config\RegBack folder when PC restarts and create a RegIdleBackup in the Task Scheduler task to manage subsequent backups
-# Создавать копии реестра при перезагрузки ПК и создавать задание RegIdleBackup в Планировщике задания для управления последующими резервными копиями
+# Создавать копии реестра при перезагрузке ПК и задание RegIdleBackup в Планировщике для управления последующими резервными копиями
 # RegistryBackup -Enable
 
 # Do not back up the system registry to %SystemRoot%\System32\config\RegBack folder (default value)
-# Не создавать копии реестра при перезагрузки ПК (значение по умолчанию)
+# Не создавать копии реестра при перезагрузке ПК (значение по умолчанию)
 # RegistryBackup -Disable
 #endregion System
 
@@ -1067,12 +1059,12 @@ AppSuggestions -Hide
 	Valid shortcuts values: ControlPanel and DevicesPrinters
 
 	Закрепить на начальном экране следующие ярлыки: Панель управления, Устройства и принтеры
-	Валидные значения ярлыков: ControlPanel и DevicesPrinters
+	Доступные значения: ControlPanel и DevicesPrinters
 #>
 PinToStart -Tiles ControlPanel, DevicesPrinters
 
 # Unpin all tiles first and pin necessary ones
-# Открепить все ярлыки сначала и закрепить необходимые
+# Открепить все ярлыки и закрепить необходимые
 # PinToStart -UnpinAll -Tiles ControlPanel, DevicesPrinters
 
 # Unpin all the Start tiles
