@@ -1,0 +1,24 @@
+name: Chocolatey push
+
+on:
+  workflow_dispatch:
+
+jobs:
+  Push:
+    name: Push
+    runs-on: windows-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@main
+
+      - name: Getting hashes
+        run: |
+          . Scripts\Chocolatey.ps1
+
+      - name: Pack and push
+        run: |
+          choco pack chocolatey\sophia.nuspec --outputdirectory chocolatey
+          choco apikey --key ${{ secrets.CHOCOLATEY_SECRET }} --source https://push.chocolatey.org/
+          [xml]$Version = Get-Content -Path chocolatey\sophia.nuspec
+          [string]$Version = $Version.package.metadata.version
+          choco push chocolatey\sophia.$Version.nupkg --source https://push.chocolatey.org/ --yes

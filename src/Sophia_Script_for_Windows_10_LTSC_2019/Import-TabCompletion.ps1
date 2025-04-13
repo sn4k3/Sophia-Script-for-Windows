@@ -1,8 +1,8 @@
 ﻿<#
 	.SYNOPSIS
-	The TAB completion for functions and their arguments
+	Enable tab completion to invoke for functions if you do not know function name
 
-	Version: 5.20.4
+	Version: 5.10.4
 	Date: 05.04.2025
 
 	Copyright (c) 2014—2025 Team Sophia
@@ -10,7 +10,7 @@
 	Thanks to all https://forum.ru-board.com members involved
 
 	.DESCRIPTION
-	Dot source the script first: . .\Function.ps1 (with a dot at the beginning)
+	Dot source the script first: . .\Import-TabCompletion.ps1 (with a dot at the beginning)
 	Start typing any characters contained in the function's name or its arguments, and press the TAB button
 
 	.EXAMPLE
@@ -49,9 +49,9 @@ function Sophia
 
 Clear-Host
 
-$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 10 LTSC 2021 v5.20.4 | Made with $([System.Char]::ConvertFromUtf32(0x1F497)) of Windows | $([System.Char]0x00A9) Team Sophia, 2014$([System.Char]0x2013)2025"
+$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 10 LTSC 2019 v5.10.4 | Made with $([System.Char]::ConvertFromUtf32(0x1F497)) of Windows 10 | $([System.Char]0x00A9) Team Sophia, 2014$([System.Char]0x2013)2025"
 
-Remove-Module -Name Sophia -Force -ErrorAction Ignore
+Remove-Module -Name SophiaScript -Force -ErrorAction Ignore
 Import-Module -Name $PSScriptRoot\Manifest\Sophia.psd1 -PassThru -Force
 
 Import-LocalizedData -BindingVariable Global:Localization -FileName Sophia -BaseDirectory $PSScriptRoot\Localizations
@@ -73,34 +73,10 @@ $Parameters = @{
 		)
 
 		# Get functions list with arguments to complete
-		$Commands = (Get-Module -Name Sophia).ExportedCommands.Keys
+		$Commands = (Get-Module -Name SophiaScript).ExportedCommands.Keys
 		foreach ($Command in $Commands)
 		{
 			$ParameterSets = (Get-Command -Name $Command).Parametersets.Parameters | Where-Object -FilterScript {$null -eq $_.Attributes.AliasNames}
-
-			# If a module command is PinToStart
-			if ($Command -eq "PinToStart")
-			{
-				# Get all command arguments, excluding defaults
-				foreach ($ParameterSet in $ParameterSets.Name)
-				{
-					# If an argument is Tiles
-					if ($ParameterSet -eq "Tiles")
-					{
-						$ValidValues = ((Get-Command -Name PinToStart).Parametersets.Parameters | Where-Object -FilterScript {$null -eq $_.Attributes.AliasNames}).Attributes.ValidValues
-						foreach ($ValidValue in $ValidValues)
-						{
-							# The "PinToStart -Tiles <function>" construction
-							"PinToStart" + " " + "-" + $ParameterSet + " " + $ValidValue | Where-Object -FilterScript {$_ -like "*$wordToComplete*"} | ForEach-Object -Process {"`"$_`""}
-						}
-
-						# The "PinToStart -Tiles <functions>" construction
-						"PinToStart" + " " + "-" + $ParameterSet + " " + ($ValidValues -join ", ") | Where-Object -FilterScript {$_ -like "*$wordToComplete*"} | ForEach-Object -Process {"`"$_`""}
-					}
-
-					continue
-				}
-			}
 
 			# If a module command is Install-VCRedist
 			if ($Command -eq "Install-VCRedist")
@@ -156,23 +132,6 @@ $Parameters = @{
 				continue
 			}
 
-			# If a module command is UserFolders
-			if ($Command -eq "UserFolders")
-			{
-				# Get all command arguments, excluding defaults
-				foreach ($ParameterSet in $ParameterSets.Name)
-				{
-					$ValidValues = ((Get-Command -Name UserFolders).Parametersets.Parameters | Where-Object -FilterScript {$null -eq $_.Attributes.AliasNames}).Attributes.ValidValues
-					foreach ($ValidValue in $ValidValues)
-					{
-						# The "UserFolders -ThreeDObjects Hide" construction
-						"UserFolders" + " " + "-" + $ParameterSet + " " + $ValidValue | Where-Object -FilterScript {$_ -like "*$wordToComplete*"} | ForEach-Object -Process {"`"$_`""}
-					}
-
-					continue
-				}
-			}
-
 			foreach ($ParameterSet in $ParameterSets.Name)
 			{
 				# The "Function -Argument" construction
@@ -193,7 +152,6 @@ Register-ArgumentCompleter @Parameters
 Write-Information -MessageData "" -InformationAction Continue
 Write-Verbose -Message "Sophia -Functions <tab>" -Verbose
 Write-Verbose -Message "Sophia -Functions temp<tab>" -Verbose
-Write-Verbose -Message "Sophia -Functions `"DiagTrackService -Disable`", `"DiagnosticDataLevel -Minimal`"" -Verbose
+Write-Verbose -Message "Sophia -Functions `"DiagTrackService -Disable`", `"DiagnosticDataLevel -Minimal`", UninstallUWPApps" -Verbose
 Write-Information -MessageData "" -InformationAction Continue
-Write-Verbose -Message "Sophia -Functions `"`"PinToStart -UnpinAll`" -Verbose"
 Write-Verbose -Message "Sophia -Functions `"Set-Association -ProgramPath ```"%ProgramFiles%\Notepad++\notepad++.exe```" -Extension .txt -Icon ```"%ProgramFiles%\Notepad++\notepad++.exe,0```"`"" -Verbose
