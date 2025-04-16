@@ -37,7 +37,7 @@ switch ((Get-CimInstance -ClassName Win32_OperatingSystem).BuildNumber)
 		{
 			$LatestRelease = $JSONVersions.Sophia_Script_Windows_10_LTSC2019
 			$URL = "https://github.com/farag2/Sophia-Script-for-Windows/releases/download/$LatestGitHubRelease/Sophia.Script.for.Windows.10.LTSC.2019.v$LatestRelease.zip"
-			$Hash = ${{ env.Windows10LTSC2019 }}
+			$Hash = "Hash_Sophia_Script_Windows_10_LTSC2019"
 		}
 		else
 		{
@@ -63,7 +63,7 @@ switch ((Get-CimInstance -ClassName Win32_OperatingSystem).BuildNumber)
 		{
 			$LatestRelease = $JSONVersions.Sophia_Script_Windows_10_LTSC2021
 			$URL = "https://github.com/farag2/Sophia-Script-for-Windows/releases/download/$LatestGitHubRelease/Sophia.Script.for.Windows.10.LTSC.2021.v$LatestRelease.zip"
-			$Hash = ${{ env.Windows10LTSC2021 }}
+			$Hash = "Hash_Sophia_Script_Windows_10_LTSC2021"
 		}
 		else
 		{
@@ -90,14 +90,14 @@ switch ((Get-CimInstance -ClassName Win32_OperatingSystem).BuildNumber)
 			{
 				$LatestRelease = $JSONVersions.Sophia_Script_Windows_10_PowerShell_7
 				$URL = "https://github.com/farag2/Sophia-Script-for-Windows/releases/download/$LatestGitHubRelease/Sophia.Script.for.Windows.10.PowerShell.7.v$LatestRelease.zip"
-				$Hash = ${{ env.Windows10PS7 }}
+				$Hash = "Hash_Sophia_Script_Windows_10_PowerShell_7"
 			}
 		}
 		else
 		{
 			$LatestRelease = $JSONVersions.Sophia_Script_Windows_10_PowerShell_5_1
 			$URL = "https://github.com/farag2/Sophia-Script-for-Windows/releases/download/$LatestGitHubRelease/Sophia.Script.for.Windows.10.v$LatestRelease.zip"
-			$Hash = ${{ env.Windows10 }}
+			$Hash = "Hash_Sophia_Script_Windows_10_PowerShell_5_1"
 		}
 	}
 	{$_ -ge 26100}
@@ -107,7 +107,7 @@ switch ((Get-CimInstance -ClassName Win32_OperatingSystem).BuildNumber)
 		{
 			$LatestRelease = $JSONVersions.Sophia_Script_Windows_11_LTSC2024
 			$URL = "https://github.com/farag2/Sophia-Script-for-Windows/releases/download/$LatestGitHubRelease/Sophia.Script.for.Windows.11.LTSC.2024.v$LatestRelease.zip"
-			$Hash = ${{ env.Windows11LTSC2024 }}
+			$Hash = "Hash_Sophia_Script_Windows_11_LTSC2024"
 		}
 		else
 		{
@@ -117,14 +117,14 @@ switch ((Get-CimInstance -ClassName Win32_OperatingSystem).BuildNumber)
 				{
 					$LatestRelease = $JSONVersions.Sophia_Script_Windows_11_PowerShell_7
 					$URL = "https://github.com/farag2/Sophia-Script-for-Windows/releases/download/$LatestGitHubRelease/Sophia.Script.for.Windows.11.PowerShell.7.v$LatestRelease.zip"
-					$Hash = ${{ env.Windows11PS7 }}
+					$Hash = "Hash_Sophia_Script_Windows_11_PowerShell_7"
 				}
 			}
 			else
 			{
 				$LatestRelease = $JSONVersions.Sophia_Script_Windows_11_PowerShell_5_1
 				$URL = "https://github.com/farag2/Sophia-Script-for-Windows/releases/download/$LatestGitHubRelease/Sophia.Script.for.Windows.11.v$LatestRelease.zip"
-				$Hash = ${{ env.Windows11 }}
+				$Hash = "Hash_Sophia_Script_Windows_11_PowerShell_5_1"
 			}
 		}
 	}
