@@ -270,7 +270,7 @@ https://user-images.githubusercontent.com/10544660/253818031-b7ce6bf1-d968-41ea-
 
 * Get your OS UI culture by invoking `$PSUICulture` in PowerShell;
 * Create a folder with the UI culture name;
-* Place your localized Sophia.psd1 file into this folder.
+* Place your localized SophiaScript.psd1 file into this folder.
 
 ## Media
 

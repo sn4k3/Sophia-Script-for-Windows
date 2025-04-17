@@ -267,7 +267,7 @@ https://user-images.githubusercontent.com/10544660/253818031-b7ce6bf1-d968-41ea-
 
 * Holen Sie sich die Sprache der Benutzeroberfläche Ihres Betriebssystems, indem Sie "$PSUICulture" in PowerShell aufrufen;
 * Erstellen Sie einen Ordner mit dem Namen der UI-Sprache;
-* Legen Sie Ihre lokalisierte Sophia.psd1-Datei in diesen Ordner.
+* Legen Sie Ihre lokalisierte SophiaScript.psd1-Datei in diesen Ordner.
 
 ## Media
 
