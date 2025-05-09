@@ -8,7 +8,7 @@
 
 [downloads-badge]: https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/farag2/25ddc72387f298503b752ad5b8d16eed/raw/SophiaScriptDownloadsCount.json
 [lines-badge]: https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/farag2/9852d6b9569a91bf69ceba8a94cc97f4/raw/SophiaScript.json
-[lines-link]: https://github.com/farag2/Sophia-Script-for-Windows
+[lines-link]: https://github.com/farag2/Sophia-Script-for-Windows/blob/master/.github/workflows/Badge_lines.yml
 [badge-code]: https://github.com/farag2/Sophia-Script-for-Windows/blob/master/.github/workflows/Badge_downloads.yml
 
 [![downloads][downloads-badge]][badge-code]
@@ -47,6 +47,7 @@ Made with <img src="https://raw.githubusercontent.com/farag2/Sophia-Script-for-W
 * [How to use](#how-to-use)
   * [Download via PowerShell](#download-via-powershell)
   * [Download via Chocolatey](#download-via-chocolatey)
+  * [Download via WinGet](#download-via-winget)
   * [Manual method](#manual-method)
   * [How to run the specific function(s)](#how-to-run-the-specific-functions)
   * [Wrapper](#wrapper)
@@ -95,6 +96,26 @@ Download `Sophia Script for Windows` for `PowerShell 7`.
 
 ```powershell
 choco install sophia --params "/PS7" --force -y
+```
+
+```powershell
+# Uninstall Sophia Script
+# Then remove downloaded folder manually
+choco uninstall sophia --force -y
+```
+
+### Download via WinGet
+
+The command downloads only `Windows 11 (PowerShell 5.1)` archive to your `Downloads` folder unlike the `Chocolatey` [script](#download-via-chocolatey) and expands it.
+
+```powershell
+$DownloadsFolder = Get-ItemPropertyValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "{374DE290-123F-4565-9164-39C4925E467B}"
+winget install --id TeamSophia.SophiaScript --location $DownloadsFolder --accept-source-agreements --force
+```
+
+```powershell
+# Uninstall Sophia Script
+winget uninstall --id TeamSophia.SophiaScript --force
 ```
 
 ### Manual method

@@ -3,10 +3,10 @@
 	Default preset file for "Sophia Script for Windows 10 (PowerShell 7)"
 
 	.VERSION
-	5.20.4
+	5.20.5
 
 	.DATE
-	05.04.2025
+	18.04.2025
 
 	.COPYRIGHT
 	(c) 2014—2025 Team Sophia
@@ -77,7 +77,7 @@ param
 
 Clear-Host
 
-$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 10 v5.20.4 (PowerShell 7) | Made with $([System.Char]::ConvertFromUtf32(0x1F497)) of Windows | $([System.Char]0x00A9) Team Sophia, 2014$([System.Char]0x2013)2025"
+$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 10 v5.20.5 (PowerShell 7) | Made with $([System.Char]::ConvertFromUtf32(0x1F497)) of Windows | $([System.Char]0x00A9) Team Sophia, 2014$([System.Char]0x2013)2025"
 
 # Checking whether all files were expanded before running
 $ScriptFiles = @(
@@ -308,14 +308,6 @@ BingSearch -Disable
 # Enable Bing search in Start Menu (default value)
 # Включить поиск через Bing в меню "Пуск" (значение по умолчанию)
 # BingSearch -Enable
-
-# Do not show Microsoft account-related notifications on Start Menu in Start menu
-# Не показывать в меню "Пуск" уведомления, связанные с учетной записью Microsoft
-StartAccountNotifications -Hide
-
-# Show Microsoft account-related notifications on Start Menu in Start menu (default value)
-# Переодически показывать в меню "Пуск" уведомления, связанные с учетной записью Microsoft (значение по умолчанию)
-# StartAccountNotifications -Show
 #endregion Privacy & Telemetry
 
 #region UI & Personalization
@@ -409,6 +401,7 @@ RecycleBinDeleteConfirmation -Enable
 
 # Hide user folders in "This PC"
 # Скрыть пользовательские папки в "Этот компьютер"
+UserFolders -ThreeDObjects Hide
 # UserFolders -ThreeDObjects Hide -Desktop Hide -Documents Hide -Downloads Hide -Music Hide -Pictures Hide -Videos Hide
 
 # Show user folders in "This PC" (default value)

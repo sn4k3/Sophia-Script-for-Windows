@@ -3,10 +3,10 @@
 	Sophia Script is a PowerShell module for Windows 10 & Windows 11 fine-tuning and automating the routine tasks
 
 	.VERSION
-	5.10.4
+	5.10.5
 
 	.DATE
-	05.04.2025
+	18.04.2025
 
 	.AUTHOR
 	Team Sophia
@@ -498,6 +498,8 @@ public static extern bool SetForegroundWindow(IntPtr hWnd);
 	# Check Windows default antivirus
 	try
 	{
+		$Script:DefenderDefaultAV = $false
+
 		$productState = (Get-CimInstance -ClassName AntiVirusProduct -Namespace root/SecurityCenter2 | Where-Object -FilterScript {$_.instanceGuid -eq "{D68DDC3A-831F-4fae-9E44-DA132C1ACF46}"}).productState
 		$DefenderState = ('0x{0:x}' -f $productState).Substring(3, 2)
 		# Defender is a currently used AV. Continue...
@@ -743,12 +745,29 @@ public extern static string BrandingFormatString(string sFormat);
 	if (-not (($WINDOWS_LONG -match "Windows 10") -and ($WINDOWS_LONG -match "LTSC")))
 	{
 		Write-Information -MessageData "" -InformationAction Continue
-		Write-Warning -Message ($Localization.UnsupportedOSBuild -f [WinAPI.Winbrand]::BrandingFormatString("%WINDOWS_LONG%"))
+
+		# Windows 11 Pro
+		$Windows_Long = [WinAPI.Winbrand]::BrandingFormatString("%WINDOWS_LONG%")
+		$Windows_Long_First_Item = $Windows_Long.split(" ")[0]
+		$Windows_Long_Second_Item = $Windows_Long.split(" ")[1]
+		# Windows 11
+		$Windows_Long = ($Windows_Long_First_Item, $Windows_Long_Second_Item) -join " "
+
+		# 24H2
+		$DisplayVersion = Get-ItemPropertyValue -Path "HKLM:\SOFTWARE\Microsoft\Windows nt\CurrentVersion" -Name DisplayVersion
+
+		Write-Warning -Message ($Localization.UnsupportedOSBuild -f $Windows_Long, $DisplayVersion)
 		Write-Information -MessageData "" -InformationAction Continue
 
 		Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
 		Write-Verbose -Message "https://discord.gg/sSryhaEv79" -Verbose
 		Write-Verbose -Message "https://github.com/farag2/Sophia-Script-for-Windows#system-requirements" -Verbose
+
+		# Receive updates for other Microsoft products when you update Windows
+		New-ItemProperty -Path HKLM:\SOFTWARE\Microsoft\WindowsUpdate\UX\Settings -Name AllowMUUpdateService -PropertyType DWord -Value 1 -Force
+
+		# Check for updates
+		Start-Process -FilePath "$env:SystemRoot\System32\UsoClient.exe" -ArgumentList StartInteractiveScan
 
 		exit
 	}
@@ -832,10 +851,10 @@ public extern static string BrandingFormatString(string sFormat);
 			{
 				# Check Windows minor build version
 				# https://support.microsoft.com/en-us/topic/windows-10-and-windows-server-2019-update-history-725fc2e1-4443-6831-a5ca-51ff5cbcb059
-				$CurrentBuild = Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows nt\CurrentVersion" -Name CurrentBuild
-				$UBR = Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows nt\CurrentVersion" -Name UBR
+				$CurrentBuild = Get-ItemPropertyValue -Path "HKLM:\SOFTWARE\Microsoft\Windows nt\CurrentVersion" -Name CurrentBuild
+				$UBR = Get-ItemPropertyValue -Path "HKLM:\SOFTWARE\Microsoft\Windows nt\CurrentVersion" -Name UBR
 				Write-Information -MessageData "" -InformationAction Continue
-				Write-Warning -Message ($Localization.UpdateWarning -f $CurrentBuild.CurrentBuild, $UBR.UBR, $LatestSupportedBuild)
+				Write-Warning -Message ($Localization.UpdateWarning -f $CurrentBuild, $UBR, $LatestSupportedBuild)
 				Write-Information -MessageData "" -InformationAction Continue
 
 				Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
@@ -7953,9 +7972,12 @@ function Export-Associations
 
 	[xml]$XML = Get-Content -Path "$env:TEMP\Application_Associations.xml" -Encoding UTF8 -Force
 	$XML.DefaultAssociations.Association | ForEach-Object -Process {
+		# Clear varibale not to begin double "\" char
+		$ProgramPath, $Icon = $null
+
 		if ($AppxProgIds -contains $_.ProgId)
 		{
-			# if ProgId is a UWP app
+			# ProgId is a UWP app
 			# ProgrammPath
 			if (Test-Path -Path "HKCU:\Software\Classes\$($_.ProgId)\Shell\Open\Command")
 			{
@@ -8104,8 +8126,6 @@ function Export-Associations
 "@ | ConvertFrom-JSON
 		$AllJSON += $JSON
 	}
-
-	Clear-Variable -Name ProgramPath, Icon -ErrorAction Ignore
 
 	# Save in UTF-8 without BOM
 	$AllJSON | ConvertTo-Json | Set-Content -Path "$PSScriptRoot\..\Application_Associations.json" -Encoding Default -Force
@@ -10835,14 +10855,24 @@ function CABInstallContext
 	{
 		"Show"
 		{
-			if (-not (Test-Path -Path Registry::HKEY_CLASSES_ROOT\CABFolder\Shell\runas\Command))
+			if ([Microsoft.Win32.Registry]::GetValue("HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\FileExts\.cab\UserChoice", "ProgId", $null) -eq "CABFolder")
 			{
-				New-Item -Path Registry::HKEY_CLASSES_ROOT\CABFolder\Shell\runas\Command -Force
+				if (-not (Test-Path -Path Registry::HKEY_CLASSES_ROOT\CABFolder\Shell\runas\Command))
+				{
+					New-Item -Path Registry::HKEY_CLASSES_ROOT\CABFolder\Shell\runas\Command -Force
+				}
+				New-ItemProperty -Path Registry::HKEY_CLASSES_ROOT\CABFolder\Shell\runas\Command -Name "(default)" -PropertyType String -Value "cmd /c DISM.exe /Online /Add-Package /PackagePath:`"%1`" /NoRestart & pause" -Force
+				New-ItemProperty -Path Registry::HKEY_CLASSES_ROOT\CABFolder\Shell\runas -Name MUIVerb -PropertyType String -Value "@shell32.dll,-10210" -Force
+				New-ItemProperty -Path Registry::HKEY_CLASSES_ROOT\CABFolder\Shell\runas -Name HasLUAShield -PropertyType String -Value "" -Force
 			}
-			$Value = "cmd /c DISM.exe /Online /Add-Package /PackagePath:`"%1`" /NoRestart & pause"
-			New-ItemProperty -Path Registry::HKEY_CLASSES_ROOT\CABFolder\Shell\runas\Command -Name "(default)" -PropertyType String -Value $Value -Force
-			New-ItemProperty -Path Registry::HKEY_CLASSES_ROOT\CABFolder\Shell\runas -Name MUIVerb -PropertyType String -Value "@shell32.dll,-10210" -Force
-			New-ItemProperty -Path Registry::HKEY_CLASSES_ROOT\CABFolder\Shell\runas -Name HasLUAShield -PropertyType String -Value "" -Force
+			else
+			{
+				Write-Information -MessageData "" -InformationAction Continue
+				Write-Verbose -Message ($Localization.Skipped -f $MyInvocation.Line.Trim()) -Verbose
+				Write-Error -Message ($Localization.Skipped -f $MyInvocation.Line.Trim()) -ErrorAction SilentlyContinue
+
+				return
+			}
 		}
 		"Hide"
 		{
@@ -11636,7 +11666,7 @@ public static void PostMessage()
 		{
 			if (Test-Path -Path $Script:OpenedFolder)
 			{
-				Start-Process -FilePath explorer -ArgumentList $Script:OpenedFolder
+				Start-Process -FilePath "$env:SystemRoot\explorer.exe" -ArgumentList $Script:OpenedFolder
 			}
 		}
 	}

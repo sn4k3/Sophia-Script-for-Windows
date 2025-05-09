@@ -5,6 +5,7 @@
       "menuImportExportPreset": "Импорт | экспорт",
       "menuImportPreset": "Импортировать пресет",
       "menuExportPreset": "Экспортировать пресет",
+      "menuAutosave": "Автосохранение",
       "menuPresets": "Пресеты",
       "menuOpposite": "Противоположные значения",
       "menuClear": "Очистить",
@@ -75,8 +76,7 @@
       "messageBoxPresetNotComp": "Пресет не совместим!",
       "messageBoxFilesMissingClose": "Отсутствуют необходимые файлы Sophia Script Wrapper. Программа будет закрыта.",
       "messageBoxConsoleEmpty": "Консоль пуста.\nНажмите кнопку \"Обновить консоль\", чтобы создать скрипт согласно вышему выбору.",
-      "messageBoxPowerShellVersionNotInstalled": "Выбранная вами версия PowerShell не установлена.",
-      "messageBoxMaybeFilesNotUnzippedProperly": "Возможно, файлы не разархивированы должным образом."
+      "messageBoxPowerShellVersionNotInstalled": "Выбранная вами версия PowerShell не установлена."
     }
   },
   {

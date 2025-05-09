@@ -5,6 +5,7 @@
       "menuImportExportPreset": "Import | Export",
       "menuImportPreset": "Import Preset",
       "menuExportPreset": "Export Preset",
+      "menuAutosave": "Autosave",
       "menuPresets": "Presets",
       "menuOpposite": "Opposite",
       "menuClear": "Clear",
@@ -75,8 +76,7 @@
       "messageBoxPresetNotComp": "preset file is not compatible!",
       "messageBoxFilesMissingClose": "Files missing so Sophia Script Wrapper will close.",
       "messageBoxConsoleEmpty": "The console is empty.\nClick 'Refresh Console' button to create script with your selections.",
-      "messageBoxPowerShellVersionNotInstalled": "PowerShell version you selected is not installed.",
-      "messageBoxMaybeFilesNotUnzippedProperly": "Maybe files not unzipped properly."
+      "messageBoxPowerShellVersionNotInstalled": "PowerShell version you selected is not installed."
     }
   },
   {

@@ -8,7 +8,7 @@
 
 [downloads-badge]: https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/farag2/25ddc72387f298503b752ad5b8d16eed/raw/SophiaScriptDownloadsCount.json
 [lines-badge]: https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/farag2/9852d6b9569a91bf69ceba8a94cc97f4/raw/SophiaScript.json
-[lines-link]: https://github.com/farag2/Sophia-Script-for-Windows
+[lines-link]: https://github.com/farag2/Sophia-Script-for-Windows/blob/master/.github/workflows/Badge_lines.yml
 [badge-code]: https://github.com/farag2/Sophia-Script-for-Windows/blob/master/.github/workflows/Badge_downloads.yml
 
 [![downloads][downloads-badge]][badge-code]
@@ -47,6 +47,7 @@ Mit <img src="https://raw.githubusercontent.com/farag2/Sophia-Script-for-Windows
 * [Verwendung](#verwendung)
   * [Herunterladen über PowerShell](#herunterladen-über-powershell)
   * [Herunterladen über Chocolatey](#herunterladen-über-chocolatey)
+  * [Herunterladen über WinGet](#herunterladen-über-winget)
   * [Manuelle Methode](#manuelle-methode)
   * [Verwendung von spezifischen Funktionen](#verwendung-von-spezifischen-funktionen)
   * [Wrapper](#wrapper)
@@ -95,6 +96,26 @@ Download `Sophia Script for Windows` for `PowerShell 7`.
 
 ```powershell
 choco install sophia --params "/PS7" --force -y
+```
+
+```powershell
+# Deinstallieren Sie Sophia Script
+# Dann entfernen Sie den heruntergeladenen Ordner manuell
+choco uninstall sophia --force -y
+```
+
+### Herunterladen über WinGet
+
+Der Befehl lädt im Gegensatz zum [Chocolatey-Skriptscript](#herunterladen-über-chocolatey) nur das `Windows 11 (PowerShell 5.1)-Archiv` in Ihren `Downloads-Ordner` herunter und erweitert es.
+
+```powershell
+$DownloadsFolder = Get-ItemPropertyValue -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders" -Name "{374DE290-123F-4565-9164-39C4925E467B}"
+winget install --id TeamSophia.SophiaScript --location $DownloadsFolder --accept-source-agreements --force
+```
+
+```powershell
+# Deinstallieren Sie Sophia Script
+winget uninstall --id TeamSophia.SophiaScript --force
 ```
 
 ### Manuelle Methode
