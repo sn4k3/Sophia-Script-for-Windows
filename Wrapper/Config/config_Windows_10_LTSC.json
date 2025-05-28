@@ -1763,7 +1763,7 @@
         "Tag": "DevicesPrinters"
       }
     },
-    "Preset": "012",
+    "Preset": "01",
     "WindowsDefault": "",
     "LTSC2019": "false",
     "LTSC2021": "true"
@@ -1781,21 +1781,6 @@
     "Preset": "",
     "WindowsDefault": "",
     "LTSC2019": "false",
-    "LTSC2021": "true"
-  },
-  {
-    "Region": "Gaming",
-    "Control": "chk",
-    "Required": "false",
-    "Function": "Set-AppGraphicsPerformance",
-    "Arg": {
-      "Zero": {
-        "Tag": ""
-      }
-    },
-    "Preset": "Zero",
-    "WindowsDefault": "",
-    "LTSC2019": "true",
     "LTSC2021": "true"
   },
   {

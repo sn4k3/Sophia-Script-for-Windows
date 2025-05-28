@@ -42,26 +42,6 @@
 
 Сделано с <img src="https://raw.githubusercontent.com/farag2/Sophia-Script-for-Windows/master/img/heart.svg" height="17px"/> к Windows.
 
-## Содержание
-
-* [Как использовать](#как-использовать)
-  * [Скачать через PowerShell](#скачать-через-powershell)
-  * [Скачать через Chocolatey](#скачать-через-chocolatey)
-  * [Скачать через WinGet](#скачать-через-winget)
-  * [Вручную](#вручную)
-  * [Как выполните конкретную функцию(и)](#как-выполните-конкретную-функциюи)
-  * [Wrapper](#wrapper)
-* [Пожертвования](#пожертвования)
-* [Системные требования](#системные-требования)
-* [Ключевые возможности](#ключевые-возможности)
-* [Скриншоты](#скриншоты)
-* [Видео](#видео)
-* [Перевод](#перевод)
-* [Ссылки](#ссылки)
-* [SophiApp](#sophiapp-c--wpf)
-
-## Как использовать
-
 > [!IMPORTANT]
 > Каждый твик в пресет-файле имеет соответствующую функцию для возврата значений по умолчанию. Использование скрипта лучше всего производить на свежеустановленной Windows в связи с тем, что неправильно настроенная ОС может вызвать сбои при работе скрипта.
 
@@ -69,6 +49,28 @@
 > При использовании скрипта только один администратор должен войти в систему.
 >
 > `Sophia Script for Windows` может не работать на кастомных образах Windows. Особенно, если такой образ был создан дилетантами, которые ломают работу Microsoft Defender и выключают работу телеметрии, удаляя системные компоненты из системы.
+
+## Содержание
+
+* [Как скачать](#как-скачать)
+  * [Скачать через PowerShell](#скачать-через-powershell)
+  * [Скачать через Chocolatey](#скачать-через-chocolatey)
+  * [Скачать через WinGet](#скачать-через-winget)
+  * [Со страницы релиза](#со-страницы-релиза)
+* [Как использовать](#как-использовать)
+  * [Как выполнить конкретную функцию(и)](#как-выполните-конкретную-функциюи)
+  * [Wrapper](#wrapper)
+  * [Как откатить изменения](#как-откатить-изменения)
+* [Пожертвования](#пожертвования)
+* [Системные требования](#системные-требования)
+* [Ключевые возможности](#ключевые-возможности)
+* [Скриншоты](#скриншоты)
+* [Видео](#видео)
+* [Перевод](#перевод)
+* [Ссылки](#ссылки)
+* [SophiApp 2](#sophiapp-2-c--winui-3)
+
+## Как скачать
 
 ### Скачать через PowerShell
 
@@ -118,10 +120,13 @@ winget install --id TeamSophia.SophiaScript --location $DownloadsFolder --accept
 winget uninstall --id TeamSophia.SophiaScript --force
 ```
 
-### Вручную
+### Со страницы релиза
 
-* Скачайте [архив](https://github.com/farag2/Sophia-Script-for-Windows/releases/latest) согласно версиям вашей Windows и PowerShell;
-* Распакуйте архив;
+Скачайте [архив](https://github.com/farag2/Sophia-Script-for-Windows/releases/latest) согласно версиям ваших Windows и PowerShell.
+
+## Как использовать
+
+* Скачайте и распакуйте архив;
 * Просмотрите файл `Sophia.ps1` для настройки того, что выхотите, чтобы запускалось;
   * Поставьте символ `#` перед функцией, если не хотите, чтобы она не запускалась.
   * Удалите символ `#` перед функцией, если хотите, чтобы она запускалась.
@@ -153,8 +158,8 @@ winget uninstall --id TeamSophia.SophiaScript --force
 
 ### Как выполните конкретную функцию(и)
 
-* Выполните все шаги из пукнта [Вручную](#вручную) и остановитесь на пункте по изменнию политики выполнения скриптов в `PowerShell`;
-* Сначала загрузите файл `Import-TabCompletion.ps1` через [дот сорсинг](https://docs.microsoft.com/ru-ru/powershell/module/microsoft.powershell.core/about/about_operators#dot-sourcing-operator):
+* Выполните все шаги из пункта [Как использовать](#как-использовать) и остановитесь на пункте по изменнию политики выполнения скриптов в `PowerShell`;
+* Сначала загрузите файл `Import-TabCompletion.ps1` через [дот сорсинг](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_operators#dot-sourcing-operator-):
 
 ```powershell
 # С точкой в начале
@@ -183,7 +188,7 @@ UninstallUWPApps, "PinToStart -UnpinAll"
 
 ## Wrapper
 
-![Wrapper](https://i.imgur.com/AiuCUvW.png)
+![Image](https://github.com/farag2/Sophia-Script-for-Windows/raw/master/img/Wrapper.png)
 
 @BenchTweakGaming
 
@@ -194,6 +199,22 @@ UninstallUWPApps, "PinToStart -UnpinAll"
   * Wrapper имеет рендеринг UI в режиме реального времени;
 * Настройте каждую функцию;
 * Откройте раздел `Вывод консоли` и нажмите `Запустить PowerShell`.
+
+## Как откатить изменения
+
+* Выполните все шаги из пункта [Как использовать](#как-использовать) и остановитесь на пункте по изменнию политики выполнения скриптов в `PowerShell`;
+* Сначала загрузите файл `Import-TabCompletion.ps1` через [дот сорсинг](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_operators#dot-sourcing-operator-):
+
+```powershell
+# С точкой в начале
+. .\Import-TabCompletion.ps1
+```
+
+* Вызовите функции из пресета `Sophia.ps1`, которые вы хотите откатить.
+
+```powershell
+Sophia -Functions "DiagTrackService -Enable", UninstallUWPApps
+```
 
 ## Пожертвования
 
@@ -207,13 +228,13 @@ UninstallUWPApps, "PinToStart -UnpinAll"
 [Windows-11-LTSC-2024]: https://support.microsoft.com/topic/windows-11-version-24h2-update-history-0929c747-1815-4543-8461-0160d16f15e5
 [Windows-11-24h2]: https://support.microsoft.com/topic/windows-11-version-24h2-update-history-0929c747-1815-4543-8461-0160d16f15e5
 
-|                Версия                    | Маркетинговое название |                        Билд                  |      Издание        |
-|:-----------------------------------------|-----------------------:|:--------------------------------------------:|:-------------------:|
-| Windows 11 24H2                          | 2024 Update            | [Последняя стабильная][Windows-11-24h2]      | Home/Pro/Enterprise |
-| Windows 10 x64 22H2                      | 2022 Update            | [Последняя стабильная][Windows-10]           | Home/Pro/Enterprise |
-| Windows 11 Enterprise LTSC 2024          | 2024 Update            | [Последняя стабильная][Windows-11-LTSC-2024] | Enterprise          |
-| Windows 10 x64 21H2 Enterprise LTSC 2021 | October 2021 Update    | [Последняя стабильная][Windows-10-LTSC-2021] | Enterprise          |
-| Windows 10 x64 1809 Enterprise LTSC 2019 | October 2018 Update    | [Последняя стабильная][Windows-10-LTSC-2019] | Enterprise          |
+|                Версия                    |                 Билд                  |      Издание        |
+|:----------------------------------------:|:-------------------------------------:|:-------------------:|
+| Windows 11 24H2                          | [Latest stable][Windows-11-24h2]      | Home/Pro/Enterprise |
+| Windows 10 x64 22H2                      | [Latest stable][Windows-10]           | Home/Pro/Enterprise |
+| Windows 11 Enterprise LTSC 2024          | [Latest stable][Windows-11-LTSC-2024] | Enterprise          |
+| Windows 10 x64 21H2 Enterprise LTSC 2021 | [Latest stable][Windows-10-LTSC-2021] | Enterprise          |
+| Windows 10 x64 1809 Enterprise LTSC 2019 | [Latest stable][Windows-10-LTSC-2019] | Enterprise          |
 
 ## Ключевые возможности
 
@@ -247,7 +268,7 @@ UninstallUWPApps, "PinToStart -UnpinAll"
   * Создать задание `SoftwareDistribution` для очистки `%SystemRoot%\SoftwareDistribution\Download`;
   * Создать задание `Temp` для очистки `%TEMP%`.
 * Установить последней версии распространяемых пакетов Microsoft Visual C++ 2015–2022 x86/x64;
-* Установить последней версии распространяемых пакетов .NET Desktop Runtime 6, 8 x86/x64;
+* Установить последней версии распространяемых пакетов .NET Desktop Runtime 8, 9 x86/x64;
 * Настроить безопасность Windows;
 * Отобразить все ключи политик реестра в оснастке редактирования групповых политик (gpedit.msc);
 * Много других твиков проводника и контекстного меню.
@@ -292,12 +313,7 @@ https://user-images.githubusercontent.com/10544660/253818031-b7ce6bf1-d968-41ea-
 
 ## Ссылки
 
-* [![Discord](https://discordapp.com/api/guilds/1006179075263561779/widget.png?style=shield)](https://discord.gg/sSryhaEv79)
-* [Чат в Telegram](https://t.me/sophia_chat)
-* [Telegram-канал](https://t.me/sophianews)
-* [Ru-Board](https://forum.ru-board.com/topic.cgi?forum=62&topic=30617#15)
-* [rutracker](https://rutracker.org/forum/viewtopic.php?t=5996011)
-* [My Digital Life](https://forums.mydigitallife.net/threads/powershell-windows-10-sophia-script.81675/)
+* [XDA](https://www.xda-developers.com/sophia-script-returns-control-windows-11)
 * [4sysops](https://4sysops.com/archives/windows-10-sophia-script-powershell-functions-for-windows-10-fine-tuning-and-automating-routine-configuration-tasks/)
 * [gHacks](https://www.ghacks.net/2020/09/27/windows-10-setup-script-has-a-new-name-and-is-now-easier-to-use/)
 * [Neowin](https://www.neowin.net/news/this-windows-10-setup-script-lets-you-fine-tune-around-150-functions-for-new-installs)
@@ -307,12 +323,15 @@ https://user-images.githubusercontent.com/10544660/253818031-b7ce6bf1-d968-41ea-
 * [PCsoleil Informatique](https://www.pcsoleil.fr/successeur-de-win10-initial-setup-script-sophia-script-comment-lutiliser/)
 * [Reddit (archived)](https://www.reddit.com/r/PowerShell/comments/go2n5v/powershell_script_setup_windows_10/)
   * PM [me](https://www.reddit.com/user/farag2/)
+* [Ru-Board](https://forum.ru-board.com/topic.cgi?forum=62&topic=30617#15)
+* [rutracker](https://rutracker.org/forum/viewtopic.php?t=5996011)
+* [My Digital Life](https://forums.mydigitallife.net/threads/powershell-windows-10-sophia-script.81675/)
 
 ***
 
-## SophiApp (C# + WPF)
+## SophiApp 2 (C# + WinUI 3)
 
 [SophiApp 2.0](https://github.com/Sophia-Community/SophiApp) находится в активной разработке. 🚀
 
-![Image](https://github.com/Sophia-Community/SophiApp/raw/master/img/0.gif)
-![Image](https://github.com/Sophia-Community/SophiApp/raw/master/img/1.png)
+![Image](https://github.com/farag2/Sophia-Script-for-Windows/raw/master/img/0.gif)
+![Image](https://github.com/farag2/Sophia-Script-for-Windows/raw/master/img/1.png)

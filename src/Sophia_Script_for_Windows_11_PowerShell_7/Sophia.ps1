@@ -3,10 +3,10 @@
 	Default preset file for "Sophia Script for Windows 11 (PowerShell 7)"
 
 	.VERSION
-	6.8.5
+	6.8.6
 
 	.DATE
-	18.04.2025
+	09.05.2025
 
 	.COPYRIGHT
 	(c) 2014—2025 Team Sophia
@@ -64,7 +64,7 @@
 #>
 
 #Requires -RunAsAdministrator
-#Requires -Version 7.4
+#Requires -Version 7.5
 
 [CmdletBinding()]
 param
@@ -76,7 +76,7 @@ param
 
 Clear-Host
 
-$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 11 v6.8.5 (PowerShell 7) | Made with $([System.Char]::ConvertFromUtf32(0x1F497)) of Windows | $([System.Char]0x00A9) Team Sophia, 2014$([System.Char]0x2013)2025"
+$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 11 v6.8.6 (PowerShell 7) | Made with $([System.Char]::ConvertFromUtf32(0x1F497)) of Windows | $([System.Char]0x00A9) Team Sophia, 2014$([System.Char]0x2013)2025"
 
 # Checking whether all files were expanded before running
 $ScriptFiles = @(
@@ -1067,10 +1067,6 @@ XboxGameTips -Disable
 # Enable Xbox Game Bar tips (default value)
 # Включить советы Xbox Game Bar (значение по умолчанию)
 # XboxGameTips -Enable
-
-# Choose an app and set the "High performance" graphics performance for it. Only if you have a dedicated GPU
-# Выбрать приложение и установить для него параметры производительности графики на "Высокая производительность". Только при наличии внешней видеокарты
-Set-AppGraphicsPerformance
 
 <#
 	Turn on hardware-accelerated GPU scheduling. Restart needed

@@ -3,10 +3,10 @@
 	Sophia Script is a PowerShell module for Windows 10 & Windows 11 fine-tuning and automating the routine tasks
 
 	.VERSION
-	5.10.5
+	5.10.6
 
 	.DATE
-	18.04.2025
+	09.05.2025
 
 	.AUTHOR
 	Team Sophia
@@ -253,6 +253,8 @@ public static extern bool SetForegroundWindow(IntPtr hWnd);
 		PCNP                 = "HKCU:\Software\PCNP"
 		# https://www.reddit.com/r/TronScript/
 		Tron                 = "$env:SystemDrive\logs\tron"
+		# https://github.com/es3n1n/defendnot
+		defendnot            = "$env:SystemRoot\System32\Tasks\defendnot"
 	}
 	foreach ($Tweaker in $Tweakers.Keys)
 	{
@@ -2569,8 +2571,11 @@ function UserFolders
 				}
 				"Show"
 				{
-					Remove-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FolderDescriptions\{31C0DD25-9439-4F12-BF41-7FF4EDA38722}\PropertyBag" -Name ThisPCPolicy -Force -ErrorAction Ignore
-					Remove-ItemProperty -Path "HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Explorer\FolderDescriptions\{31C0DD25-9439-4F12-BF41-7FF4EDA38722}\PropertyBag" -Name ThisPCPolicy -Force -ErrorAction Ignore
+					$Paths = @(
+						"HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FolderDescriptions\{31C0DD25-9439-4F12-BF41-7FF4EDA38722}\PropertyBag",
+						"HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Explorer\FolderDescriptions\{31C0DD25-9439-4F12-BF41-7FF4EDA38722}\PropertyBag"
+					)
+					Remove-ItemProperty -Path $Paths -Name ThisPCPolicy -Force -ErrorAction Ignore
 				}
 			}
 		}
@@ -2593,8 +2598,11 @@ function UserFolders
 				}
 				"Show"
 				{
-					Remove-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FolderDescriptions\{B4BFCC3A-DB2C-424C-B029-7FE99A87C641}\PropertyBag" -Name ThisPCPolicy -Force -ErrorAction Ignore
-					Remove-ItemProperty -Path "HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Explorer\FolderDescriptions\{B4BFCC3A-DB2C-424C-B029-7FE99A87C641}\PropertyBag" -Name ThisPCPolicy -Force -ErrorAction Ignore
+					$Paths = @(
+						"HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FolderDescriptions\{B4BFCC3A-DB2C-424C-B029-7FE99A87C641}\PropertyBag",
+						"HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Explorer\FolderDescriptions\{B4BFCC3A-DB2C-424C-B029-7FE99A87C641}\PropertyBag"
+					)
+					Remove-ItemProperty -Path $Paths -Name ThisPCPolicy -Force -ErrorAction Ignore
 				}
 			}
 		}
@@ -2617,8 +2625,11 @@ function UserFolders
 				}
 				"Show"
 				{
-					Remove-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FolderDescriptions\{f42ee2d3-909f-4907-8871-4c22fc0bf756}\PropertyBag" -Name ThisPCPolicy -Force -ErrorAction Ignore
-					Remove-ItemProperty -Path "HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Explorer\FolderDescriptions\{f42ee2d3-909f-4907-8871-4c22fc0bf756}\PropertyBag" -Name ThisPCPolicy -Force -ErrorAction Ignore
+					$Paths = @(
+						"HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FolderDescriptions\{f42ee2d3-909f-4907-8871-4c22fc0bf756}\PropertyBag",
+						"HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Explorer\FolderDescriptions\{f42ee2d3-909f-4907-8871-4c22fc0bf756}\PropertyBag"
+					)
+					Remove-ItemProperty -Path $Paths -Name ThisPCPolicy -Force -ErrorAction Ignore
 				}
 			}
 		}
@@ -2641,8 +2652,11 @@ function UserFolders
 				}
 				"Show"
 				{
-					Remove-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FolderDescriptions\{7d83ee9b-2244-4e70-b1f5-5393042af1e4}\PropertyBag" -Name ThisPCPolicy -Force -ErrorAction Ignore
-					Remove-ItemProperty -Path "HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Explorer\FolderDescriptions\{7d83ee9b-2244-4e70-b1f5-5393042af1e4}\PropertyBag" -Name ThisPCPolicy -Force -ErrorAction Ignore
+					$Paths = @(
+						"HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FolderDescriptions\{7d83ee9b-2244-4e70-b1f5-5393042af1e4}\PropertyBag",
+						"HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Explorer\FolderDescriptions\{7d83ee9b-2244-4e70-b1f5-5393042af1e4}\PropertyBag"
+					)
+					Remove-ItemProperty -Path $Paths -Name ThisPCPolicy -Force -ErrorAction Ignore
 				}
 			}
 		}
@@ -2665,8 +2679,11 @@ function UserFolders
 				}
 				"Show"
 				{
-					Remove-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FolderDescriptions\{a0c69a99-21c8-4671-8703-7934162fcf1d}\PropertyBag" -Name ThisPCPolicy -Force -ErrorAction Ignore
-					Remove-ItemProperty -Path "HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Explorer\FolderDescriptions\{a0c69a99-21c8-4671-8703-7934162fcf1d}\PropertyBag" -Name ThisPCPolicy -Force -ErrorAction Ignore
+					$Paths = @(
+						"HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FolderDescriptions\{a0c69a99-21c8-4671-8703-7934162fcf1d}\PropertyBag",
+						"HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Explorer\FolderDescriptions\{a0c69a99-21c8-4671-8703-7934162fcf1d}\PropertyBag"
+					)
+					Remove-ItemProperty -Path $Paths -Name ThisPCPolicy -Force -ErrorAction Ignore
 				}
 			}
 		}
@@ -2689,8 +2706,11 @@ function UserFolders
 				}
 				"Show"
 				{
-					Remove-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FolderDescriptions\{0ddd015d-b06c-45d5-8c4c-f59713854639}\PropertyBag" -Name ThisPCPolicy -Force -ErrorAction Ignore
-					Remove-ItemProperty -Path "HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Explorer\FolderDescriptions\{0ddd015d-b06c-45d5-8c4c-f59713854639}\PropertyBag" -Name ThisPCPolicy -Force -ErrorAction Ignore
+					$Paths = @(
+						"HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FolderDescriptions\{0ddd015d-b06c-45d5-8c4c-f59713854639}\PropertyBag",
+						"HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Explorer\FolderDescriptions\{0ddd015d-b06c-45d5-8c4c-f59713854639}\PropertyBag"
+					)
+					Remove-ItemProperty -Path $Paths -Name ThisPCPolicy -Force -ErrorAction Ignore
 				}
 			}
 		}
@@ -2713,8 +2733,11 @@ function UserFolders
 				}
 				"Show"
 				{
-					Remove-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FolderDescriptions\{35286a68-3c57-41a1-bbb1-0eae73d76c95}\PropertyBag" -Name ThisPCPolicy -Force -ErrorAction Ignore
-					Remove-ItemProperty -Path "HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Explorer\FolderDescriptions\{35286a68-3c57-41a1-bbb1-0eae73d76c95}\PropertyBag" -Name ThisPCPolicy -Force -ErrorAction Ignore
+					$Paths = @(
+						"HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\FolderDescriptions\{35286a68-3c57-41a1-bbb1-0eae73d76c95}\PropertyBag",
+						"HKLM:\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Explorer\FolderDescriptions\{35286a68-3c57-41a1-bbb1-0eae73d76c95}\PropertyBag"
+					)
+					Remove-ItemProperty -Path $Paths -Name ThisPCPolicy -Force -ErrorAction Ignore
 				}
 			}
 		}
@@ -6427,8 +6450,7 @@ function LatestInstalled.NET
 		}
 		"Disable"
 		{
-			Remove-ItemProperty -Path HKLM:\SOFTWARE\Microsoft\.NETFramework -Name OnlyUseLatestCLR -Force -ErrorAction Ignore
-			Remove-ItemProperty -Path HKLM:\SOFTWARE\Wow6432Node\Microsoft\.NETFramework -Name OnlyUseLatestCLR -Force -ErrorAction Ignore
+			Remove-ItemProperty -Path HKLM:\SOFTWARE\Microsoft\.NETFramework, HKLM:\SOFTWARE\Wow6432Node\Microsoft\.NETFramework -Name OnlyUseLatestCLR -Force -ErrorAction Ignore
 		}
 	}
 }
@@ -7533,8 +7555,7 @@ public static int UnloadHive(RegistryHives hive, string subKey)
 						if ($ProgId -eq $AppxProgID)
 						{
 							# Remove association limitations for this UWP apps
-							Remove-ItemProperty -Path "HKCU:\Software\Classes\$AppxProgID" -Name NoOpenWith -Force -ErrorAction Ignore
-							Remove-ItemProperty -Path "HKCU:\Software\Classes\$AppxProgID" -Name NoStaticDefaultVerb -Force -ErrorAction Ignore
+							Remove-ItemProperty -Path "HKCU:\Software\Classes\$AppxProgID" -Name NoOpenWith, NoStaticDefaultVerb -Force -ErrorAction Ignore
 						}
 						else
 						{
@@ -8912,68 +8933,6 @@ function AppSuggestions
 	}
 }
 #endregion Start menu
-
-#region Gaming
-<#
-	.SYNOPSIS
-	Choose an app and set the "High performance" graphics performance for it
-
-	.EXAMPLE
-	Set-AppGraphicsPerformance
-
-	.NOTES
-	Works only with a dedicated GPU
-
-	.NOTES
-	Current user
-#>
-function Set-AppGraphicsPerformance
-{
-	if (Get-CimInstance -ClassName Win32_VideoController | Where-Object -FilterScript {($_.AdapterDACType -ne "Internal") -and ($null -ne $_.AdapterDACType)})
-	{
-		Write-Information -MessageData "" -InformationAction Continue
-		Write-Verbose -Message $Localization.GraphicsPerformanceTitle -Verbose
-
-		do
-		{
-			$Choice = Show-Menu -Menu $Browse -Default 1 -AddSkip
-
-			switch ($Choice)
-			{
-				$Browse
-				{
-					Add-Type -AssemblyName System.Windows.Forms
-					$OpenFileDialog = New-Object -TypeName System.Windows.Forms.OpenFileDialog
-					$OpenFileDialog.Filter = "*.exe|*.exe|{0} (*.*)|*.*" -f $Localization.AllFilesFilter
-					$OpenFileDialog.InitialDirectory = "::{20D04FE0-3AEA-1069-A2D8-08002B30309D}"
-					$OpenFileDialog.Multiselect = $false
-
-					# Force move the open file dialog to the foreground
-					$Focus = New-Object -TypeName System.Windows.Forms.Form -Property @{TopMost = $true}
-					$OpenFileDialog.ShowDialog($Focus)
-
-					if ($OpenFileDialog.FileName)
-					{
-						if (-not (Test-Path -Path HKCU:\Software\Microsoft\DirectX\UserGpuPreferences))
-						{
-							New-Item -Path HKCU:\Software\Microsoft\DirectX\UserGpuPreferences -Force
-						}
-						New-ItemProperty -Path HKCU:\Software\Microsoft\DirectX\UserGpuPreferences -Name $OpenFileDialog.FileName -PropertyType String -Value "GpuPreference=2;" -Force
-					}
-				}
-				$Skip
-				{
-					Write-Information -MessageData "" -InformationAction Continue
-					Write-Verbose -Message ($Localization.Skipped -f $MyInvocation.Line.Trim()) -Verbose
-					Write-Error -Message ($Localization.Skipped -f $MyInvocation.Line.Trim()) -ErrorAction SilentlyContinue
-				}
-				$KeyboardArrows {}
-			}
-		}
-		until ($Choice -ne $KeyboardArrows)
-	}
-}
-#endregion Gaming
 
 #region Scheduled tasks
 <#
@@ -11103,8 +11062,7 @@ function PrintCMDContext
 		}
 		"Show"
 		{
-			Remove-ItemProperty -Path Registry::HKEY_CLASSES_ROOT\batfile\shell\print -Name ProgrammaticAccessOnly -Force -ErrorAction Ignore
-			Remove-ItemProperty -Path Registry::HKEY_CLASSES_ROOT\cmdfile\shell\print -Name ProgrammaticAccessOnly -Force -ErrorAction Ignore
+			Remove-ItemProperty -Path Registry::HKEY_CLASSES_ROOT\batfile\shell\print, Registry::HKEY_CLASSES_ROOT\cmdfile\shell\print -Name ProgrammaticAccessOnly -Force -ErrorAction Ignore
 		}
 	}
 }

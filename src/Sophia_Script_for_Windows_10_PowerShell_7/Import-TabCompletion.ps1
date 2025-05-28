@@ -2,8 +2,8 @@
 	.SYNOPSIS
 	Enable tab completion to invoke for functions if you do not know function name
 
-	Version: 5.20.5
-	Date: 18.04.2025
+	Version: 5.20.6
+	Date: 09.05.2025
 
 	Copyright (c) 2014—2025 Team Sophia
 
@@ -26,7 +26,7 @@
 #>
 
 #Requires -RunAsAdministrator
-#Requires -Version 7.4
+#Requires -Version 7.5
 
 function Sophia
 {
@@ -49,7 +49,7 @@ function Sophia
 
 Clear-Host
 
-$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 10 v5.20.5 (PowerShell 7) | Made with $([System.Char]::ConvertFromUtf32(0x1F497)) of Windows | $([System.Char]0x00A9) Team Sophia, 2014$([System.Char]0x2013)2025"
+$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 10 v5.20.6 (PowerShell 7) | Made with $([System.Char]::ConvertFromUtf32(0x1F497)) of Windows | $([System.Char]0x00A9) Team Sophia, 2014$([System.Char]0x2013)2025"
 
 Remove-Module -Name SophiaScript -Force -ErrorAction Ignore
 Import-Module -Name $PSScriptRoot\Manifest\SophiaScript.psd1 -PassThru -Force
@@ -61,6 +61,21 @@ try
 catch
 {
 	Import-LocalizedData -BindingVariable Global:Localization -UICulture en-US -BaseDirectory $PSScriptRoot\Localizations -FileName Sophia
+}
+
+# Checking if function wasn't dot-sourced, but called explicitly
+# ".\Import-TabCompletion.ps1" instead of ". .\Import-TabCompletion.ps1"
+if ($MyInvocation.Line -ne ". .\Import-TabCompletion.ps1")
+{
+	Write-Information -MessageData "" -InformationAction Continue
+	Write-Warning -Message $Localization.DotSourcedWarning
+	Write-Information -MessageData "" -InformationAction Continue
+
+	Write-Verbose -Message "https://github.com/farag2/Sophia-Script-for-Windows?tab=readme-ov-file#how-to-run-the-specific-functions" -Verbose
+	Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
+	Write-Verbose -Message "https://discord.gg/sSryhaEv79" -Verbose
+
+	exit
 }
 
 # The mandatory checks. Please, do not comment out this function

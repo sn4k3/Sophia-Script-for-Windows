@@ -3,10 +3,10 @@
 	Sophia Script is a PowerShell module for Windows 10 & Windows 11 fine-tuning and automating the routine tasks
 
 	.VERSION
-	6.8.5
+	6.8.6
 
 	.DATE
-	18.04.2025
+	09.05.2025
 
 	.AUTHOR
 	Team Sophia
@@ -253,6 +253,8 @@ public static extern bool SetForegroundWindow(IntPtr hWnd);
 		PCNP                 = "HKCU:\Software\PCNP"
 		# https://www.reddit.com/r/TronScript/
 		Tron                 = "$env:SystemDrive\logs\tron"
+		# https://github.com/es3n1n/defendnot
+		defendnot            = "$env:SystemRoot\System32\Tasks\defendnot"
 	}
 	foreach ($Tweaker in $Tweakers.Keys)
 	{
@@ -4712,20 +4714,10 @@ function StartRecommendedSection
 		$Show
 	)
 
-	# Windows 11 Home not supported
-	$EditionID = (Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion").EditionID
-	if ($EditionID -match "Home" -or ($EditionID -match "Core"))
-	{
-		Write-Information -MessageData "" -InformationAction Continue
-		Write-Verbose -Message ($Localization.Skipped -f $MyInvocation.Line.Trim()) -Verbose
-		Write-Error -Message ($Localization.Skipped -f $MyInvocation.Line.Trim()) -ErrorAction SilentlyContinue
-
-		return
-	}
-
 	# Remove all policies in order to make changes visible in UI
 	Remove-ItemProperty -Path HKLM:\SOFTWARE\Policies\Microsoft\Windows\Explorer -Name HideRecommendedSection -Force -ErrorAction Ignore
 	Set-Policy -Scope Computer -Path SOFTWARE\Policies\Microsoft\Windows\Explorer -Name HideRecommendedSection -Type DELETE
+	Remove-ItemProperty -Path HKLM:\SOFTWARE\Microsoft\PolicyManager\current\device\Education -Name IsEducationEnvironment -Force -ErrorAction Ignore
 
 	switch ($PSCmdlet.ParameterSetName)
 	{
@@ -4735,20 +4727,13 @@ function StartRecommendedSection
 			{
 				New-Item -Path HKCU:\Software\Policies\Microsoft\Windows\Explorer -Force
 			}
-			if (-not (Test-Path -Path HKLM:\SOFTWARE\Microsoft\PolicyManager\current\device\Education))
-			{
-				New-Item -Path HKLM:\SOFTWARE\Microsoft\PolicyManager\current\device\Education -Force
-			}
 			New-ItemProperty -Path HKCU:\Software\Policies\Microsoft\Windows\Explorer -Name HideRecommendedSection -PropertyType DWord -Value 1 -Force
-			New-ItemProperty -Path HKLM:\SOFTWARE\Microsoft\PolicyManager\current\device\Education -Name IsEducationEnvironment -PropertyType DWord -Value 1 -Force
 
 			Set-Policy -Scope User -Path Software\Policies\Microsoft\Windows\Explorer -Name HideRecommendedSection -Type DWORD -Value 1
 		}
 		"Show"
 		{
-			Remove-ItemProperty -Path HKCU:\Software\Policies\Microsoft\Windows\Explorer -Name HideRecommendedSection -Force -ErrorAction Ignore
-			Remove-ItemProperty -Path HKLM:\SOFTWARE\Microsoft\PolicyManager\current\device\Education -Name IsEducationEnvironment -Force -ErrorAction Ignore
-			Remove-ItemProperty -Path HKLM:\SOFTWARE\Microsoft\PolicyManager\current\device\Start -Name HideRecommendedSection -Force -ErrorAction Ignore
+			Remove-ItemProperty -Path HKCU:\Software\Policies\Microsoft\Windows\Explorer, HKLM:\SOFTWARE\Microsoft\PolicyManager\current\device\Start -Name HideRecommendedSection -Force -ErrorAction Ignore
 			Set-Policy -Scope User -Path Software\Policies\Microsoft\Windows\Explorer -Name HideRecommendedSection -Type DELETE
 		}
 	}
@@ -7586,8 +7571,7 @@ function LatestInstalled.NET
 		}
 		"Disable"
 		{
-			Remove-ItemProperty -Path HKLM:\SOFTWARE\Microsoft\.NETFramework -Name OnlyUseLatestCLR -Force -ErrorAction Ignore
-			Remove-ItemProperty -Path HKLM:\SOFTWARE\Wow6432Node\Microsoft\.NETFramework -Name OnlyUseLatestCLR -Force -ErrorAction Ignore
+			Remove-ItemProperty -Path HKLM:\SOFTWARE\Microsoft\.NETFramework, HKLM:\SOFTWARE\Wow6432Node\Microsoft\.NETFramework -Name OnlyUseLatestCLR -Force -ErrorAction Ignore
 		}
 	}
 }
@@ -8831,8 +8815,7 @@ public static int UnloadHive(RegistryHives hive, string subKey)
 						if ($ProgId -eq $AppxProgID)
 						{
 							# Remove association limitations for this UWP apps
-							Remove-ItemProperty -Path "HKCU:\Software\Classes\$AppxProgID" -Name NoOpenWith -Force -ErrorAction Ignore
-							Remove-ItemProperty -Path "HKCU:\Software\Classes\$AppxProgID" -Name NoStaticDefaultVerb -Force -ErrorAction Ignore
+							Remove-ItemProperty -Path "HKCU:\Software\Classes\$AppxProgID" -Name NoOpenWith, NoStaticDefaultVerb -Force -ErrorAction Ignore
 						}
 						else
 						{
@@ -10468,6 +10451,9 @@ function UninstallUWPApps
 		# Calculator
 		"Microsoft.WindowsCalculator",
 
+		# Windows Advanced Settings
+		"Microsoft.Windows.DevHome",
+
 		# Windows Camera
 		"Microsoft.WindowsCamera",
 
@@ -11031,66 +11017,6 @@ function XboxGameTips
 		{
 			New-ItemProperty -Path HKCU:\Software\Microsoft\GameBar -Name ShowStartupPanel -PropertyType DWord -Value 1 -Force
 		}
-	}
-}
-
-<#
-	.SYNOPSIS
-	Choose an app and set the "High performance" graphics performance for it
-
-	.EXAMPLE
-	Set-AppGraphicsPerformance
-
-	.NOTES
-	Works only with a dedicated GPU
-
-	.NOTES
-	Current user
-#>
-function Set-AppGraphicsPerformance
-{
-	if (Get-CimInstance -ClassName Win32_VideoController | Where-Object -FilterScript {($_.AdapterDACType -ne "Internal") -and ($null -ne $_.AdapterDACType)})
-	{
-		Write-Information -MessageData "" -InformationAction Continue
-		Write-Verbose -Message $Localization.GraphicsPerformanceTitle -Verbose
-
-		do
-		{
-			$Choice = Show-Menu -Menu $Browse -Default 1 -AddSkip
-
-			switch ($Choice)
-			{
-				$Browse
-				{
-					Add-Type -AssemblyName System.Windows.Forms
-					$OpenFileDialog = New-Object -TypeName System.Windows.Forms.OpenFileDialog
-					$OpenFileDialog.Filter = "*.exe|*.exe|{0} (*.*)|*.*" -f $Localization.AllFilesFilter
-					$OpenFileDialog.InitialDirectory = "::{20D04FE0-3AEA-1069-A2D8-08002B30309D}"
-					$OpenFileDialog.Multiselect = $false
-
-					# Force move the open file dialog to the foreground
-					$Focus = New-Object -TypeName System.Windows.Forms.Form -Property @{TopMost = $true}
-					$OpenFileDialog.ShowDialog($Focus)
-
-					if ($OpenFileDialog.FileName)
-					{
-						if (-not (Test-Path -Path HKCU:\Software\Microsoft\DirectX\UserGpuPreferences))
-						{
-							New-Item -Path HKCU:\Software\Microsoft\DirectX\UserGpuPreferences -Force
-						}
-						New-ItemProperty -Path HKCU:\Software\Microsoft\DirectX\UserGpuPreferences -Name $OpenFileDialog.FileName -PropertyType String -Value "GpuPreference=2;" -Force
-					}
-				}
-				$Skip
-				{
-					Write-Information -MessageData "" -InformationAction Continue
-					Write-Verbose -Message ($Localization.Skipped -f $MyInvocation.Line.Trim()) -Verbose
-					Write-Error -Message ($Localization.Skipped -f $MyInvocation.Line.Trim()) -ErrorAction SilentlyContinue
-				}
-				$KeyboardArrows {}
-			}
-		}
-		until ($Choice -ne $KeyboardArrows)
 	}
 }
 
@@ -13675,8 +13601,7 @@ function PrintCMDContext
 		}
 		"Show"
 		{
-			Remove-ItemProperty -Path Registry::HKEY_CLASSES_ROOT\batfile\shell\print -Name ProgrammaticAccessOnly -Force -ErrorAction Ignore
-			Remove-ItemProperty -Path Registry::HKEY_CLASSES_ROOT\cmdfile\shell\print -Name ProgrammaticAccessOnly -Force -ErrorAction Ignore
+			Remove-ItemProperty -Path Registry::HKEY_CLASSES_ROOT\batfile\shell\print, Registry::HKEY_CLASSES_ROOT\cmdfile\shell\print -Name ProgrammaticAccessOnly -Force -ErrorAction Ignore
 		}
 	}
 }
@@ -13992,8 +13917,11 @@ function OpenWindowsTerminalAdminContext
 	{
 		"Enable"
 		{
-			Remove-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked" -Name "{9F156763-7844-4DC4-B2B1-901F640F5155}" -ErrorAction Ignore
-			Remove-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked" -Name "{9F156763-7844-4DC4-B2B1-901F640F5155}" -ErrorAction Ignore
+			$Paths = @(
+				"HKCU:\Software\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked",
+				"HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Shell Extensions\Blocked"
+			)
+			Remove-ItemProperty -Path $Paths -Name "{9F156763-7844-4DC4-B2B1-901F640F5155}" -ErrorAction Ignore
 
 			if ($Terminal.profiles.defaults.elevate)
 			{
