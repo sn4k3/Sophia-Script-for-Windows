@@ -3,10 +3,10 @@
 	Default preset file for "Sophia Script for Windows 11 (PowerShell 7)"
 
 	.VERSION
-	6.8.7
+	6.9.0
 
 	.DATE
-	22.06.2025
+	03.08.2025
 
 	.COPYRIGHT
 	(c) 2014—2025 Team Sophia
@@ -76,7 +76,7 @@ param
 
 Clear-Host
 
-$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 11 v6.8.7 (PowerShell 7) | Made with $([System.Char]::ConvertFromUtf32(0x1F497)) of Windows | $([System.Char]0x00A9) Team Sophia, 2014$([System.Char]0x2013)2025"
+$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 11 v6.9.0 (PowerShell 7) | Made with $([System.Char]::ConvertFromUtf32(0x1F497)) of Windows | $([System.Char]0x00A9) Team Sophia, 2014$([System.Char]0x2013)2025"
 
 # Checking whether all files were expanded before running
 $ScriptFiles = @(
@@ -975,8 +975,8 @@ DefaultTerminalApp -WindowsTerminal
 # Установить последнюю версию распространяемых пакетов Microsoft Visual C++ 2015–2022 (x86/x64)
 Install-VCRedist -Redistributables 2015_2022_x86, 2015_2022_x64
 
-# Install the latest .NET Desktop Runtime 8, 9 x64
-#Установить последнюю версию .NET Desktop Runtime 8, 9 x64
+# Install the latest .NET Runtime 8, 9 x64
+#Установить последнюю версию .NET Runtime 8, 9 x64
 Install-DotNetRuntimes -Runtimes NET8x64, NET9x64
 
 # Enable proxying only blocked sites from the unified registry of Roskomnadzor. The function is applicable for Russia only

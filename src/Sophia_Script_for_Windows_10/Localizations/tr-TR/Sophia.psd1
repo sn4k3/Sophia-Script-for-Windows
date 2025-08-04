@@ -1,14 +1,15 @@
 ﻿ConvertFrom-StringData -StringData @'
 UnsupportedOSBitness                      = Komut dosyası yalnızca 64 bit Windows'u destekler.
-UnsupportedOSBuild                        = Komut dosyası yalnızca Windows 10 22H2'yi destekler. Sizin işletim sisteminiz {0}. Windows'unuzu yükseltin ve tekrar deneyin.
+UnsupportedOSBuild                        = Komut dosyası yalnızca Windows 10 22H2'yi destekler. {0} {1} kullanıyorsunuz. Windows'unuzu yükseltin ve tekrar deneyin.
 UnsupportedWindowsTerminal                = Windows Terminal sürümü 1.20'den daha düşük. Lütfen Microsoft Store'da güncelleyin ve tekrar deneyin.
-UpdateWarning                             = Windows 10 yapınız: {0}.{1}. Desteklenen yapılar: {2} ve üzeri sürümler.. Windows Update'i çalıştırın ve tekrar deneyin.
+UpdateWarning                             = Windows 10 {0}.{1} rendszert használ. A támogatott verzió Windows 10 {0}.{2} vagy újabb. Futtassa a Windows Update programot, majd próbálja meg újra.
 UnsupportedLanguageMode                   = Sınırlı bir dil modunda çalışan PowerShell oturumu.
 LoggedInUserNotAdmin                      = Oturum açan kullanıcının yönetici hakları yok.
-UnsupportedPowerShell                     = Komut dosyasını PowerShell {0}.{1} aracılığıyla çalıştırmaya çalışıyorsunuz. Komut dosyasını uygun PowerShell sürümünde çalıştırın.
+UnsupportedPowerShell                     = Komut dosyasını PowerShell {0}.{1} aracılığıyla çalıştırmaya çalışıyorsunuz. Lütfen betiği PowerShell {2} ile çalıştırın.
 UnsupportedHost                           = Komut dosyası, {0} üzerinden çalıştırmayı desteklemiyor.
 Win10TweakerWarning                       = Muhtemelen işletim sisteminize Win 10 Tweaker arka kapısı yoluyla bulaştı.
 TweakerWarning                            = Windows işletim sistemi kararlılığı, {0} betiği kullanılarak tehlikeye atılmış olabilir. Yalnızca orijinal bir ISO görüntüsü kullanarak Windows'u yeniden yükleyin.
+HostsWarning                              = {0} dosyasında bulunan üçüncü taraf girişleri. Bunlar, betikte kullanılan kaynaklara bağlantıları engelleyebilir. Devam etmek istiyor musunuz?
 Bin                                       = "{0}" klasöründe dosya yok. Lütfen arşivi yeniden indirin.
 RebootPending                             = PC yeniden başlatılmayı bekliyor.
 UnsupportedRelease                        = Yeni bir komut dosyası sürümü bulundu. Lütfen sadece en son Sophia Script'i kullanın.
@@ -21,7 +22,7 @@ ScheduledTasks                            = Zamanlanan görevler
 OneDriveUninstalling                      = OneDrive kaldırılıyor...
 OneDriveInstalling                        = OneDrive kuruluyor...
 OneDriveDownloading                       = OneDrive indiriliyor...
-OneDriveWarning                           = "WinPrtScrFolder -Desktop" işlevi yalnızca kullanıcı OneDrive'ı kaldırmak için komut dosyası yapılandırmışsa (veya OneDrive zaten kaldırılmışsa) uygulanır.\nAksi takdirde OneDrive'daki "Masaüstü" ve "Resimler" klasörleri için yedekleme işlevi bozulur.
+OneDriveWarning                           = "WinPrtScrFolder -Desktop" işlevi yalnızca kullanıcı OneDrive'ı kaldırmak için komut dosyası yapılandırmışsa (veya OneDrive zaten kaldırılmışsa) uygulanır. Aksi takdirde OneDrive'daki "Masaüstü" ve "Resimler" klasörleri için yedekleme işlevi bozulur.
 WindowsFeaturesTitle                      = Características do Windows
 OptionalFeaturesTitle                     = Opsiyonel özellikler
 EnableHardwareVT                          = UEFI'dan sanallaştırmayı aktifleştirin.

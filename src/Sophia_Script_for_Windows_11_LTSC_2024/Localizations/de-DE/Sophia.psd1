@@ -1,13 +1,15 @@
 ﻿ConvertFrom-StringData -StringData @'
-UnsupportedOSBuild                        = Das Skript unterstützt nur Windows 11 Enterprise LTSC 2024. Ihr Betriebssystem ist {0}. Aktualisieren Sie Ihr Windows und versuchen Sie es erneut.
+UnsupportedArchitecture                   = Sie verwenden eine CPU mit "{0}"-basierter Architektur. Dieses Skript unterstützt nur CPUs mit x64-Architektur. Laden Sie die für Ihre Architektur geeignete Skriptversion herunter und führen Sie sie aus.
+UnsupportedOSBuild                        = Das Skript unterstützt nur Windows 11 Enterprise LTSC 2024. Sie verwenden Windows {0} {1}. Aktualisieren Sie Ihr Windows und versuchen Sie es erneut.
 UnsupportedWindowsTerminal                = Die Windows Terminal-Version ist niedriger als 1.20. Bitte aktualisieren Sie es im Microsoft Store und versuchen Sie es erneut.
-UpdateWarning                             = Ihr Windows 11-Build: {0}.{1}. Unterstützter Builds: {2} und höher. Führen Sie Windows Update aus und versuchen Sie es erneut.
+UpdateWarning                             = Sie verwenden Windows 11 {0}.{1}. Unterstützt wird Windows 11 {0}.{2} und höher. Führen Sie Windows Update aus und versuchen Sie es erneut.
 UnsupportedLanguageMode                   = Die PowerShell-Sitzung wird in einem eingeschränkten Sprachmodus ausgeführt.
 LoggedInUserNotAdmin                      = Der angemeldete Benutzer hat keine Administratorrechte.
-UnsupportedPowerShell                     = Sie versuchen ein Skript über PowerShell {0}.{1} auszuführen. Das Skript in der entsprechenden PowerShell-Version ausführen.
+UnsupportedPowerShell                     = Sie versuchen ein Skript über PowerShell {0}.{1} auszuführen. Bitte führen Sie das Skript in PowerShell {2} aus.
 UnsupportedHost                           = Das Skript unterstützt nicht die Ausführung über {0}.
 Win10TweakerWarning                       = Wahrscheinlich wurde Ihr Betriebssystem über die Win 10 Tweaker-Hintertür infiziert.
 TweakerWarning                            = Die Stabilität des Windows-Betriebssystems kann durch die Verwendung des {0} beeinträchtigt worden sein. Installieren Sie Windows nur mit einem Original-ISO-Abbild neu.
+HostsWarning                              = Einträge von Drittanbietern, die in der Datei {0} gefunden werden. Sie können Verbindungen zu den im Skript verwendeten Ressourcen blockieren. Möchten Sie fortfahren?
 Bin                                       = Im Ordner "{0}" befinden sich keine Dateien. Bitte laden Sie das Archiv erneut herunter.
 RebootPending                             = Der PC wartet darauf, neu gestartet zu werden.
 UnsupportedRelease                        = Eine neue Skriptversion gefunden. Bitte verwenden Sie nur das neueste Sophia-Skript.
@@ -17,7 +19,7 @@ WindowsComponentBroken                    = {0} defekt oder aus dem Betriebssyst
 ControlledFolderAccessDisabled            = Kontrollierter Ordnerzugriff deaktiviert.
 InitialActionsCheckFailed                 = Die Funktion InitialActions kann nicht aus der Voreinstellungsdatei {0} geladen werden. Bitte überprüfen Sie die Voreinstellungsdatei und versuchen Sie es erneut.
 ScheduledTasks                            = Geplante Aufgaben
-OneDriveWarning                           = Die Funktion "WinPrtScrFolder -Desktop" wird nur angewendet, wenn der Benutzer das Skript zum Entfernen von OneDrive konfiguriert hat (oder OneDrive bereits entfernt wurde).\nAndernfalls wird die Backup-Funktionalität für die Ordner "Desktop" und "Bilder" in OneDrive unterbrochen.
+OneDriveWarning                           = Die Funktion "WinPrtScrFolder -Desktop" wird nur angewendet, wenn der Benutzer das Skript zum Entfernen von OneDrive konfiguriert hat (oder OneDrive bereits entfernt wurde). Andernfalls wird die Backup-Funktionalität für die Ordner "Desktop" und "Bilder" in OneDrive unterbrochen.
 WindowsFeaturesTitle                      = Windows-Features
 OptionalFeaturesTitle                     = Optionale Features
 EnableHardwareVT                          = Virtualisierung in UEFI aktivieren.

@@ -3,10 +3,10 @@
 	Sophia Script is a PowerShell module for Windows 10 & Windows 11 fine-tuning and automating the routine tasks
 
 	.VERSION
-	6.8.7
+	6.9.0
 
 	.DATE
-	22.06.2025
+	03.08.2025
 
 	.AUTHOR
 	Team Sophia
@@ -150,6 +150,126 @@ public static extern bool SetForegroundWindow(IntPtr hWnd);
 		Add-Type @Signature
 	}
 
+	# Extract the localized "Browse" string from shell32.dll
+	$Script:Browse = [WinAPI.GetStrings]::GetString(9015)
+	# Extract the localized "&No" string from shell32.dll
+	$Script:No = [WinAPI.GetStrings]::GetString(33232).Replace("&", "")
+	# Extract the localized "&Yes" string from shell32.dll
+	$Script:Yes = [WinAPI.GetStrings]::GetString(33224).Replace("&", "")
+	$Script:KeyboardArrows = $Localization.KeyboardArrows -f [System.Char]::ConvertFromUtf32(0x2191), [System.Char]::ConvertFromUtf32(0x2193)
+	# Extract the localized "Skip" string from shell32.dll
+	$Script:Skip = [WinAPI.GetStrings]::GetString(16956)
+
+	<#
+		.SYNOPSIS
+		The "Show menu" function with the up/down arrow keys and enter key to make a selection
+
+		.PARAMETER Menu
+		Array of items to choose from
+
+		.PARAMETER Default
+		Default selected item in array
+
+		.PARAMETER AddSkip
+		Add localized extracted "Skip" string from shell32.dll
+
+		.EXAMPLE
+		Show-Menu -Menu @($Item1, $Item2) -Default 1
+
+		.LINK
+		https://qna.habr.com/answer?answer_id=1522379
+		https://github.com/ryandunton/InteractivePSMenu
+	#>
+	function script:Show-Menu
+	{
+		[CmdletBinding()]
+		param
+		(
+			[Parameter(Mandatory = $true)]
+			[array]
+			$Menu,
+
+			[Parameter(Mandatory = $true)]
+			[int]
+			$Default,
+
+			[Parameter(Mandatory = $false)]
+			[switch]
+			$AddSkip
+		)
+
+		Write-Information -MessageData "" -InformationAction Continue
+
+		# Add "Please use the arrow keys 🠕 and 🠗 on your keyboard to select your answer" to menu
+		$Menu += $Localization.KeyboardArrows -f [System.Char]::ConvertFromUtf32(0x2191), [System.Char]::ConvertFromUtf32(0x2193)
+
+		if ($AddSkip)
+		{
+			# Extract the localized "Skip" string from shell32.dll
+			$Menu += [WinAPI.GetStrings]::GetString(16956)
+		}
+
+		$i = 0
+		while ($i -lt $Menu.Count)
+		{
+			$i++
+			Write-Host -Object ""
+		}
+
+		$SelectedValueIndex = [Math]::Max([Math]::Min($Default, $Menu.Count), 0)
+
+		do
+		{
+			[Console]::SetCursorPosition(0, [Console]::CursorTop - $Menu.Count)
+
+			for ($i = 0; $i -lt $Menu.Count; $i++)
+			{
+				if ($i -eq $SelectedValueIndex)
+				{
+					Write-Host -Object "[>] $($Menu[$i])" -NoNewline
+				}
+				else
+				{
+					Write-Host -Object "[ ] $($Menu[$i])" -NoNewline
+				}
+
+				Write-Host -Object ""
+			}
+
+			$Key = [Console]::ReadKey()
+			switch ($Key.Key)
+			{
+				"UpArrow"
+				{
+					$SelectedValueIndex = [Math]::Max(0, $SelectedValueIndex - 1)
+				}
+				"DownArrow"
+				{
+					$SelectedValueIndex = [Math]::Min($Menu.Count - 1, $SelectedValueIndex + 1)
+				}
+				"Enter"
+				{
+					return $Menu[$SelectedValueIndex]
+				}
+			}
+		}
+		while ($Key.Key -notin ([ConsoleKey]::Escape, [ConsoleKey]::Enter))
+	}
+
+	# Check CPU architecture
+	$Caption = (Get-CimInstance -ClassName CIM_Processor).Caption
+	if (($Caption -notmatch "AMD64") -and ($Caption -notmatch "Intel64"))
+	{
+		Write-Information -MessageData "" -InformationAction Continue
+		Write-Warning -Message ($Localization.UnsupportedArchitecture -f $Caption)
+		Write-Information -MessageData "" -InformationAction Continue
+
+		Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
+		Write-Verbose -Message "https://discord.gg/sSryhaEv79" -Verbose
+
+		exit
+	}
+
 	# Check the language mode
 	if ($ExecutionContext.SessionState.LanguageMode -ne "FullLanguage")
 	{
@@ -184,7 +304,8 @@ public static extern bool SetForegroundWindow(IntPtr hWnd);
 	if ($PSVersionTable.PSVersion.Major -ne 5)
 	{
 		Write-Information -MessageData "" -InformationAction Continue
-		Write-Warning -Message ($Localization.UnsupportedPowerShell -f $PSVersionTable.PSVersion.Major, $PSVersionTable.PSVersion.Minor)
+		$MandatoryPSVersion = (Import-PowershellDataFile -Path "$PSScriptRoot\..\Manifest\SophiaScript.psd1").PowerShellVersion
+		Write-Warning -Message ($Localization.UnsupportedPowerShell -f $PSVersionTable.PSVersion.Major, $PSVersionTable.PSVersion.Minor, $MandatoryPSVersion)
 		Write-Information -MessageData "" -InformationAction Continue
 
 		Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
@@ -323,6 +444,43 @@ public static extern bool SetForegroundWindow(IntPtr hWnd);
 	Write-Verbose -Message ([WinAPI.GetStrings]::GetString(12612)) -Verbose
 	Write-Information -MessageData "" -InformationAction Continue
 
+	# Check if third-party enries added to hosts file
+	foreach ($host in @(Get-Content -Path "$env:SystemRoot\System32\drivers\etc\hosts" -Force))
+	{
+		if (-not ([string]::IsNullOrEmpty($host) -or $host.StartsWith("#")))
+		{
+			Write-Information -MessageData "" -InformationAction Continue
+			Write-Verbose -Message ($Localization.HostsWarning -f "$env:SystemRoot\System32\drivers\etc\hosts") -Verbose
+
+			do
+			{
+				$Choice = Show-Menu -Menu @($Yes, $No) -Default 2
+
+				switch ($Choice)
+				{
+					$Yes
+					{
+						continue
+					}
+					$No
+					{
+						Invoke-Item -Path $PresetName "$env:SystemRoot\System32\drivers\etc"
+
+						Write-Verbose -Message "https://github.com/farag2/Sophia-Script-for-Windows" -Verbose
+						Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
+						Write-Verbose -Message "https://discord.gg/sSryhaEv79" -Verbose
+
+						exit
+					}
+					$KeyboardArrows {}
+				}
+			}
+			until ($Choice -ne $KeyboardArrows)
+
+			break
+		}
+	}
+
 	# Remove IP addresses from hosts file that block Microsoft recourses added by WindowsSpyBlocker
 	# https://github.com/crazy-max/WindowsSpyBlocker
 	try
@@ -377,8 +535,8 @@ public static extern bool SetForegroundWindow(IntPtr hWnd);
 		$Parameters = @{
 			Uri             = "https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/update_v6.txt"
 			UseBasicParsing = $true
-				Verbose         = $true
-			}
+			Verbose         = $true
+		}
 		$update_v6 = (Invoke-WebRequest @Parameters).Content
 
 		$IPArray += $extra, $extra_v6, $spy, $spy_v6, $update, $update_v6
@@ -855,6 +1013,7 @@ public extern static string BrandingFormatString(string sFormat);
 				# https://support.microsoft.com/en-us/topic/windows-11-version-24h2-update-history-0929c747-1815-4543-8461-0160d16f15e5
 				$CurrentBuild = Get-ItemPropertyValue -Path "HKLM:\SOFTWARE\Microsoft\Windows nt\CurrentVersion" -Name CurrentBuild
 				$UBR = Get-ItemPropertyValue -Path "HKLM:\SOFTWARE\Microsoft\Windows nt\CurrentVersion" -Name UBR
+
 				Write-Information -MessageData "" -InformationAction Continue
 				Write-Warning -Message ($Localization.UpdateWarning -f $CurrentBuild, $UBR, $LatestSupportedBuild)
 				Write-Information -MessageData "" -InformationAction Continue
@@ -904,126 +1063,24 @@ public extern static string BrandingFormatString(string sFormat);
 	catch [System.Management.Automation.PropertyNotFoundException]
 	{}
 
-	<#
-		.SYNOPSIS
-		The "Show menu" function with the up/down arrow keys and enter key to make a selection
-
-		.PARAMETER Menu
-		Array of items to choose from
-
-		.PARAMETER Default
-		Default selected item in array
-
-		.PARAMETER AddSkip
-		Add localized extracted "Skip" string from shell32.dll
-
-		.EXAMPLE
-		Show-Menu -Menu @($Item1, $Item2) -Default 1
-
-		.LINK
-		https://qna.habr.com/answer?answer_id=1522379
-		https://github.com/ryandunton/InteractivePSMenu
-	#>
-	function script:Show-Menu
-	{
-		[CmdletBinding()]
-		param
-		(
-			[Parameter(Mandatory = $true)]
-			[array]
-			$Menu,
-
-			[Parameter(Mandatory = $true)]
-			[int]
-			$Default,
-
-			[Parameter(Mandatory = $false)]
-			[switch]
-			$AddSkip
-		)
-
-		Write-Information -MessageData "" -InformationAction Continue
-
-		# Add "Please use the arrow keys 🠕 and 🠗 on your keyboard to select your answer" to menu
-		$Menu += $Localization.KeyboardArrows -f [System.Char]::ConvertFromUtf32(0x2191), [System.Char]::ConvertFromUtf32(0x2193)
-
-		if ($AddSkip)
-		{
-			# Extract the localized "Skip" string from shell32.dll
-			$Menu += [WinAPI.GetStrings]::GetString(16956)
-		}
-
-		$i = 0
-		while ($i -lt $Menu.Count)
-		{
-			$i++
-			Write-Host -Object ""
-		}
-
-		$SelectedValueIndex = [Math]::Max([Math]::Min($Default, $Menu.Count), 0)
-
-		do
-		{
-			[Console]::SetCursorPosition(0, [Console]::CursorTop - $Menu.Count)
-
-			for ($i = 0; $i -lt $Menu.Count; $i++)
-			{
-				if ($i -eq $SelectedValueIndex)
-				{
-					Write-Host -Object "[>] $($Menu[$i])" -NoNewline
-				}
-				else
-				{
-					Write-Host -Object "[ ] $($Menu[$i])" -NoNewline
-				}
-
-				Write-Host -Object ""
-			}
-
-			$Key = [Console]::ReadKey()
-			switch ($Key.Key)
-			{
-				"UpArrow"
-				{
-					$SelectedValueIndex = [Math]::Max(0, $SelectedValueIndex - 1)
-				}
-				"DownArrow"
-				{
-					$SelectedValueIndex = [Math]::Min($Menu.Count - 1, $SelectedValueIndex + 1)
-				}
-				"Enter"
-				{
-					return $Menu[$SelectedValueIndex]
-				}
-			}
-		}
-		while ($Key.Key -notin ([ConsoleKey]::Escape, [ConsoleKey]::Enter))
-	}
-
-	# Extract the localized "Browse" string from shell32.dll
-	$Script:Browse = [WinAPI.GetStrings]::GetString(9015)
-	# Extract the localized "&No" string from shell32.dll
-	$Script:No = [WinAPI.GetStrings]::GetString(33232).Replace("&", "")
-	# Extract the localized "&Yes" string from shell32.dll
-	$Script:Yes = [WinAPI.GetStrings]::GetString(33224).Replace("&", "")
-	$Script:KeyboardArrows = $Localization.KeyboardArrows -f [System.Char]::ConvertFromUtf32(0x2191), [System.Char]::ConvertFromUtf32(0x2193)
-	# Extract the localized "Skip" string from shell32.dll
-	$Script:Skip = [WinAPI.GetStrings]::GetString(16956)
-
+	Write-Information -MessageData "" -InformationAction Continue
 	Write-Information -MessageData "┏┓    ┓ •    ┏┓   •     ┏      ┓ ┏•   ┓ " -InformationAction Continue
 	Write-Information -MessageData "┗┓┏┓┏┓┣┓┓┏┓  ┗┓┏┏┓┓┏┓╋  ╋┏┓┏┓  ┃┃┃┓┏┓┏┫┏┓┓┏┏┏" -InformationAction Continue
 	Write-Information -MessageData "┗┛┗┛┣┛┛┗┗┗┻  ┗┛┗┛ ┗┣┛┗  ┛┗┛┛   ┗┻┛┗┛┗┗┻┗┛┗┻┛┛" -InformationAction Continue
 	Write-Information -MessageData "    ┛              ┛                   " -InformationAction Continue
 
-	Write-Information -MessageData "https://t.me/sophianews" -InformationAction Continue
-	Write-Information -MessageData "https://t.me/sophia_chat" -InformationAction Continue
-	Write-Information -MessageData "https://discord.gg/sSryhaEv79" -InformationAction Continue
+	Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
+	Write-Verbose -Message "https://t.me/sophianews" -Verbose
+	Write-Verbose -Message "https://discord.gg/sSryhaEv79" -Verbose
+	Write-Information -MessageData "" -InformationAction Continue
+	Write-Verbose -Message "https://ko-fi.com/farag" -Verbose
+	Write-Verbose -Message "https://boosty.to/teamsophia" -Verbose
+	Write-Information -MessageData "" -InformationAction Continue
 
 	# Display a warning message about whether a user has customized the preset file
 	if ($Warning)
 	{
 		# Get the name of a preset (e.g Sophia.ps1) regardless it was named
-		# $_.File has no EndsWith() method
 		Write-Information -MessageData "" -InformationAction Continue
 		[string]$PresetName = ((Get-PSCallStack).Position | Where-Object -FilterScript {$_.File}).File | Where-Object -FilterScript {$_.EndsWith(".ps1")}
 		Write-Verbose -Message ($Localization.CustomizationWarning -f "`"$PresetName`"") -Verbose
@@ -1041,8 +1098,6 @@ public extern static string BrandingFormatString(string sFormat);
 				$No
 				{
 					Invoke-Item -Path $PresetName
-
-					Start-Sleep -Seconds 5
 
 					Write-Verbose -Message "https://github.com/farag2/Sophia-Script-for-Windows#how-to-use" -Verbose
 					Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
@@ -9140,13 +9195,13 @@ function Install-VCRedist
 
 <#
 	.SYNOPSIS
-	Install the latest .NET Desktop Runtime 8, 9 x64
+	Install the latest .NET Runtime 8, 9 x64
 
 	.PARAMETER NET8x64
-	Install the latest .NET Desktop Runtime 8 x64
+	Install the latest .NET Runtime 8 x64
 
 	.PARAMETER NET9x64
-	Install the latest .NET Desktop Runtime 9 x64
+	Install the latest .NET Runtime 9 x64
 
 	.EXAMPLE
 	Install-DotNetRuntimes -Runtimes NET8x64, NET9x64
@@ -9216,7 +9271,7 @@ function Install-DotNetRuntimes
 				{
 					try
 					{
-						# .NET Desktop Runtime 8 x64
+						# .NET Runtime 8 x64
 						$Parameters = @{
 							Uri             = "https://builds.dotnet.microsoft.com/dotnet/Runtime/$LatestNET8Version/dotnet-runtime-$LatestNET8Version-win-x64.exe"
 							OutFile         = "$DownloadsFolder\dotnet-runtime-$LatestNET8Version-win-x64.exe"
@@ -9294,7 +9349,7 @@ function Install-DotNetRuntimes
 				{
 					try
 					{
-						# Downloading .NET Desktop Runtime 9 x64
+						# Downloading .NET Runtime 9 x64
 						$Parameters = @{
 							Uri             = "https://builds.dotnet.microsoft.com/dotnet/Runtime/$LatestNET9Version/dotnet-runtime-$LatestNET9Version-win-x64.exe"
 							OutFile         = "$DownloadsFolder\dotnet-runtime-$LatestNET9Version-win-x64.exe"
@@ -10095,7 +10150,10 @@ function UninstallUWPApps
 			"Microsoft.OutlookForWindows",
 
 			# Microsoft Teams
-			"MSTeams"
+			"MSTeams",
+
+			# Microsoft Edge Game Assist
+			"Microsoft.Edge.GameAssist"
 		)
 		foreach ($Package in $Packages)
 		{

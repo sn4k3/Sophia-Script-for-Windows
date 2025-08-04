@@ -1,14 +1,15 @@
 ﻿ConvertFrom-StringData -StringData @'
 UnsupportedOSBitness                      = A szkript csak a 64 bites Windows-t támogatja.
-UnsupportedOSBuild                        = A szkript csak a Windows 10 Enterprise LTSC 2019 rendszert támogatja. Az Ön operációs rendszere {0}. Frissítse a Windows-t, és próbálja meg újra.
+UnsupportedOSBuild                        = A szkript csak a Windows 10 Enterprise LTSC 2019 rendszert támogatja. {0} {1}-et használsz. Frissítse a Windows-t, és próbálja meg újra.
 UnsupportedWindowsTerminal                = A Windows Terminal verziója alacsonyabb, mint 1.20. Kérjük, frissítse azt a Microsoft Store-ban, és próbálja meg újra.
-UpdateWarning                             = Az Ön Windows 10 építése: {0}.{1}. Támogatott buildek: {2} és újabb verziók. Futtassa a Windows Update programot, és próbálja meg újra.
+UpdateWarning                             = Vous utilisez Windows 10 {0}.{1}. La version prise en charge est Windows 10 {0}.{2} et supérieure. Exécutez Windows Update et réessayez.
 UnsupportedLanguageMode                   = A PowerShell munkamenet korlátozott nyelvi üzemmódban fut.
 LoggedInUserNotAdmin                      = A bejelentkezett felhasználó nem rendelkezik admin jogokkal.
-UnsupportedPowerShell                     = A PowerShell {0}.{1} segítségével próbálja futtatni a szkriptet. Futtassa a szkriptet a megfelelő PowerShell-verzióban.
+UnsupportedPowerShell                     = A PowerShell {0}.{1} segítségével próbálja futtatni a szkriptet. Kérjük, futtassa a szkriptet a PowerShell {2}-ben.
 UnsupportedHost                           = A szkript nem támogatja a {0} futtatását.
 Win10TweakerWarning                       = Valószínűleg az operációs rendszerét a Win 10 Tweaker backdoor segítségével fertőzték meg.
 TweakerWarning                            = A Windows operációs rendszer stabilitását veszélyeztethette a {0}. Ponovno instalirajte Windows koristeći samo originalnu ISO sliku.
+HostsWarning                              = A {0} fájlban található harmadik féltől származó bejegyzések. Ezek blokkolhatják a szkriptben használt erőforrásokhoz való kapcsolódást. Folytatni szeretné?
 Bin                                       = A "{0}" mappában nincsenek fájlok. Kérjük, töltse le újra az archívumot.
 RebootPending                             = A számítógép újraindításra vár.
 UnsupportedRelease                        = Egy új szkriptverzió található. Kérjük, csak a legújabb Sophia Scriptet használja.

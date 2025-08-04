@@ -1,13 +1,15 @@
 ﻿ConvertFrom-StringData -StringData @'
-UnsupportedOSBuild                        = Скрипт підтримує тільки Windows 11 Enterprise LTSC 2024. Ваша ОС — {0} {1}. Оновіть Windows і спробуйте ще раз.
+UnsupportedArchitecture                   = Ви використовуєте процесор з архітектурою "{0}". Скрипт підтримує процесори з архітектурою x64. Завантажте та запустіть версію скрипту для вашої архітектури.
+UnsupportedOSBuild                        = Скрипт підтримує тільки Windows 11 Enterprise LTSC 2024. Ви використовуєте {0} {1}. Оновіть Windows і спробуйте ще раз.
 UnsupportedWindowsTerminal                = Версія Windows Terminal нижча за 1.20. Будь ласка, оновіть його в Microsoft Store і спробуйте заново.
-UpdateWarning                             = Ваш білд Windows 11: {0}.{1}. Підтримувані збірки: {2} і вище. Запустіть Windows Update і повторіть спробу.
+UpdateWarning                             = Ви використовуєте Windows 11 {0}.{1}. Підтримувані збірки: Windows 11 {0}.{2} і вище. Запустіть оновлення Windows і спробуйте ще раз.
 UnsupportedLanguageMode                   = Сесія PowerShell працює в обмеженому режимі.
 LoggedInUserNotAdmin                      = Поточний користувач, що увійшов, не має прав адміністратора.
-UnsupportedPowerShell                     = Ви намагаєтеся запустити скрипт в PowerShell {0}.{1}. Запустіть скрипт у відповідній версії PowerShell.
+UnsupportedPowerShell                     = Ви намагаєтеся запустити скрипт в PowerShell {0}.{1}. Запустіть скрипт в PowerShell {2}.
 UnsupportedHost                           = Скрипт не підтримує роботу через {0}.
 Win10TweakerWarning                       = Windows була заражена трояном через бекдор у Win 10 Tweaker. Перевстановіть Windows, використовуючи тільки справжній ISO-образ.
 TweakerWarning                            = Стабільність вашої ОС могла бути порушена використанням {0}. Перевстановіть Windows, використовуючи тільки справжній ISO-образ.
+HostsWarning                              = У файлі {0} виявлено сторонні записи. Вони можуть блокувати з'єднання з ресурсами, використовуваними в роботі скрипта. Хочете продовжити?
 Bin                                       = У папці "{0}" відсутні файли. Будь ласка, перекачайте архів.
 RebootPending                             = Комп'ютер очікує на перезавантаження.
 UnsupportedRelease                        = Виявлено нову версію скрипта. Будь ласка, використовуйте тільки останню версію Sophia Script.
@@ -17,7 +19,7 @@ WindowsComponentBroken                    = {0} пошкоджено або ви
 ControlledFolderAccessDisabled            = Контрольований доступ до папок вимкнений.
 InitialActionsCheckFailed                 = Функцію InitialActions не можна завантажити з пресет-файлу {0}. Будь ласка, перевірте пресет-файл і спробуйте заново.
 ScheduledTasks                            = Заплановані задачі
-OneDriveWarning                           = Функція "WinPrtScrFolder -Desktop" буде застосована тільки в разі, якщо користувач налаштував видалення OneDrive (або застосунок уже видалено).\nІнакше ламається функціонал резервного копіювання для папок "Робочий стіл" і "Зображення" в OneDrive.
+OneDriveWarning                           = Функція "WinPrtScrFolder -Desktop" буде застосована тільки в разі, якщо користувач налаштував видалення OneDrive (або застосунок уже видалено). Інакше ламається функціонал резервного копіювання для папок "Робочий стіл" і "Зображення" в OneDrive.
 WindowsFeaturesTitle                      = Компоненти Windows
 OptionalFeaturesTitle                     = Додаткові компоненти
 EnableHardwareVT                          = Увімкніть віртуалізацію в UEFI.

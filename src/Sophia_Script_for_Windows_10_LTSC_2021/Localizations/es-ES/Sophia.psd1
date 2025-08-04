@@ -1,14 +1,15 @@
 ﻿ConvertFrom-StringData -StringData @'
 UnsupportedOSBitness                      = El script sólo es compatible con Windows de 64 bits.
-UnsupportedOSBuild                        = El script sólo es compatible con Windows 10 Enterprise LTSC 2021. Su sistema operativo es {0}. Actualiza tu Windows e inténtalo de nuevo.
+UnsupportedOSBuild                        = El script sólo es compatible con Windows 10 Enterprise LTSC 2021. Estás usando Windows {0} {1}. Actualiza tu Windows e inténtalo de nuevo.
 UnsupportedWindowsTerminal                = La versión de Windows Terminal es inferior a la 1.20. Por favor, actualízala en la Microsoft Store e inténtalo de nuevo.
-UpdateWarning                             = Su build de Windows 10: {0}.{1}. Compilaciones compatibles: {2} y superior. Ejecute Windows Update y vuelva a intentarlo.
+UpdateWarning                             = Estás utilizando Windows 10 {0}.{1}. La versión compatible es Windows 10 {0}.{2} y superior. Ejecuta Windows Update e inténtalo de nuevo.
 UnsupportedLanguageMode                   = Sesión de PowerShell ejecutada en modo de lenguaje limitado.
 LoggedInUserNotAdmin                      = El usuario que inició sesión no tiene derechos de administrador.
-UnsupportedPowerShell                     = Estás intentando ejecutar el script a través de PowerShell {0}.{1}. Ejecute el script en la versión apropiada de PowerShell.
+UnsupportedPowerShell                     = Estás intentando ejecutar el script a través de PowerShell {0}.{1}. Por favor, ejecute el script en PowerShell {2}.
 UnsupportedHost                           = El script no es compatible con la ejecución a través de {0}.
 Win10TweakerWarning                       = Probablemente su sistema operativo fue infectado a través del backdoor Win 10 Tweaker.
 TweakerWarning                            = La estabilidad del sistema operativo Windows puede haberse visto comprometida al utilizar el {0}. Reinstale Windows utilizando sólo una imagen ISO original.
+HostsWarning                              = Entradas de terceros que se encuentran en el archivo {0}. Pueden bloquear las conexiones a los recursos utilizados en el script. ¿Desea continuar?
 Bin                                       = No hay archivos en la carpeta "{0}". Por favor, vuelva a descargar el archivo.
 RebootPending                             = El PC está esperando a ser reiniciado.
 UnsupportedRelease                        = Se ha encontrado una nueva versión del script. Por favor, utilice sólo la última versión de Sophia Script.

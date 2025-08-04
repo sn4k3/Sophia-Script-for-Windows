@@ -1,14 +1,15 @@
 ﻿ConvertFrom-StringData -StringData @'
 UnsupportedOSBitness                      = The script supports 64-bit Windows only.
-UnsupportedOSBuild                        = The script supports only Windows 10 Enterprise LTSC 2021. Your OS is {0}. Upgrade your Windows and try again.
+UnsupportedOSBuild                        = The script supports only Windows 10 Enterprise LTSC 2021. You're using {0} {1}. Upgrade your Windows and try again.
 UnsupportedWindowsTerminal                = Windows Terminal version is lower than 1.22. Please update it in the Microsoft Store and try again.
-UpdateWarning                             = Your Windows 10 build: {0}.{1}. Supported builds: {2} and higher. Run Windows Update and try again.
+UpdateWarning                             = You're using Windows 10 {0}.{1}. Supported builds are Windows 10 {0}.{2} and higher. Run Windows Update and try again.
 UnsupportedLanguageMode                   = The PowerShell session in running in a limited language mode.
 LoggedInUserNotAdmin                      = The logged-on user doesn't have admin rights.
-UnsupportedPowerShell                     = You're trying to run script via PowerShell {0}.{1}. Run the script in the appropriate PowerShell version.
+UnsupportedPowerShell                     = You're trying to run script via PowerShell {0}.{1}. Please run the script in PowerShell {2}.
 UnsupportedHost                           = The script doesn't support running via {0}.
 Win10TweakerWarning                       = Windows has been infected with a trojan via a Win 10 Tweaker backdoor. Reinstall Windows using only a genuine ISO image.
 TweakerWarning                            = The Windows stability may have been compromised by using {0}. Reinstall Windows using only a genuine ISO image.
+HostsWarning                              = Third-party entries found in the {0} file. They may block connections to resources used in the script. Do you want to continue?
 Bin                                       = There are no files in "{0}" folder. Please, re-download the archive.
 RebootPending                             = The PC is waiting to be restarted.
 UnsupportedRelease                        = A new script version found. Please use only latest Sophia Script.

@@ -3,10 +3,10 @@
 	Sophia Script is a PowerShell module for Windows 10 & Windows 11 fine-tuning and automating the routine tasks
 
 	.VERSION
-	5.10.7
+	5.11.0
 
 	.DATE
-	22.06.2025
+	03.08.2025
 
 	.AUTHOR
 	Team Sophia
@@ -163,6 +163,20 @@ public static extern bool SetForegroundWindow(IntPtr hWnd);
 		exit
 	}
 
+	# Check CPU architecture
+	$Caption = (Get-CimInstance -ClassName CIM_Processor).Caption
+	if (($Caption -notmatch "AMD64") -and ($Caption -notmatch "Intel64"))
+	{
+		Write-Information -MessageData "" -InformationAction Continue
+		Write-Warning -Message ($Localization.UnsupportedArchitecture -f $Caption)
+		Write-Information -MessageData "" -InformationAction Continue
+
+		Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
+		Write-Verbose -Message "https://discord.gg/sSryhaEv79" -Verbose
+
+		exit
+	}
+
 	# Check the language mode
 	if ($ExecutionContext.SessionState.LanguageMode -ne "FullLanguage")
 	{
@@ -197,7 +211,8 @@ public static extern bool SetForegroundWindow(IntPtr hWnd);
 	if ($PSVersionTable.PSVersion.Major -ne 5)
 	{
 		Write-Information -MessageData "" -InformationAction Continue
-		Write-Warning -Message ($Localization.UnsupportedPowerShell -f $PSVersionTable.PSVersion.Major, $PSVersionTable.PSVersion.Minor)
+		$MandatoryPSVersion = (Import-PowershellDataFile -Path "$PSScriptRoot\..\Manifest\SophiaScript.psd1").PowerShellVersion
+		Write-Warning -Message ($Localization.UnsupportedPowerShell -f $PSVersionTable.PSVersion.Major, $PSVersionTable.PSVersion.Minor, $MandatoryPSVersion)
 		Write-Information -MessageData "" -InformationAction Continue
 
 		Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
@@ -748,11 +763,11 @@ public extern static string BrandingFormatString(string sFormat);
 	{
 		Write-Information -MessageData "" -InformationAction Continue
 
-		# Windows 11 Pro
+		# Windows 10 Pro
 		$Windows_Long = [WinAPI.Winbrand]::BrandingFormatString("%WINDOWS_LONG%")
 		$Windows_Long_First_Item = $Windows_Long.split(" ")[0]
 		$Windows_Long_Second_Item = $Windows_Long.split(" ")[1]
-		# Windows 11
+		# Windows 10
 		$Windows_Long = ($Windows_Long_First_Item, $Windows_Long_Second_Item) -join " "
 
 		# 24H2
@@ -855,6 +870,7 @@ public extern static string BrandingFormatString(string sFormat);
 				# https://support.microsoft.com/en-us/topic/windows-10-and-windows-server-2019-update-history-725fc2e1-4443-6831-a5ca-51ff5cbcb059
 				$CurrentBuild = Get-ItemPropertyValue -Path "HKLM:\SOFTWARE\Microsoft\Windows nt\CurrentVersion" -Name CurrentBuild
 				$UBR = Get-ItemPropertyValue -Path "HKLM:\SOFTWARE\Microsoft\Windows nt\CurrentVersion" -Name UBR
+
 				Write-Information -MessageData "" -InformationAction Continue
 				Write-Warning -Message ($Localization.UpdateWarning -f $CurrentBuild, $UBR, $LatestSupportedBuild)
 				Write-Information -MessageData "" -InformationAction Continue
@@ -1010,20 +1026,24 @@ public extern static string BrandingFormatString(string sFormat);
 	# Extract the localized "Skip" string from shell32.dll
 	$Script:Skip = [WinAPI.GetStrings]::GetString(16956)
 
+	Write-Information -MessageData "" -InformationAction Continue
 	Write-Information -MessageData "┏┓    ┓ •    ┏┓   •     ┏      ┓ ┏•   ┓ " -InformationAction Continue
 	Write-Information -MessageData "┗┓┏┓┏┓┣┓┓┏┓  ┗┓┏┏┓┓┏┓╋  ╋┏┓┏┓  ┃┃┃┓┏┓┏┫┏┓┓┏┏┏" -InformationAction Continue
 	Write-Information -MessageData "┗┛┗┛┣┛┛┗┗┗┻  ┗┛┗┛ ┗┣┛┗  ┛┗┛┛   ┗┻┛┗┛┗┗┻┗┛┗┻┛┛" -InformationAction Continue
 	Write-Information -MessageData "    ┛              ┛                   " -InformationAction Continue
 
-	Write-Information -MessageData "https://t.me/sophianews" -InformationAction Continue
-	Write-Information -MessageData "https://t.me/sophia_chat" -InformationAction Continue
-	Write-Information -MessageData "https://discord.gg/sSryhaEv79" -InformationAction Continue
+	Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
+	Write-Verbose -Message "https://t.me/sophianews" -Verbose
+	Write-Verbose -Message "https://discord.gg/sSryhaEv79" -Verbose
+	Write-Information -MessageData "" -InformationAction Continue
+	Write-Verbose -Message "https://ko-fi.com/farag" -Verbose
+	Write-Verbose -Message "https://boosty.to/teamsophia" -Verbose
+	Write-Information -MessageData "" -InformationAction Continue
 
 	# Display a warning message about whether a user has customized the preset file
 	if ($Warning)
 	{
 		# Get the name of a preset (e.g Sophia.ps1) regardless it was named
-		# $_.File has no EndsWith() method
 		Write-Information -MessageData "" -InformationAction Continue
 		[string]$PresetName = ((Get-PSCallStack).Position | Where-Object -FilterScript {$_.File}).File | Where-Object -FilterScript {$_.EndsWith(".ps1")}
 		Write-Verbose -Message ($Localization.CustomizationWarning -f "`"$PresetName`"") -Verbose
@@ -1041,8 +1061,6 @@ public extern static string BrandingFormatString(string sFormat);
 				$No
 				{
 					Invoke-Item -Path $PresetName
-
-					Start-Sleep -Seconds 5
 
 					Write-Verbose -Message "https://github.com/farag2/Sophia-Script-for-Windows#how-to-use" -Verbose
 					Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
@@ -8377,13 +8395,13 @@ function Install-VCRedist
 
 <#
 	.SYNOPSIS
-	Install the latest .NET Desktop Runtime 8, 9 x64
+	Install the latest .NET Runtime 8, 9 x64
 
 	.PARAMETER NET8x64
-	Install the latest .NET Desktop Runtime 8 x64
+	Install the latest .NET Runtime 8 x64
 
 	.PARAMETER NET9x64
-	Install the latest .NET Desktop Runtime 9 x64
+	Install the latest .NET Runtime 9 x64
 
 	.EXAMPLE
 	Install-DotNetRuntimes -Runtimes NET8x64, NET9x64
@@ -8453,7 +8471,7 @@ function Install-DotNetRuntimes
 				{
 					try
 					{
-						# .NET Desktop Runtime 8 x64
+						# .NET Runtime 8 x64
 						$Parameters = @{
 							Uri             = "https://builds.dotnet.microsoft.com/dotnet/Runtime/$LatestNET8Version/dotnet-runtime-$LatestNET8Version-win-x64.exe"
 							OutFile         = "$DownloadsFolder\dotnet-runtime-$LatestNET8Version-win-x64.exe"
@@ -8531,7 +8549,7 @@ function Install-DotNetRuntimes
 				{
 					try
 					{
-						# Downloading .NET Desktop Runtime 9 x64
+						# Downloading .NET Runtime 9 x64
 						$Parameters = @{
 							Uri             = "https://builds.dotnet.microsoft.com/dotnet/Runtime/$LatestNET9Version/dotnet-runtime-$LatestNET9Version-win-x64.exe"
 							OutFile         = "$DownloadsFolder\dotnet-runtime-$LatestNET9Version-win-x64.exe"

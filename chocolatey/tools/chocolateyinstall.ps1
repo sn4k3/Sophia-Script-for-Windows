@@ -115,16 +115,34 @@ switch ((Get-CimInstance -ClassName Win32_OperatingSystem).BuildNumber)
 			{
 				if ($packageParameters.Contains('PS7'))
 				{
-					$LatestRelease = $JSONVersions.Sophia_Script_Windows_11_PowerShell_7
-					$URL = "https://github.com/farag2/Sophia-Script-for-Windows/releases/download/$LatestGitHubRelease/Sophia.Script.for.Windows.11.PowerShell.7.v$LatestRelease.zip"
-					$Hash = "Hash_Sophia_Script_Windows_11_PowerShell_7"
+					if ((Get-CimInstance -ClassName CIM_Processor).Caption -match "ARM")
+					{
+						$LatestRelease = $JSONVersions.Sophia_Script_Windows_11_Arm__PowerShell_7
+						$URL = "https://github.com/farag2/Sophia-Script-for-Windows/releases/download/$LatestGitHubRelease/Sophia.Script.for.Windows.11.Arm.PowerShell.7.v$LatestRelease.zip"
+						$Hash = "Hash_Sophia_Script_Windows_11_Arm_PowerShell_7"
+					}
+					else
+					{
+						$LatestRelease = $JSONVersions.Sophia_Script_Windows_11_PowerShell_7
+						$URL = "https://github.com/farag2/Sophia-Script-for-Windows/releases/download/$LatestGitHubRelease/Sophia.Script.for.Windows.11.PowerShell.7.v$LatestRelease.zip"
+						$Hash = "Hash_Sophia_Script_Windows_11_PowerShell_7"
+					}
 				}
 			}
 			else
 			{
-				$LatestRelease = $JSONVersions.Sophia_Script_Windows_11_PowerShell_5_1
-				$URL = "https://github.com/farag2/Sophia-Script-for-Windows/releases/download/$LatestGitHubRelease/Sophia.Script.for.Windows.11.v$LatestRelease.zip"
-				$Hash = "Hash_Sophia_Script_Windows_11_PowerShell_5_1"
+				if ((Get-CimInstance -ClassName CIM_Processor).Caption -match "ARM")
+				{
+					$LatestRelease = $JSONVersions.Sophia_Script_Windows_11_Arm_PowerShell_5_1
+					$URL = "https://github.com/farag2/Sophia-Script-for-Windows/releases/download/$LatestGitHubRelease/Sophia.Script.for.Windows.11.Arm.v$LatestRelease.zip"
+					$Hash = "Hash_Sophia_Script_Windows_11_Arm"
+				}
+				else
+				{
+					$LatestRelease = $JSONVersions.Sophia_Script_Windows_11_PowerShell_5_1
+					$URL = "https://github.com/farag2/Sophia-Script-for-Windows/releases/download/$LatestGitHubRelease/Sophia.Script.for.Windows.11.v$LatestRelease.zip"
+					$Hash = "Hash_Sophia_Script_Windows_11_PowerShell_7"
+				}
 			}
 		}
 	}
