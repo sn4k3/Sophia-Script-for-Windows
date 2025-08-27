@@ -1022,7 +1022,7 @@ public extern static string BrandingFormatString(string sFormat);
 			}
 
 			# We may use Test-Path -Path variable:LatestSupportedBuild
-			if ((Get-ItemPropertyValue -Path "HKLM:\SOFTWARE\Microsoft\Windows nt\CurrentVersion" -Name UBR) -gt $LatestSupportedBuild)
+			if ((Get-ItemPropertyValue -Path "HKLM:\SOFTWARE\Microsoft\Windows nt\CurrentVersion" -Name UBR) -lt $LatestSupportedBuild)
 			{
 				# Check Windows minor build version
 				# https://support.microsoft.com/en-us/topic/windows-11-version-24h2-update-history-0929c747-1815-4543-8461-0160d16f15e5
@@ -12974,7 +12974,7 @@ function DNSoverHTTPS
 	)
 
 	# Determining whether Hyper-V is enabled
-	# After enabling Hyper-V feature a virtual switch breing created, so we need to use different method to isolate the proper adapter
+	# After enabling Hyper-V feature a virtual switch being created, so we need to use different method to isolate the proper adapter
 	if (-not (Get-CimInstance -ClassName CIM_ComputerSystem).HypervisorPresent)
 	{
 		$InterfaceGuids = @((Get-NetAdapter -Physical).InterfaceGuid)
@@ -13034,24 +13034,46 @@ function DNSoverHTTPS
 			}
 			catch [System.Net.WebException]
 			{
-				Write-Warning -Message ($Localization.NoResponse -f "https://dns.comss.one/dns-query")
-				Write-Error -Message ($Localization.NoResponse -f "https://dns.comss.one/dns-query") -ErrorAction SilentlyContinue
+				Write-Warning -Message ($Localization.NoResponse -f "https://dns.comss.one")
+				Write-Error -Message ($Localization.NoResponse -f "https://dns.comss.one") -ErrorAction SilentlyContinue
 
 				return
 			}
 
-			$FirstIPAddress = $ResolveComss.IPAddress | Select-Object -First 1
-			$SecondIPAddress = $ResolveComss.IPAddress | Select-Object -Last 1
+			# Some ISPs block IP address resolving, and user get only one IP address
+			if ($ResolveComss.IPAddress.Count -eq 1)
+			{
+				$FirstIPAddress = $ResolveComss.IPAddress | Select-Object -First 1
+			}
+			else
+			{
+				$FirstIPAddress = $ResolveComss.IPAddress | Select-Object -First 1
+				$SecondIPAddress = $ResolveComss.IPAddress | Select-Object -Last 1
+			}
 
 			# Set a primary and secondary DNS servers
 			# https://www.comss.ru/page.php?id=7315
 			if (-not (Get-CimInstance -ClassName CIM_ComputerSystem).HypervisorPresent)
 			{
-				Get-NetAdapter -Physical | Get-NetIPInterface -AddressFamily IPv4 | Set-DnsClientServerAddress -ServerAddresses $FirstIPAddress, $SecondIPAddress
+				if ($SecondIPAddress)
+				{
+					Get-NetAdapter -Physical | Get-NetIPInterface -AddressFamily IPv4 | Set-DnsClientServerAddress -ServerAddresses $FirstIPAddress, $SecondIPAddress
+				}
+				else
+				{
+					Get-NetAdapter -Physical | Get-NetIPInterface -AddressFamily IPv4 | Set-DnsClientServerAddress -ServerAddresses $FirstIPAddress
+				}
 			}
 			else
 			{
-				Get-NetRoute | Where-Object -FilterScript {$_.DestinationPrefix -eq "0.0.0.0/0"} | Get-NetAdapter | Set-DnsClientServerAddress -ServerAddresses $FirstIPAddress, $SecondIPAddress
+				if ($SecondIPAddress)
+				{
+					Get-NetRoute | Where-Object -FilterScript {$_.DestinationPrefix -eq "0.0.0.0/0"} | Get-NetAdapter | Set-DnsClientServerAddress -ServerAddresses $FirstIPAddress, $SecondIPAddress
+				}
+				else
+				{
+					Get-NetRoute | Where-Object -FilterScript {$_.DestinationPrefix -eq "0.0.0.0/0"} | Get-NetAdapter | Set-DnsClientServerAddress -ServerAddresses $FirstIPAddress
+				}
 			}
 
 			foreach ($InterfaceGuid in $InterfaceGuids)
@@ -13060,14 +13082,18 @@ function DNSoverHTTPS
 				{
 					New-Item -Path "HKLM:\SYSTEM\CurrentControlSet\Services\Dnscache\InterfaceSpecificParameters\$InterfaceGuid\DohInterfaceSettings\Doh\$FirstIPAddress" -Force
 				}
-				if (-not (Test-Path -Path "HKLM:\SYSTEM\CurrentControlSet\Services\Dnscache\InterfaceSpecificParameters\$InterfaceGuid\DohInterfaceSettings\Doh\$SecondIPAddress"))
-				{
-					New-Item -Path "HKLM:\SYSTEM\CurrentControlSet\Services\Dnscache\InterfaceSpecificParameters\$InterfaceGuid\DohInterfaceSettings\Doh\$SecondIPAddress" -Force
-				}
 				New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\Dnscache\InterfaceSpecificParameters\$InterfaceGuid\DohInterfaceSettings\Doh\$FirstIPAddress" -Name DohFlags -PropertyType QWord -Value 2 -Force
 				New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\Dnscache\InterfaceSpecificParameters\$InterfaceGuid\DohInterfaceSettings\Doh\$FirstIPAddress" -Name DohTemplate -PropertyType String -Value https://dns.comss.one/dns-query -Force
-				New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\Dnscache\InterfaceSpecificParameters\$InterfaceGuid\DohInterfaceSettings\Doh\$SecondIPAddress" -Name DohFlags -PropertyType QWord -Value 2 -Force
-				New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\Dnscache\InterfaceSpecificParameters\$InterfaceGuid\DohInterfaceSettings\Doh\$SecondIPAddress" -Name DohTemplate -PropertyType String -Value https://dns.comss.one/dns-query -Force
+
+				if ($SecondIPAddress)
+				{
+					if (-not (Test-Path -Path "HKLM:\SYSTEM\CurrentControlSet\Services\Dnscache\InterfaceSpecificParameters\$InterfaceGuid\DohInterfaceSettings\Doh\$SecondIPAddress"))
+					{
+						New-Item -Path "HKLM:\SYSTEM\CurrentControlSet\Services\Dnscache\InterfaceSpecificParameters\$InterfaceGuid\DohInterfaceSettings\Doh\$SecondIPAddress" -Force
+					}
+					New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\Dnscache\InterfaceSpecificParameters\$InterfaceGuid\DohInterfaceSettings\Doh\$SecondIPAddress" -Name DohFlags -PropertyType QWord -Value 2 -Force
+					New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\Dnscache\InterfaceSpecificParameters\$InterfaceGuid\DohInterfaceSettings\Doh\$SecondIPAddress" -Name DohTemplate -PropertyType String -Value https://dns.comss.one/dns-query -Force
+				}
 			}
 		}
 		"Disable"
