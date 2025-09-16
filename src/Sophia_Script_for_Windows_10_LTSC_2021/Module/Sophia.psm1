@@ -3,10 +3,10 @@
 	Sophia Script is a PowerShell module for Windows 10 & Windows 11 fine-tuning and automating the routine tasks
 
 	.VERSION
-	5.21.0
+	5.21.1
 
 	.DATE
-	03.08.2025
+	01.09.2025
 
 	.AUTHOR
 	Team Sophia
@@ -161,6 +161,112 @@ public static extern bool SetForegroundWindow(IntPtr hWnd);
 		Write-Verbose -Message "https://discord.gg/sSryhaEv79" -Verbose
 
 		exit
+	}
+
+	# Extract the localized "Browse" string from shell32.dll
+	$Script:Browse = [WinAPI.GetStrings]::GetString(9015)
+	# Extract the localized "&No" string from shell32.dll
+	$Script:No = [WinAPI.GetStrings]::GetString(33232).Replace("&", "")
+	# Extract the localized "&Yes" string from shell32.dll
+	$Script:Yes = [WinAPI.GetStrings]::GetString(33224).Replace("&", "")
+	$Script:KeyboardArrows = $Localization.KeyboardArrows -f [System.Char]::ConvertFromUtf32(0x2191), [System.Char]::ConvertFromUtf32(0x2193)
+	# Extract the localized "Skip" string from shell32.dll
+	$Script:Skip = [WinAPI.GetStrings]::GetString(16956)
+
+	<#
+		.SYNOPSIS
+		The "Show menu" function with the up/down arrow keys and enter key to make a selection
+
+		.PARAMETER Menu
+		Array of items to choose from
+
+		.PARAMETER Default
+		Default selected item in array
+
+		.PARAMETER AddSkip
+		Add localized extracted "Skip" string from shell32.dll
+
+		.EXAMPLE
+		Show-Menu -Menu @($Item1, $Item2) -Default 1
+
+		.LINK
+		https://qna.habr.com/answer?answer_id=1522379
+		https://github.com/ryandunton/InteractivePSMenu
+	#>
+	function script:Show-Menu
+	{
+		[CmdletBinding()]
+		param
+		(
+			[Parameter(Mandatory = $true)]
+			[array]
+			$Menu,
+
+			[Parameter(Mandatory = $true)]
+			[int]
+			$Default,
+
+			[Parameter(Mandatory = $false)]
+			[switch]
+			$AddSkip
+		)
+
+		Write-Information -MessageData "" -InformationAction Continue
+
+		# Add "Please use the arrow keys 🠕 and 🠗 on your keyboard to select your answer" to menu
+		$Menu += $Localization.KeyboardArrows -f [System.Char]::ConvertFromUtf32(0x2191), [System.Char]::ConvertFromUtf32(0x2193)
+
+		if ($AddSkip)
+		{
+			# Extract the localized "Skip" string from shell32.dll
+			$Menu += [WinAPI.GetStrings]::GetString(16956)
+		}
+
+		$i = 0
+		while ($i -lt $Menu.Count)
+		{
+			$i++
+			Write-Host -Object ""
+		}
+
+		$SelectedValueIndex = [Math]::Max([Math]::Min($Default, $Menu.Count), 0)
+
+		do
+		{
+			[Console]::SetCursorPosition(0, [Console]::CursorTop - $Menu.Count)
+
+			for ($i = 0; $i -lt $Menu.Count; $i++)
+			{
+				if ($i -eq $SelectedValueIndex)
+				{
+					Write-Host -Object "[>] $($Menu[$i])" -NoNewline
+				}
+				else
+				{
+					Write-Host -Object "[ ] $($Menu[$i])" -NoNewline
+				}
+
+				Write-Host -Object ""
+			}
+
+			$Key = [Console]::ReadKey()
+			switch ($Key.Key)
+			{
+				"UpArrow"
+				{
+					$SelectedValueIndex = [Math]::Max(0, $SelectedValueIndex - 1)
+				}
+				"DownArrow"
+				{
+					$SelectedValueIndex = [Math]::Min($Menu.Count - 1, $SelectedValueIndex + 1)
+				}
+				"Enter"
+				{
+					return $Menu[$SelectedValueIndex]
+				}
+			}
+		}
+		while ($Key.Key -notin ([ConsoleKey]::Escape, [ConsoleKey]::Enter))
 	}
 
 	# Check CPU architecture
@@ -351,6 +457,43 @@ public static extern bool SetForegroundWindow(IntPtr hWnd);
 	Write-Verbose -Message ([WinAPI.GetStrings]::GetString(12612)) -Verbose
 	Write-Information -MessageData "" -InformationAction Continue
 
+	# Check if third-party enries added to hosts file
+	foreach ($Item in @(Get-Content -Path "$env:SystemRoot\System32\drivers\etc\hosts" -Force))
+	{
+		if (-not ([string]::IsNullOrEmpty($Item) -or $Item.StartsWith("#")))
+		{
+			Write-Information -MessageData "" -InformationAction Continue
+			Write-Verbose -Message ($Localization.HostsWarning -f "$env:SystemRoot\System32\drivers\etc\hosts") -Verbose
+
+			do
+			{
+				$Choice = Show-Menu -Menu @($Yes, $No) -Default 2
+
+				switch ($Choice)
+				{
+					$Yes
+					{
+						continue
+					}
+					$No
+					{
+						Invoke-Item -Path $PresetName "$env:SystemRoot\System32\drivers\etc"
+
+						Write-Verbose -Message "https://github.com/farag2/Sophia-Script-for-Windows" -Verbose
+						Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
+						Write-Verbose -Message "https://discord.gg/sSryhaEv79" -Verbose
+
+						exit
+					}
+					$KeyboardArrows {}
+				}
+			}
+			until ($Choice -ne $KeyboardArrows)
+
+			break
+		}
+	}
+
 	# Remove IP addresses from hosts file that block Microsoft recourses added by WindowsSpyBlocker
 	# https://github.com/crazy-max/WindowsSpyBlocker
 	try
@@ -405,8 +548,8 @@ public static extern bool SetForegroundWindow(IntPtr hWnd);
 		$Parameters = @{
 			Uri             = "https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/update_v6.txt"
 			UseBasicParsing = $true
-				Verbose         = $true
-			}
+			Verbose         = $true
+		}
 		$update_v6 = (Invoke-WebRequest @Parameters).Content
 
 		$IPArray += $extra, $extra_v6, $spy, $spy_v6, $update, $update_v6
@@ -712,7 +855,7 @@ public static extern bool SetForegroundWindow(IntPtr hWnd);
 		if ([System.Version]$LatestRelease -gt [System.Version]$CurrentRelease)
 		{
 			Write-Information -MessageData "" -InformationAction Continue
-			Write-Warning -Message $Localization.UnsupportedRelease
+			Write-Warning -Message ($Localization.UnsupportedRelease -f $LatestRelease)
 			Write-Information -MessageData "" -InformationAction Continue
 
 			Write-Verbose -Message "https://github.com/farag2/Sophia-Script-for-Windows/releases/latest" -Verbose
@@ -769,8 +912,7 @@ public extern static string BrandingFormatString(string sFormat);
 		$Windows_Long_Second_Item = $Windows_Long.split(" ")[1]
 		# Windows 10
 		$Windows_Long = ($Windows_Long_First_Item, $Windows_Long_Second_Item) -join " "
-
-		# 24H2
+		# e.g. 24H2
 		$DisplayVersion = Get-ItemPropertyValue -Path "HKLM:\SOFTWARE\Microsoft\Windows nt\CurrentVersion" -Name DisplayVersion
 
 		Write-Warning -Message ($Localization.UnsupportedOSBuild -f $Windows_Long, $DisplayVersion)
@@ -824,7 +966,17 @@ public extern static string BrandingFormatString(string sFormat);
 		{$_ -ne 19044}
 		{
 			Write-Information -MessageData "" -InformationAction Continue
-			Write-Warning -Message ($Localization.UnsupportedOSBuild -f [WinAPI.Winbrand]::BrandingFormatString("%WINDOWS_LONG%"))
+
+			# Windows 10 Pro
+			$Windows_Long = [WinAPI.Winbrand]::BrandingFormatString("%WINDOWS_LONG%")
+			$Windows_Long_First_Item = $Windows_Long.split(" ")[0]
+			$Windows_Long_Second_Item = $Windows_Long.split(" ")[1]
+			# Windows 11
+			$Windows_Long = ($Windows_Long_First_Item, $Windows_Long_Second_Item) -join " "
+			# e.g. 24H2
+			$DisplayVersion = Get-ItemPropertyValue -Path "HKLM:\SOFTWARE\Microsoft\Windows nt\CurrentVersion" -Name DisplayVersion
+
+			Write-Warning -Message ($Localization.UnsupportedOSBuild -f $Windows_Long, $DisplayVersion)
 			Write-Information -MessageData "" -InformationAction Continue
 
 			Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
@@ -919,112 +1071,6 @@ public extern static string BrandingFormatString(string sFormat);
 	}
 	catch [System.Management.Automation.PropertyNotFoundException]
 	{}
-
-	<#
-		.SYNOPSIS
-		The "Show menu" function with the up/down arrow keys and enter key to make a selection
-
-		.PARAMETER Menu
-		Array of items to choose from
-
-		.PARAMETER Default
-		Default selected item in array
-
-		.PARAMETER AddSkip
-		Add localized extracted "Skip" string from shell32.dll
-
-		.EXAMPLE
-		Show-Menu -Menu @($Item1, $Item2) -Default 1
-
-		.LINK
-		https://qna.habr.com/answer?answer_id=1522379
-		https://github.com/ryandunton/InteractivePSMenu
-	#>
-	function script:Show-Menu
-	{
-		[CmdletBinding()]
-		param
-		(
-			[Parameter(Mandatory = $true)]
-			[array]
-			$Menu,
-
-			[Parameter(Mandatory = $true)]
-			[int]
-			$Default,
-
-			[Parameter(Mandatory = $false)]
-			[switch]
-			$AddSkip
-		)
-
-		Write-Information -MessageData "" -InformationAction Continue
-
-		# Add "Please use the arrow keys 🠕 and 🠗 on your keyboard to select your answer" to menu
-		$Menu += $Localization.KeyboardArrows -f [System.Char]::ConvertFromUtf32(0x2191), [System.Char]::ConvertFromUtf32(0x2193)
-
-		if ($AddSkip)
-		{
-			# Extract the localized "Skip" string from shell32.dll
-			$Menu += [WinAPI.GetStrings]::GetString(16956)
-		}
-
-		$i = 0
-		while ($i -lt $Menu.Count)
-		{
-			$i++
-			Write-Host -Object ""
-		}
-
-		$SelectedValueIndex = [Math]::Max([Math]::Min($Default, $Menu.Count), 0)
-
-		do
-		{
-			[Console]::SetCursorPosition(0, [Console]::CursorTop - $Menu.Count)
-
-			for ($i = 0; $i -lt $Menu.Count; $i++)
-			{
-				if ($i -eq $SelectedValueIndex)
-				{
-					Write-Host -Object "[>] $($Menu[$i])" -NoNewline
-				}
-				else
-				{
-					Write-Host -Object "[ ] $($Menu[$i])" -NoNewline
-				}
-
-				Write-Host -Object ""
-			}
-
-			$Key = [Console]::ReadKey()
-			switch ($Key.Key)
-			{
-				"UpArrow"
-				{
-					$SelectedValueIndex = [Math]::Max(0, $SelectedValueIndex - 1)
-				}
-				"DownArrow"
-				{
-					$SelectedValueIndex = [Math]::Min($Menu.Count - 1, $SelectedValueIndex + 1)
-				}
-				"Enter"
-				{
-					return $Menu[$SelectedValueIndex]
-				}
-			}
-		}
-		while ($Key.Key -notin ([ConsoleKey]::Escape, [ConsoleKey]::Enter))
-	}
-
-	# Extract the localized "Browse" string from shell32.dll
-	$Script:Browse = [WinAPI.GetStrings]::GetString(9015)
-	# Extract the localized "&No" string from shell32.dll
-	$Script:No = [WinAPI.GetStrings]::GetString(33232).Replace("&", "")
-	# Extract the localized "&Yes" string from shell32.dll
-	$Script:Yes = [WinAPI.GetStrings]::GetString(33224).Replace("&", "")
-	$Script:KeyboardArrows = $Localization.KeyboardArrows -f [System.Char]::ConvertFromUtf32(0x2191), [System.Char]::ConvertFromUtf32(0x2193)
-	# Extract the localized "Skip" string from shell32.dll
-	$Script:Skip = [WinAPI.GetStrings]::GetString(16956)
 
 	Write-Information -MessageData "" -InformationAction Continue
 	Write-Information -MessageData "┏┓    ┓ •    ┏┓   •     ┏      ┓ ┏•   ┓ " -InformationAction Continue
