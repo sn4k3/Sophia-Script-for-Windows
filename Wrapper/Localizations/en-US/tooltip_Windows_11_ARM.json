@@ -547,6 +547,20 @@
   },
   {
     "Region": "UI & Personalization",
+    "Function": "ClockInNotificationCenter",
+    "Arg": {
+      "Zero": {
+        "Tag": "Show",
+        "ToolTip": "Show time in Notification Center."
+      },
+      "One": {
+        "Tag": "Hide",
+        "ToolTip": "Hide time in Notification Center (default value)."
+      }
+    }
+  },
+  {
+    "Region": "UI & Personalization",
     "Function": "TaskbarCombine",
     "Arg": {
       "Zero": {
@@ -792,11 +806,11 @@
     "Arg": {
       "Zero": {
         "Tag": "Uninstall",
-        "ToolTip": "Uninstall OneDrive. The OneDrive user folder won't be removed."
+        "ToolTip": "Uninstall OneDrive. OneDrive user folder won't be removed if any file found there."
       },
       "One": {
         "Tag": "Install",
-        "ToolTip": "Install OneDrive 64-bit."
+        "ToolTip": "Install OneDrive. Internet connection required."
       }
     }
   },
@@ -806,7 +820,7 @@
     "Arg": {
       "Zero": {
         "Tag": "",
-        "ToolTip": "Install OneDrive 64-bit all users to %ProgramFiles% depending which installer is triggered."
+        "ToolTip": "Install OneDrive all users to %ProgramFiles% depending which installer is triggered. Internet connection required."
       }
     }
   },
@@ -840,15 +854,15 @@
   },
   {
     "Region": "System",
-    "Function": "Win32LongPathLimit",
+    "Function": "Win32LongPathSupport",
     "Arg": {
       "Zero": {
-        "Tag": "Disable",
-        "ToolTip": "Disable the Windows 260 characters path limit."
+        "Tag": "Enable",
+        "ToolTip": "Enable Windows long paths support which is limited for 260 characters by default."
       },
       "One": {
-        "Tag": "Enable",
-        "ToolTip": "Enable the Windows 260 character path limit (default value)."
+        "Tag": "Disable",
+        "ToolTip": "Disable Windows long paths support which is limited for 260 characters by default (default value)."
       }
     }
   },
@@ -1072,11 +1086,11 @@
     "Arg": {
       "Zero": {
         "Tag": "Enable",
-        "ToolTip": "Use the latest installed .NET runtime for all apps."
+        "ToolTip": "Use .NET Framework 4.8.1 for old apps."
       },
       "One": {
         "Tag": "Disable",
-        "ToolTip": "Do not use the latest installed .NET runtime for all apps (default value)."
+        "ToolTip": "Do not use .NET Framework 4.8.1 for old apps (default value)."
       }
     }
   },
@@ -1086,11 +1100,11 @@
     "Arg": {
       "Zero": {
         "Tag": "Desktop",
-        "ToolTip": "Save screenshots by pressing Win+PrtScr on the Desktop. The function will be applied only if the preset is configured to remove OneDrive. Otherwise the backup functionality for the \"Desktop\" and \"Pictures\" folders in OneDrive breaks."
+        "ToolTip": "Save screenshots on the Desktop when pressing Windows+PrtScr or using Windows+Shift+S."
       },
       "One": {
         "Tag": "Default",
-        "ToolTip": "Save screenshots by pressing Win+PrtScr in the Pictures folder (default value)."
+        "ToolTip": "Save screenshots in the Pictures folder when pressing Windows+PrtScr or using Windows+Shift+S (default value)."
       }
     }
   },
@@ -1105,20 +1119,6 @@
       "One": {
         "Tag": "Default",
         "ToolTip": "Ask me before running troubleshooters. In order this feature to work the OS level of diagnostic data gathering will be set to \"Optional diagnostic data\" and the error reporting feature will be turned on (default value)."
-      }
-    }
-  },
-  {
-    "Region": "System",
-    "Function": "FoldersLaunchSeparateProcess",
-    "Arg": {
-      "Zero": {
-        "Tag": "Enable",
-        "ToolTip": "Launch folder windows in a separate process."
-      },
-      "One": {
-        "Tag": "Disable",
-        "ToolTip": "Do not launch folder windows in a separate process (default value)."
       }
     }
   },
@@ -1236,6 +1236,20 @@
   },
   {
     "Region": "System",
+    "Function": "RestorePreviousFolders",
+    "Arg": {
+      "Zero": {
+        "Tag": "Disable",
+        "ToolTip": "Do not restore previous folder windows at logon (default value)."
+      },
+      "One": {
+        "Tag": "Enable",
+        "ToolTip": "Restore previous folder windows at logon."
+      }
+    }
+  },
+  {
+    "Region": "System",
     "Function": "NetworkDiscovery",
     "Arg": {
       "Zero": {
@@ -1262,28 +1276,6 @@
         "ToolTip": "Extension."
       },
       "Two": {
-        "Tag": "Icon",
-        "ToolTip": "Path to icon."
-      }
-    }
-  },
-  {
-    "Region": "System",
-    "Function": "Get-Association",
-    "Arg": {
-      "Zero": {
-        "Tag": "",
-        "ToolTip": "Get app, calculate hash, and associate with an extension with the 'How do you want to open this' pop-up hidden."
-      },
-      "One": {
-        "Tag": "ProgramPath",
-        "ToolTip": "Path to executable file."
-      },
-      "Two": {
-        "Tag": "Extension",
-        "ToolTip": "Extension."
-      },
-      "Three": {
         "Tag": "Icon",
         "ToolTip": "Path to icon."
       }
@@ -1330,22 +1322,22 @@
     "Arg": {
       "Zero": {
         "Tag": "",
-        "ToolTip": ""
+        "ToolTip": "Internet connection required."
       }
     }
   },
   {
     "Region": "System",
     "Function": "Install-DotNetRuntimes -Runtimes",
-    "ToolTip": "Install the latest .NET Runtime 8, 9.",
+    "ToolTip": "Install the latest .NET Runtime 8, 9. Internet connection required",
     "Arg": {
       "Zero": {
         "Tag": "NET8",
-        "ToolTip": ".NET Runtime 8."
+        "ToolTip": ".NET Runtime 8. Internet connection required."
       },
       "One": {
         "Tag": "NET9",
-        "ToolTip": ".NET Runtime 9."
+        "ToolTip": ".NET Runtime 9. Internet connection required."
       }
     }
   },
@@ -1397,7 +1389,7 @@
     "Arg": {
       "Zero": {
         "Tag": "",
-        "ToolTip": "Enable Windows Subsystem for Linux (WSL), install the latest WSL Linux kernel version, and a Linux distribution using a pop-up form. The \"Receive updates for other Microsoft products\" setting will enabled automatically to receive kernel updates."
+        "ToolTip": "Enable Windows Subsystem for Linux (WSL), install the latest WSL Linux kernel version, and a Linux distribution using a pop-up form. Internet connection required."
       }
     }
   },

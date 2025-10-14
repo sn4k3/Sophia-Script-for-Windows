@@ -481,13 +481,13 @@ AppsLanguageSwitch -Enable
 # Не использовать метод ввода для каждого окна (значение по умолчанию)
 # AppsLanguageSwitch -Disable
 
-# Download and install free dark "Windows 11 Cursors Concept" cursors from Jepri Creations
-# Скачать и установить бесплатные темные курсоры "Windows 11 Cursors Concept" от Jepri Creations
+# Download and install free dark "Windows 11 Cursors Concept" cursors from Jepri Creations. Internet connection required
+# Скачать и установить бесплатные темные курсоры "Windows 11 Cursors Concept" от Jepri Creations. Требуется соединение с интернетом
 # https://www.deviantart.com/jepricreations/art/Windows-11-Cursors-Concept-886489356
 Cursors -Dark
 
-# Download and install free light "Windows 11 Cursors Concept" cursors from Jepri Creations
-# Скачать и установить бесплатные светлые курсоры "Windows 11 Cursors Concept" от Jepri Creations
+# Download and install free light "Windows 11 Cursors Concept" cursors from Jepri Creations. Internet connection required
+# Скачать и установить бесплатные светлые курсоры "Windows 11 Cursors Concept" от Jepri Creations. Требуется соединение с интернетом
 # https://www.deviantart.com/jepricreations/art/Windows-11-Cursors-Concept-886489356
 # Cursors -Light
 
@@ -529,13 +529,13 @@ Hibernation -Disable
 # Включить режим гибернации (значение по умолчанию)
 # Hibernation -Enable
 
-# Disable the Windows 260 characters path limit
-# Отключить ограничение Windows на 260 символов в пути
-Win32LongPathLimit -Disable
+# Enable Windows long paths support which is limited for 260 characters by default
+# Включить поддержку длинных путей, ограниченных по умолчанию 260 символами
+Win32LongPathSupport -Enable
 
-# Enable the Windows 260 character path limit (default value)
-# Включить ограничение Windows на 260 символов в пути (значение по умолчанию)
-# Win32LongPathLimit -Enable
+# Disable Windows long paths support which is limited for 260 characters by default (default value)
+# Отключить поддержку длинных путей, ограниченных по умолчанию 260 символами (значение по умолчанию)
+# Win32LongPathSupport -Disable
 
 # Display Stop error code when BSoD occurs
 # Отображать код Stop-ошибки при появлении BSoD
@@ -675,20 +675,20 @@ Set-UserShellFolderLocation -Root
 #>
 # Set-UserShellFolderLocation -Default
 
-# Use the latest installed .NET runtime for all apps
-# Использовать последнюю установленную среду выполнения .NET для всех приложений
-LatestInstalled.NET -Enable
+# Use .NET Framework 4.8.1 for old apps
+# Использовать .NET Framework 4.8.1 для устаревших программ
+# LatestInstalled.NET -Enable
 
-# Do not use the latest installed .NET runtime for all apps (default value)
-# Не использовать последнюю установленную версию .NET для всех приложений (значение по умолчанию)
+# Do not Use .NET Framework 4.8.1 for old apps (default value)
+# Не использовать .NET Framework 4.8.1 для устаревших программ (значение по умолчанию)
 # LatestInstalled.NET -Disable
 
-# Save screenshots by pressing Win+PrtScr on the Desktop
-# Сохранять скриншоты по нажатию Win+PrtScr на рабочий стол
+# Save screenshots on the Desktop when pressing Windows+PrtScr or using Windows+Shift+S
+# Сохранять скриншоты по нажатию Windows+PrtScr или Windows+Shift+S на рабочий стол
 WinPrtScrFolder -Desktop
 
-# Save screenshots by pressing Win+PrtScr in the Pictures folder (default value)
-# Cохранять скриншоты по нажатию Win+PrtScr в папку "Изображения" (значение по умолчанию)
+# Save screenshots in the Pictures folder when pressing Windows+PrtScr or using Windows+Shift+S (default value)
+# Cохранять скриншоты по нажатию Windows+PrtScr или Windows+Shift+S в папку "Изображения" (значение по умолчанию)
 # WinPrtScrFolder -Default
 
 # Launch folder windows in a separate process
@@ -723,11 +723,11 @@ NumLock -Enable
 # Включить Caps Lock (значение по умолчанию)
 # CapsLock -Enable
 
-# Do not allow the shortcut key to Start Sticky Keys by pressing the the Shift key 5 times
+# Do not allow the shortcut key to Start Sticky Keys when pressing the the Shift key 5 times
 # Не разрешать включения залипания клавиши Shift после 5 нажатий
 StickyShift -Disable
 
-# Allow the shortcut key to Start Sticky Keys by pressing the the Shift key 5 times (default value)
+# Allow the shortcut key to Start Sticky Keys when pressing the the Shift key 5 times (default value)
 # Разрешать включения залипания клавиши Shift после 5 нажатий (значение по умолчанию)
 # StickyShift -Enable
 
@@ -778,12 +778,12 @@ NetworkDiscovery -Enable
 #>
 # Import-Associations
 
-# Install the latest Microsoft Visual C++ Redistributable Packages 2015–2022 (x86/x64)
+# Install the latest Microsoft Visual C++ Redistributable Packages 2015–2022 (x86/x64). Internet connection required
 Install-VCRedist -Redistributables 2015_2022_x86, 2015_2022_x64
 
-# Install the latest .NET Runtime 8, 9 x64
-#Установить последнюю версию .NET Runtime 8, 9 x64
-Install-DotNetRuntimes -Runtimes NET8x64, NET9x64
+# Install the latest .NET Runtime 8, 9. Internet connection required
+# Установить последнюю версию .NET Runtime 8, 9. Требуется соединение с интернетом
+Install-DotNetRuntimes -Runtimes NET8, NET9
 
 # Enable proxying only blocked sites from the unified registry of Roskomnadzor. The function is applicable for Russia only
 # Включить проксирование только заблокированных сайтов из единого реестра Роскомнадзора. Функция применима только для России

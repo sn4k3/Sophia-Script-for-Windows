@@ -547,6 +547,20 @@
   },
   {
     "Region": "UI & Personalization",
+    "Function": "ClockInNotificationCenter",
+    "Arg": {
+      "Zero": {
+        "Tag": "Show",
+        "ToolTip": "Sekunden im Benachrichtigungscenter anzeigen."
+      },
+      "One": {
+        "Tag": "Hide",
+        "ToolTip": "Zeit im Benachrichtigungscenter ausblenden (default value)."
+      }
+    }
+  },
+  {
+    "Region": "UI & Personalization",
     "Function": "TaskbarCombine",
     "Arg": {
       "Zero": {
@@ -796,7 +810,7 @@
       },
       "One": {
         "Tag": "Install",
-        "ToolTip": "OneDrive 64-bit installieren."
+        "ToolTip": "OneDrive installieren. Internetverbindung erforderlich."
       }
     }
   },
@@ -806,7 +820,7 @@
     "Arg": {
       "Zero": {
         "Tag": "",
-        "ToolTip": "Installieren Sie OneDrive 64-bit für alle Benutzer in %ProgramFiles%. Je nachdem welches Installationsprogramm ausgelöst wird, 64bit oder 32bit."
+        "ToolTip": "Installieren Sie OneDrive für alle Benutzer in %ProgramFiles%. Internetverbindung erforderlich."
       }
     }
   },
@@ -840,15 +854,15 @@
   },
   {
     "Region": "System",
-    "Function": "Win32LongPathLimit",
+    "Function": "Win32LongPathSupport",
     "Arg": {
       "Zero": {
-        "Tag": "Disable",
-        "ToolTip": "Deaktiviert die Windows-Pfadbegrenzung auf 260 Zeichen."
+        "Tag": "Enable",
+        "ToolTip": "Aktivieren Sie die Unterstützung langer Windows-Pfade, die standardmäßig auf 260 Zeichen begrenzt ist."
       },
       "One": {
-        "Tag": "Enable",
-        "ToolTip": "Aktiviert die Windows-Pfadbegrenzung auf 260 Zeichen (Standardwert)."
+        "Tag": "Disable",
+        "ToolTip": "Deaktivieren Sie die Unterstützung langer Windows-Pfade, die standardmäßig auf 260 Zeichen begrenzt ist (Standardwert)."
       }
     }
   },
@@ -1086,11 +1100,11 @@
     "Arg": {
       "Zero": {
         "Tag": "Desktop",
-        "ToolTip": "Speichern von Screenshots durch Drücken von Windows-Taste+\"druck\"-Taste auf dem Desktop."
+        "ToolTip": "Speichern Sie Screenshots auf dem Desktop, indem Sie Windows+PrtScr drücken oder Windows+Shift+S verwenden."
       },
       "One": {
         "Tag": "Default",
-        "ToolTip": "Speichern von Screenshots durch Drücken von Windows-Taste+\"druck\"-Taste im Ordner Bilder (Standardwert)."
+        "ToolTip": "Speichern Sie Screenshots im Ordner Bilder, indem Sie Windows+PrtScr drücken oder Windows+Shift+S verwenden (Standardwert)."
       }
     }
   },
@@ -1105,20 +1119,6 @@
       "One": {
         "Tag": "Default",
         "ToolTip": "Fragen Sie mich, bevor Sie Troubleshooter ausführen. Damit diese Funktion funktioniert, muss die Betriebssystemebene der Diagnosedatenerfassung auf \"Optionale Diagnosedaten\" eingestellt und die Fehlerberichtsfunktion aktiviert werden (Standardwert)."
-      }
-    }
-  },
-  {
-    "Region": "System",
-    "Function": "FoldersLaunchSeparateProcess",
-    "Arg": {
-      "Zero": {
-        "Tag": "Enable",
-        "ToolTip": "Explorer in einem separaten Prozess starten."
-      },
-      "One": {
-        "Tag": "Disable",
-        "ToolTip": "Explorer nicht in einem separaten Prozess starten (Standardwert)."
       }
     }
   },
@@ -1236,6 +1236,20 @@
   },
   {
     "Region": "System",
+    "Function": "RestorePreviousFolders",
+    "Arg": {
+      "Zero": {
+        "Tag": "Disable",
+        "ToolTip": "Vorherige Ordnerfenster bei der Anmeldung nicht wiederherstellen (Standardwert)."
+      },
+      "One": {
+        "Tag": "Enable",
+        "ToolTip": "Stellen Sie bei der Anmeldung die vorherigen Ordnerfenster wieder her."
+      }
+    }
+  },
+  {
+    "Region": "System",
     "Function": "NetworkDiscovery",
     "Arg": {
       "Zero": {
@@ -1251,22 +1265,19 @@
   {
     "Region": "System",
     "Function": "Set-Association",
+    "ToolTip": "App registrieren, Hash berechnen und mit einer Erweiterung verknüpfen, wobei das Popup-Fenster 'Wie möchten Sie dies öffnen?' ausgeblendet ist.",
     "Arg": {
       "Zero": {
-        "Tag": "",
-        "ToolTip": "Registrieren Sie die App, berechnen Sie den Hash und verknüpfen Sie sie mit einer Erweiterung, wobei das Popup 'Wie möchten Sie diese öffnen?' ausgeblendet ist."
-      },
-      "One": {
         "Tag": "ProgramPath",
         "ToolTip": "Pfad zur ausführbaren Datei."
       },
-      "Two": {
+      "One": {
         "Tag": "Extension",
         "ToolTip": "Erweiterung."
       },
-      "Three": {
+      "Two": {
         "Tag": "Icon",
-        "ToolTip": "Pfad zum Symbol."
+        "ToolTip": "Pfad zur Ikone."
       }
     }
   },
@@ -1311,7 +1322,7 @@
     "Arg": {
       "Zero": {
         "Tag": "",
-        "ToolTip": ""
+        "ToolTip": "Internetverbindung erforderlich."
       }
     }
   },
@@ -1322,11 +1333,11 @@
     "Arg": {
       "Zero": {
         "Tag": "NET8",
-        "ToolTip": ".NET Runtime 8."
+        "ToolTip": ".NET Runtime 8. Internetverbindung erforderlich."
       },
       "One": {
         "Tag": "NET9",
-        "ToolTip": ".NET Runtime 9."
+        "ToolTip": ".NET Runtime 9. Internetverbindung erforderlich."
       }
     }
   },
@@ -1378,7 +1389,7 @@
     "Arg": {
       "Zero": {
         "Tag": "",
-        "ToolTip": "Aktiviert das Windows Subsystem für Linux (WSL), installiert die neueste Version des WSL-Linux-Kernels und eine Linux-Distribution über ein Popup-Formular. Die Einstellung \"Updates für andere Microsoft-Produkte empfangen\" wird automatisch aktiviert, um Kernel-Updates zu erhalten."
+        "ToolTip": "Aktiviert das Windows Subsystem für Linux (WSL), installiert die neueste Version des WSL-Linux-Kernels und eine Linux-Distribution über ein Popup-Formular. Internetverbindung erforderlich."
       }
     }
   },

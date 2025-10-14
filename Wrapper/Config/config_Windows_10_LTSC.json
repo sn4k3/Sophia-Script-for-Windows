@@ -1039,13 +1039,13 @@
     "Region": "System",
     "Control": "cmb",
     "Required": "false",
-    "Function": "Win32LongPathLimit",
+    "Function": "Win32LongPathSupport",
     "Arg": {
       "Zero": {
-        "Tag": "Disable"
+        "Tag": "Enable"
       },
       "One": {
-        "Tag": "Enable"
+        "Tag": "Disable"
       }
     },
     "Preset": "Zero",
@@ -1631,10 +1631,10 @@
     "Function": "Install-DotNetRuntimes -Runtimes",
     "Arg": {
       "Zero": {
-        "Tag": "NET8x64"
+        "Tag": "NET8"
       },
       "One": {
-        "Tag": "NET9x64"
+        "Tag": "NET9"
       }
     },
     "Preset": "",
