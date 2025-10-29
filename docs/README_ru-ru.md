@@ -82,7 +82,7 @@ This page is also available in other languages
   * Скрипт генерирует список установленных UWP-приложений [динамически](#локализированные-имена-пакетов)
 * Отключить компоненты Windows, отображая локализированные пакеты с помощью всплывающего окошка, написанного на [WPF](#скриншоты);
 * Удалить дополнительные компоненты Windows, отображая локализированные пакеты с помощью всплывающего окошка, написанного на [WPF](#скриншоты);
-* Скачать и установить [Расширения для видео HEVC от производителя](https://apps.microsoft.com/detail/9N4WGH0Z6VHQ), чтобы иметь поддержку формата [HEVC](https://en.wikipedia.org/wiki/H.265);
+* Скачать и установить [Расширения для видео HEVC от производителя](https://apps.microsoft.com/detail/9N4WGH0Z6VHQ), чтобы иметь поддержку формата [HEVC](https://en.wikipedia.org/wiki/High_Efficiency_Video_Coding);
 * Установить приложение по умолчанию для конкретного расширения без всплывающего окошка "Каким образом вы хотите открыть этот файл?", используя специльную [функцию](https://github.com/DanysysTeam/PS-SFTA);
 * Экспортировать все ассоциации в Windows. Ассоциации будут экспортированы в файл `Application_Associations.json` в корне папки скрипта;
 * Импортировать выгруженный `Application_Associations.json` после чистой установки. Вам необходимо установить все приложения из списка выгруженного `Application_Associations.json`, чтобы восстановить ассоциации;
@@ -92,9 +92,9 @@ This page is also available in other languages
   * Создать задание `SoftwareDistribution` для очистки `%SystemRoot%\SoftwareDistribution\Download`;
   * Создать задание `Temp` для очистки `%TEMP%`.
 * Установить последней версии распространяемых пакетов Microsoft Visual C++ 2015–2022 x86/x64;
-* Установить последней версии распространяемых пакетов .NET Desktop Runtime 8, 9 x86/x64;
+* Установить последней версии распространяемых пакетов .NET Desktop Runtime 8, 9 x64;
 * Настроить безопасность Windows;
-* Отобразить все ключи политик реестра в оснастке редактирования групповых политик (gpedit.msc);
+* Отобразить примененные политики реестра в оснастке редактирования групповых политик (gpedit.msc);
 * Много других твиков проводника и контекстного меню.
 
 ## Содержание
@@ -265,7 +265,7 @@ Sophia -Functions "DiagTrackService -Enable", UninstallUWPApps
 
 ## Пожертвования
 
-[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/farag)⠀⠀⠀<a href="https://boosty.to/teamsophia"><img src="https://raw.githubusercontent.com/farag2/Sophia-Script-for-Windows/master/img/boosty.png" width='40'></a>
+[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/farag) <a href="https://boosty.to/teamsophia"><img src="https://raw.githubusercontent.com/farag2/Sophia-Script-for-Windows/master/img/boosty.png" width='40'></a>
 
 ## Системные требования
 
@@ -273,11 +273,11 @@ Sophia -Functions "DiagTrackService -Enable", UninstallUWPApps
 [Windows-10-LTSC-2019]: https://support.microsoft.com/topic/windows-10-and-windows-server-2019-update-history-725fc2e1-4443-6831-a5ca-51ff5cbcb059
 [Windows-10-LTSC-2021]: https://support.microsoft.com/topic/windows-10-update-history-857b8ccb-71e4-49e5-b3f6-7073197d98fb
 [Windows-11-LTSC-2024]: https://support.microsoft.com/topic/windows-11-version-24h2-update-history-0929c747-1815-4543-8461-0160d16f15e5
-[Windows-11-24h2]: https://support.microsoft.com/topic/windows-11-version-24h2-update-history-0929c747-1815-4543-8461-0160d16f15e5
+[Windows-11-24h2]: https://support.microsoft.com/topic/windows-11-version-25h2-update-history-99c7f493-df2a-4832-bd2d-6706baa0dec0
 
 |                Версия                    |                 Билд                  |      Издание        |
-|:----------------------------------------:|:-------------------------------------:|:-------------------:|
-| Windows 11 24H2                          | [Latest stable][Windows-11-24h2]      | Home/Pro/Enterprise |
+|:-----------------------------------------|:-------------------------------------:|:-------------------:|
+| Windows 11 24H2/25H2+                    | [Latest stable][Windows-11-24h2]      | Home/Pro/Enterprise |
 | Windows 10 x64 22H2                      | [Latest stable][Windows-10]           | Home/Pro/Enterprise |
 | Windows 11 Enterprise LTSC 2024          | [Latest stable][Windows-11-LTSC-2024] | Enterprise          |
 | Windows 10 x64 21H2 Enterprise LTSC 2021 | [Latest stable][Windows-10-LTSC-2021] | Enterprise          |
@@ -295,15 +295,15 @@ https://user-images.githubusercontent.com/10544660/253818031-b7ce6bf1-d968-41ea-
 
 ### Локализированные имена пакетов
 
-![Image](https://i.imgur.com/xeiBbes.png) ![Image](https://i.imgur.com/0zj0h2S.png)
+![Image](./img/uwpapps.png)
 
 ### Локализированные имена компонентов Windows
 
-![Image](https://i.imgur.com/xlMR2mz.png) ![Image](https://i.imgur.com/yl9j9Vt.png)
+![Image](./img/optionalfeatures.png) ![Image](./img/windowsfeatures.png)
 
 ### Скачать и установить любые поддерживаемые дистрибутивые Linux через WSL в автоматическом режиме
 
-![Image](https://i.imgur.com/Xn5SqxE.png)
+![Image](./img/WSL.png)
 
 ### Нативные тостовые уведомления для заданий Планировщика заданий
 

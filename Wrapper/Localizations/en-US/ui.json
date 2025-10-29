@@ -57,7 +57,6 @@
     "Options": {
       "statusBarHover": "Hover your mouse cursor over the selection items for information about each option",
       "statusBarPresetLoaded": "preset loaded!",
-      "statusBarPresetNotComp": "preset file is not compatible!",
       "statusBarSophiaPreset": "Sophia preset loaded!",
       "statusBarWindowsDefaultPreset": "Windows Default preset loaded!",
       "statusBarPowerShellScriptCreatedFromSelections": "PowerShell Script created from your selections! You can run it or save it.",
@@ -66,8 +65,9 @@
       "statusBarOppositeEverything": "Opposites selected for everything!",
       "statusBarClearTab": "Selections for tab cleared!",
       "statusBarClearEverything": "Selections all cleared!",
-      "statusBarDisabled": "Import a preset to enable controls.",
-      "statusBarCurrentOS": "Current OS"
+      "statusBarMessageDownloadMessagePart1of3": "Download",
+      "statusBarMessageDownloadLinkPart2of3": "Sophia Script for Windows",
+      "statusBarMessageDownloadMessagePart3of3": "and import Sophia.ps1 preset to enable controls"
     }
   },
   {

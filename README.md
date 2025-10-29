@@ -6,7 +6,7 @@
 
 **The most powerful PowerShell module for fine-tuning Windows on GitHub**
 
-Made with <img src="./img/heart.svg" height="17px"/> of Windows.
+Made with <img src="./img/heart.svg" height="17px"/> of Windows
 
 <kbd>
 	<a href="https://github.com/farag2/Sophia-Script-for-Windows/actions"><img src="https://img.shields.io/github/actions/workflow/status/farag2/Sophia-Script-for-Windows/Sophia.yml?labelColor=151B23&color=151B23&style=for-the-badge&label=build&logo=GitHub"></a>
@@ -82,7 +82,7 @@ This page is also available in other languages
   * Script generates installed UWP apps list [dynamically](#localized-uwp-packages-names)
 * Disable Windows features displaying friendly packages names with pop-up form written in [WPF](#screenshots);
 * Uninstall Windows capabilities displaying friendly packages names with pop-up form written in [WPF](#screenshots);
-* Download and install the [HEVC Video Extensions from Device Manufacturer](https://apps.microsoft.com/detail/9N4WGH0Z6VHQ) to be able to open [HEVC](https://en.wikipedia.org/wiki/H.265) format;
+* Download and install the [HEVC Video Extensions from Device Manufacturer](https://apps.microsoft.com/detail/9N4WGH0Z6VHQ) to be able to open [HEVC](https://en.wikipedia.org/wiki/High_Efficiency_Video_Coding) format;
 * Set an app as default one for specific extension without the "How do you want to open this" pop-up using special [function](https://github.com/DanysysTeam/PS-SFTA);
 * Export all Windows associations. Associations will be exported as Application_Associations.json file in script root folder;
 * Import exported JSON file after a clean installation. You need to install all apps according to exported JSON file to restore all associations;
@@ -97,7 +97,7 @@ This page is also available in other languages
 * Install the latest provided Microsoft Visual C++ 2015–2022 x86/x64;
 * Install the latest provided .NET Desktop Runtime 8, 9;
 * Configure the Windows security;
-* Display all policy registry keys (even manually created ones) in the Local Group Policy Editor snap-in (gpedit.msc);
+* Display applied registry policies in the Local Group Policy Editor snap-in (gpedit.msc);
 * Many more File Explorer and context menu "deep" tweaks.
 
 ## Table of Contents
@@ -268,7 +268,7 @@ Sophia -Functions "DiagTrackService -Enable", UninstallUWPApps
 
 ## Donations
 
-[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/farag)⠀⠀⠀<a href="https://boosty.to/teamsophia"><img src="https://raw.githubusercontent.com/farag2/Sophia-Script-for-Windows/master/img/boosty.png" width='40'></a>
+[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/farag) <a href="https://boosty.to/teamsophia"><img src="https://raw.githubusercontent.com/farag2/Sophia-Script-for-Windows/master/img/boosty.png" width='40'></a>
 
 ## System Requirements
 
@@ -276,11 +276,11 @@ Sophia -Functions "DiagTrackService -Enable", UninstallUWPApps
 [Windows-10-LTSC-2019]: https://support.microsoft.com/topic/windows-10-and-windows-server-2019-update-history-725fc2e1-4443-6831-a5ca-51ff5cbcb059
 [Windows-10-LTSC-2021]: https://support.microsoft.com/topic/windows-10-update-history-857b8ccb-71e4-49e5-b3f6-7073197d98fb
 [Windows-11-LTSC-2024]: https://support.microsoft.com/topic/windows-11-version-24h2-update-history-0929c747-1815-4543-8461-0160d16f15e5
-[Windows-11-24h2]: https://support.microsoft.com/topic/windows-11-version-24h2-update-history-0929c747-1815-4543-8461-0160d16f15e5
+[Windows-11-24h2]: https://support.microsoft.com/topic/windows-11-version-25h2-update-history-99c7f493-df2a-4832-bd2d-6706baa0dec0
 
 |               Version                    |                  Build                |      Edition        |
 |:-----------------------------------------|:-------------------------------------:|:-------------------:|
-| Windows 11 24H2                          | [Latest stable][Windows-11-24h2]      | Home/Pro/Enterprise |
+| Windows 11 24H2/25H2+                    | [Latest stable][Windows-11-24h2]      | Home/Pro/Enterprise |
 | Windows 10 x64 22H2                      | [Latest stable][Windows-10]           | Home/Pro/Enterprise |
 | Windows 11 Enterprise LTSC 2024          | [Latest stable][Windows-11-LTSC-2024] | Enterprise          |
 | Windows 10 x64 21H2 Enterprise LTSC 2021 | [Latest stable][Windows-10-LTSC-2021] | Enterprise          |
@@ -306,7 +306,7 @@ https://user-images.githubusercontent.com/10544660/253818031-b7ce6bf1-d968-41ea-
 
 ### Download and install any supported Linux distribution in automatic mode
 
-![Image](./img/wsl.png)
+![Image](./img/WSL.png)
 
 ### Native interactive toasts for the scheduled tasks
 

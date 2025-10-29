@@ -57,7 +57,6 @@
     "Options": {
       "statusBarHover": "Наведите курсором на функции, чтобы увидеть подсказки по каждой опции",
       "statusBarPresetLoaded": "Модуль загружен!",
-      "statusBarPresetNotComp": "Пресет не совместим!",
       "statusBarSophiaPreset": "Загружен пресет Sophia!",
       "statusBarWindowsDefaultPreset": "Загружен пресет по умолчанию!",
       "statusBarPowerShellScriptCreatedFromSelections": "Скрипт для PowerShell создан из ваших выбранных элементов. Можете запустить и сохранить его.",
@@ -66,8 +65,9 @@
       "statusBarOppositeEverything": "Выбраны все противоположные значения!",
       "statusBarClearTab": "Отмеченные элементы для вкладки очищены!",
       "statusBarClearEverything": "Все отмеченные элементы очищены!",
-      "statusBarDisabled": "Импортируйте пресет, чтобы включить элементы управления.",
-      "statusBarCurrentOS": "Текущая ОС"
+      "statusBarMessageDownloadMessagePart1of3": "Скачайте",
+      "statusBarMessageDownloadLinkPart2of3": "Sophia Script for Windows",
+      "statusBarMessageDownloadMessagePart3of3": "и импортируйте пресет Sophia.ps1, чтобы включить элементы управления"
     }
   },
   {

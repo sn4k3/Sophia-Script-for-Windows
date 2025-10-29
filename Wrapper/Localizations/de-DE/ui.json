@@ -57,7 +57,6 @@
     "Options": {
       "statusBarHover": "Bewegen Sie den Mauszeiger über die Auswahlpunkte, um Informationen zu jeder Option zu erhalten",
       "statusBarPresetLoaded": "Voreinstellung geladen!",
-      "statusBarPresetNotComp": "Voreinstellungsdatei ist nicht kompatibel!",
       "statusBarSophiaPreset": "Sophia Voreinstellung geladen!",
       "statusBarWindowsDefaultPreset": "Windows Standardvoreinstellung geladen!",
       "statusBarPowerShellScriptCreatedFromSelections": "PowerShell Skript, das anhand Ihrer Auswahlen erstellt wurde! Sie können es ausführen oder speichern.",
@@ -66,8 +65,9 @@
       "statusBarOppositeEverything": "Für alles ausgewählte Gegensätze!",
       "statusBarClearTab": "Auswahl für Registerkarte gelöscht!",
       "statusBarClearEverything": "Alle Auswahlen gelöscht!",
-      "statusBarDisabled": "Sie müssen zuerst 'Voreinstellung importieren', um die Verwendung von Wrapper zu aktivieren. Importieren, um Steuerelemente zu aktivieren.",
-      "statusBarCurrentOS": "Aktuelles OS"
+      "statusBarMessageDownloadMessagePart1of3": "Herunterladen",
+      "statusBarMessageDownloadLinkPart2of3": "Sophia Script for Windows",
+      "statusBarMessageDownloadMessagePart3of3": "und importieren Sie die Voreinstellung Sophia.ps1, um die Steuerelemente zu aktivieren"
     }
   },
   {
