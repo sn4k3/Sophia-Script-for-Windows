@@ -908,7 +908,7 @@ RegistryBackup -Enable
 
 # Disable Windows AI functions
 # Выключить функции, связанные с ИИ Windows
-WindowsAI -Disable
+# WindowsAI -Disable
 
 # Enable Windows AI functions (default value)
 # Включить функции, связанные с ИИ Windows (значение по умолчанию)
