@@ -2,12 +2,14 @@
 	.SYNOPSIS
 	Enable tab completion to invoke for functions if you do not know function name
 
-	Version: 5.21.2
-	Date: 19.10.2025
+	.VERSION
+	6.1.4
 
-	Copyright (c) 2014—2025 Team Sophia
+	.DATE
+	24.02.2026
 
-	Thanks to all https://forum.ru-board.com members involved
+	.COPYRIGHT
+	(c) 2014—2026 Team Sophia
 
 	.DESCRIPTION
 	Dot source the script first: . .\Import-TabCompletion.ps1 (with a dot at the beginning)
@@ -16,7 +18,7 @@
 	.EXAMPLE
 	Sophia -Functions <tab>
 	Sophia -Functions temp<tab>
-	Sophia -Functions "DiagTrackService -Disable", "DiagnosticDataLevel -Minimal", UninstallUWPApps
+	Sophia -Functions "DiagTrackService -Disable", "DiagnosticDataLevel -Minimal", Uninstall-UWPApps
 
 	.NOTES
 	Use commas to separate funtions
@@ -27,6 +29,42 @@
 
 #Requires -RunAsAdministrator
 #Requires -Version 5.1
+
+#region Initial Actions
+$Global:Failed = $false
+
+# Checking if function wasn't dot-sourced, but called explicitly
+# ".\Import-TabCompletion.ps1" instead of ". .\Import-TabCompletion.ps1"
+if ($MyInvocation.Line -ne ". .\Import-TabCompletion.ps1")
+{
+	Write-Information -MessageData "" -InformationAction Continue
+	Write-Warning -Message $Localization.DotSourcedWarning
+	Write-Information -MessageData "" -InformationAction Continue
+
+	Write-Verbose -Message "https://github.com/farag2/Sophia-Script-for-Windows?tab=readme-ov-file#how-to-run-the-specific-functions" -Verbose
+	Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
+	Write-Verbose -Message "https://discord.gg/sSryhaEv79" -Verbose
+
+	exit
+}
+
+$Global:Failed = $false
+
+# Unload and import private functions and module
+Get-ChildItem function: | Where-Object {$_.ScriptBlock.File -match "Sophia_Script_for_Windows"} | Remove-Item -Force
+Remove-Module -Name SophiaScript -Force -ErrorAction Ignore
+Import-Module -Name $PSScriptRoot\Manifest\SophiaScript.psd1 -PassThru -Force
+Get-ChildItem -Path $PSScriptRoot\Module\private | Foreach-Object -Process {. $_.FullName}
+
+# Dot-source script with checks
+InitialActions
+
+# Global variable if checks failed
+if ($Global:Failed)
+{
+	exit
+}
+#endregion Initial Actions
 
 function Sophia
 {
@@ -44,35 +82,8 @@ function Sophia
 	}
 
 	# The "PostActions" and "Errors" functions will be executed at the end
-	Invoke-Command -ScriptBlock {PostActions; Errors}
+	Invoke-Command -ScriptBlock {PostActions}
 }
-
-Clear-Host
-
-$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 10 v5.21.2 | Made with $([System.Char]::ConvertFromUtf32(0x1F497)) of Windows | $([System.Char]0x00A9) Team Sophia, 2014$([System.Char]0x2013)2025"
-
-Remove-Module -Name SophiaScript -Force -ErrorAction Ignore
-Import-Module -Name $PSScriptRoot\Manifest\SophiaScript.psd1 -PassThru -Force
-
-Import-LocalizedData -BindingVariable Global:Localization -FileName Sophia -BaseDirectory $PSScriptRoot\Localizations
-
-# Checking if function wasn't dot-sourced, but called explicitly
-# ".\Import-TabCompletion.ps1" instead of ". .\Import-TabCompletion.ps1"
-if ($MyInvocation.Line -ne ". .\Import-TabCompletion.ps1")
-{
-	Write-Information -MessageData "" -InformationAction Continue
-	Write-Warning -Message $Localization.DotSourcedWarning
-	Write-Information -MessageData "" -InformationAction Continue
-
-	Write-Verbose -Message "https://github.com/farag2/Sophia-Script-for-Windows?tab=readme-ov-file#how-to-run-the-specific-functions" -Verbose
-	Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
-	Write-Verbose -Message "https://discord.gg/sSryhaEv79" -Verbose
-
-	exit
-}
-
-# The mandatory checks. Please, do not comment out this function
-InitialActions
 
 $Parameters = @{
 	CommandName   = "Sophia"
@@ -160,8 +171,8 @@ $Parameters = @{
 				}
 			}
 
-			# If a module command is UninstallUWPApps
-			if ($Command -eq "UninstallUWPApps")
+			# If a module command is Uninstall-UWPApps
+			if ($Command -eq "Uninstall-UWPApps")
 			{
 				(Get-Command -Name $Command).Name | Where-Object -FilterScript {$_ -like "*$wordToComplete*"}
 
@@ -171,32 +182,8 @@ $Parameters = @{
 					# If an argument is ForAllUsers
 					if ($ParameterSet -eq "ForAllUsers")
 					{
-						# The "UninstallUWPApps -ForAllUsers" construction
-						"UninstallUWPApps" + " " + "-" + $ParameterSet | Where-Object -FilterScript {$_ -like "*$wordToComplete*"} | ForEach-Object -Process {"`"$_`""}
-					}
-
-					continue
-				}
-			}
-
-			# If a module command is Install-VCRedist
-			if ($Command -eq "Install-VCRedist")
-			{
-				# Get all command arguments, excluding defaults
-				foreach ($ParameterSet in $ParameterSets.Name)
-				{
-					# If an argument is Redistributables
-					if ($ParameterSet -eq "Redistributables")
-					{
-						$ValidValues = ((Get-Command -Name Install-VCRedist).Parametersets.Parameters | Where-Object -FilterScript {$null -eq $_.Attributes.AliasNames}).Attributes.ValidValues
-						foreach ($ValidValue in $ValidValues)
-						{
-							# The "Install-VCRedist -Redistributables <function>" construction
-							"Install-VCRedist" + " " + "-" + $ParameterSet + " " + $ValidValue | Where-Object -FilterScript {$_ -like "*$wordToComplete*"} | ForEach-Object -Process {"`"$_`""}
-						}
-
-						# The "Install-VCRedist -Redistributables <functions>" construction
-						"Install-VCRedist" + " " + "-" + $ParameterSet + " " + ($ValidValues -join ", ") | Where-Object -FilterScript {$_ -like "*$wordToComplete*"} | ForEach-Object -Process {"`"$_`""}
+						# The "Uninstall-UWPApps -ForAllUsers" construction
+						"Uninstall-UWPApps" + " " + "-" + $ParameterSet | Where-Object -FilterScript {$_ -like "*$wordToComplete*"} | ForEach-Object -Process {"`"$_`""}
 					}
 
 					continue
@@ -227,12 +214,6 @@ $Parameters = @{
 				}
 			}
 
-			# If a module command is Set-Policy
-			if ($Command -eq "Set-Policy")
-			{
-				continue
-			}
-
 			# If a module command is UserFolders
 			if ($Command -eq "UserFolders")
 			{
@@ -248,6 +229,12 @@ $Parameters = @{
 
 					continue
 				}
+			}
+
+			# If a module command is Set-Policy
+			if ($Command -eq "Set-Policy")
+			{
+				continue
 			}
 
 			foreach ($ParameterSet in $ParameterSets.Name)
@@ -270,7 +257,7 @@ Register-ArgumentCompleter @Parameters
 Write-Information -MessageData "" -InformationAction Continue
 Write-Verbose -Message "Sophia -Functions <tab>" -Verbose
 Write-Verbose -Message "Sophia -Functions temp<tab>" -Verbose
-Write-Verbose -Message "Sophia -Functions `"DiagTrackService -Disable`", `"DiagnosticDataLevel -Minimal`", UninstallUWPApps" -Verbose
+Write-Verbose -Message "Sophia -Functions 'DiagTrackService -Disable', 'DiagnosticDataLevel -Minimal', Uninstall-UWPApps" -Verbose
 Write-Information -MessageData "" -InformationAction Continue
-Write-Verbose -Message "Sophia -Functions `"UninstallUWPApps, `"PinToStart -UnpinAll`" -Verbose"
-Write-Verbose -Message "Sophia -Functions `"Set-Association -ProgramPath ```"%ProgramFiles%\Notepad++\notepad++.exe```" -Extension .txt -Icon ```"%ProgramFiles%\Notepad++\notepad++.exe,0```"`"" -Verbose
+Write-Verbose -Message "Sophia -Functions 'Uninstall-UWPApps, 'PinToStart -UnpinAll'" -Verbose
+Write-Verbose -Message "Sophia -Functions `"Set-Association -ProgramPath '%ProgramFiles%\Notepad++\notepad++.exe' -Extension .txt -Icon '%ProgramFiles%\Notepad++\notepad++.exe,0'`"" -Verbose

@@ -2,12 +2,14 @@
 	.SYNOPSIS
 	Enable tab completion to invoke for functions if you do not know function name
 
-	Version: 5.11.2
-	Date: 19.10.2025
+	.VERSION
+	6.1.4
 
-	Copyright (c) 2014—2025 Team Sophia
+	.DATE
+	24.02.2026
 
-	Thanks to all https://forum.ru-board.com members involved
+	.COPYRIGHT
+	(c) 2014—2026 Team Sophia
 
 	.DESCRIPTION
 	Dot source the script first: . .\Import-TabCompletion.ps1 (with a dot at the beginning)
@@ -28,33 +30,8 @@
 #Requires -RunAsAdministrator
 #Requires -Version 5.1
 
-function Sophia
-{
-	[CmdletBinding()]
-	param
-	(
-		[Parameter(Mandatory = $false)]
-		[string[]]
-		$Functions
-	)
-
-	foreach ($Function in $Functions)
-	{
-		Invoke-Expression -Command $Function
-	}
-
-	# The "PostActions" and "Errors" functions will be executed at the end
-	Invoke-Command -ScriptBlock {PostActions; Errors}
-}
-
-Clear-Host
-
-$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 10 LTSC 2019 v5.11.2 | Made with $([System.Char]::ConvertFromUtf32(0x1F497)) of Windows 10 | $([System.Char]0x00A9) Team Sophia, 2014$([System.Char]0x2013)2025"
-
-Remove-Module -Name SophiaScript -Force -ErrorAction Ignore
-Import-Module -Name $PSScriptRoot\Manifest\SophiaScript.psd1 -PassThru -Force
-
-Import-LocalizedData -BindingVariable Global:Localization -FileName Sophia -BaseDirectory $PSScriptRoot\Localizations
+#region Initial Actions
+$Global:Failed = $false
 
 # Checking if function wasn't dot-sourced, but called explicitly
 # ".\Import-TabCompletion.ps1" instead of ". .\Import-TabCompletion.ps1"
@@ -71,8 +48,42 @@ if ($MyInvocation.Line -ne ". .\Import-TabCompletion.ps1")
 	exit
 }
 
-# The mandatory checks. Please, do not comment out this function
+$Global:Failed = $false
+
+# Unload and import private functions and module
+Get-ChildItem function: | Where-Object {$_.ScriptBlock.File -match "Sophia_Script_for_Windows"} | Remove-Item -Force
+Remove-Module -Name SophiaScript -Force -ErrorAction Ignore
+Import-Module -Name $PSScriptRoot\Manifest\SophiaScript.psd1 -PassThru -Force
+Get-ChildItem -Path $PSScriptRoot\Module\private | Foreach-Object -Process {. $_.FullName}
+
+# Dot-source script with checks
 InitialActions
+
+# Global variable if checks failed
+if ($Global:Failed)
+{
+	exit
+}
+#endregion Initial Actions
+
+function Sophia
+{
+	[CmdletBinding()]
+	param
+	(
+		[Parameter(Mandatory = $false)]
+		[string[]]
+		$Functions
+	)
+
+	foreach ($Function in $Functions)
+	{
+		Invoke-Expression -Command $Function
+	}
+
+	# The "PostActions" and "Errors" functions will be executed at the end
+	Invoke-Command -ScriptBlock {PostActions}
+}
 
 $Parameters = @{
 	CommandName   = "Sophia"
@@ -92,30 +103,6 @@ $Parameters = @{
 		foreach ($Command in $Commands)
 		{
 			$ParameterSets = (Get-Command -Name $Command).Parametersets.Parameters | Where-Object -FilterScript {$null -eq $_.Attributes.AliasNames}
-
-			# If a module command is Install-VCRedist
-			if ($Command -eq "Install-VCRedist")
-			{
-				# Get all command arguments, excluding defaults
-				foreach ($ParameterSet in $ParameterSets.Name)
-				{
-					# If an argument is Redistributables
-					if ($ParameterSet -eq "Redistributables")
-					{
-						$ValidValues = ((Get-Command -Name Install-VCRedist).Parametersets.Parameters | Where-Object -FilterScript {$null -eq $_.Attributes.AliasNames}).Attributes.ValidValues
-						foreach ($ValidValue in $ValidValues)
-						{
-							# The "Install-VCRedist -Redistributables <function>" construction
-							"Install-VCRedist" + " " + "-" + $ParameterSet + " " + $ValidValue | Where-Object -FilterScript {$_ -like "*$wordToComplete*"} | ForEach-Object -Process {"`"$_`""}
-						}
-
-						# The "Install-VCRedist -Redistributables <functions>" construction
-						"Install-VCRedist" + " " + "-" + $ParameterSet + " " + ($ValidValues -join ", ") | Where-Object -FilterScript {$_ -like "*$wordToComplete*"} | ForEach-Object -Process {"`"$_`""}
-					}
-
-					continue
-				}
-			}
 
 			# If a module command is Install-DotNetRuntimes
 			if ($Command -eq "Install-DotNetRuntimes")
@@ -167,6 +154,6 @@ Register-ArgumentCompleter @Parameters
 Write-Information -MessageData "" -InformationAction Continue
 Write-Verbose -Message "Sophia -Functions <tab>" -Verbose
 Write-Verbose -Message "Sophia -Functions temp<tab>" -Verbose
-Write-Verbose -Message "Sophia -Functions `"DiagTrackService -Disable`", `"DiagnosticDataLevel -Minimal`", UninstallUWPApps" -Verbose
+Write-Verbose -Message "Sophia -Functions 'DiagTrackService -Disable', 'DiagnosticDataLevel -Minimal'" -Verbose
 Write-Information -MessageData "" -InformationAction Continue
-Write-Verbose -Message "Sophia -Functions `"Set-Association -ProgramPath ```"%ProgramFiles%\Notepad++\notepad++.exe```" -Extension .txt -Icon ```"%ProgramFiles%\Notepad++\notepad++.exe,0```"`"" -Verbose
+Write-Verbose -Message "Sophia -Functions `"Set-Association -ProgramPath '%ProgramFiles%\Notepad++\notepad++.exe' -Extension .txt -Icon '%ProgramFiles%\Notepad++\notepad++.exe,0'`"" -Verbose

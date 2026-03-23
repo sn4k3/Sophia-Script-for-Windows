@@ -1,6 +1,6 @@
 [
   {
-    "Region": "Protection",
+    "Region": "Initial Actions",
     "Function": "InitialActions",
     "Arg": {
       "Zero": {
@@ -240,34 +240,6 @@
       "One": {
         "Tag": "Enable",
         "ToolTip": "Aktiviert die Bing-Suche im Startmenü (Standardwert)."
-      }
-    }
-  },
-  {
-    "Region": "Privacy & Telemetry",
-    "Function": "StartRecommendationsTips",
-    "Arg": {
-      "Zero": {
-        "Tag": "Hide",
-        "ToolTip": "Zeigen Sie im Startmenü keine Empfehlungen für Tipps, Verknüpfungen, neue Anwendungen und mehr an."
-      },
-      "One": {
-        "Tag": "Show",
-        "ToolTip": "Anzeigen von Empfehlungen für Tipps, Verknüpfungen, neue Anwendungen und mehr im Startmenü (Standardwert)."
-      }
-    }
-  },
-  {
-    "Region": "Privacy & Telemetry",
-    "Function": "StartAccountNotifications",
-    "Arg": {
-      "Zero": {
-        "Tag": "Hide",
-        "ToolTip": "Keine Microsoft-Konto-Benachrichtigungen im Startmenü im Startmenü anzeigen."
-      },
-      "One": {
-        "Tag": "Show",
-        "ToolTip": "Anzeigen von Microsoft-Konto-Benachrichtigungen im Startmenü im Startmenü (Standardwert)."
       }
     }
   },
@@ -788,6 +760,34 @@
   },
   {
     "Region": "UI & Personalization",
+    "Function": "RecentlyAddedStartApps",
+    "Arg": {
+      "Zero": {
+        "Tag": "Hide",
+        "ToolTip": "Zuletzt hinzugefügte Apps nicht in Start anzeigen."
+      },
+      "One": {
+        "Tag": "Show",
+        "ToolTip": "Zuletzt hinzugefügte Apps in Start anzeigen (Standardwert)."
+      }
+    }
+  },
+  {
+    "Region": "UI & Personalization",
+    "Function": "MostUsedStartApps",
+    "Arg": {
+      "Zero": {
+        "Tag": "Hide",
+        "ToolTip": "Die am häufigsten verwendeten Apps nicht in Start anzeigen (Standardwert)."
+      },
+      "One": {
+        "Tag": "Show",
+        "ToolTip": "Die am häufigsten verwendeten Apps in Start anzeigen."
+      }
+    }
+  },
+  {
+    "Region": "UI & Personalization",
     "Function": "StartRecommendedSection",
     "Arg": {
       "Zero": {
@@ -797,6 +797,52 @@
       "One": {
         "Tag": "Show",
         "ToolTip": "Abschnitt Empfohlen im Startmenü anzeigen (Standardwert). Gilt nicht für die Home-Edition."
+      }
+    }
+  },
+  {
+    "Region": "UI & Personalization",
+    "Function": "StartRecommendationsTips",
+    "Arg": {
+      "Zero": {
+        "Tag": "Hide",
+        "ToolTip": "Empfehlungen für Tipps, Verknüpfungen, neue Apps und mehr nicht in Start anzeigen."
+      },
+      "One": {
+        "Tag": "Show",
+        "ToolTip": "Empfehlungen für Tipps, Tastenkombinationen, neue Apps und mehr in Start anzeigen (Standardwert)."
+      }
+    }
+  },
+  {
+    "Region": "UI & Personalization",
+    "Function": "StartAccountNotifications",
+    "Arg": {
+      "Zero": {
+        "Tag": "Hide",
+        "ToolTip": "Zeige keine Benachrichtigungen zu Microsoft-Konten auf Start an."
+      },
+      "One": {
+        "Tag": "Show",
+        "ToolTip": "Benachrichtigungen zum Microsoft-Konto auf Start anzeigen (Standardwert)."
+      }
+    }
+  },
+  {
+    "Region": "UI & Personalization",
+    "Function": "StartLayout",
+    "Arg": {
+      "Zero": {
+        "Tag": "Default",
+        "ToolTip": "Standard-Startlayout anzeigen (Standardwert)."
+      },
+      "One": {
+        "Tag": "ShowMorePins",
+        "ToolTip": "Mehr Pins auf Start anzeigen."
+      },
+      "Two": {
+        "Tag": "ShowMoreRecommendations",
+        "ToolTip": "Weitere Empfehlungen auf Start anzeigen."
       }
     }
   },
@@ -854,7 +900,7 @@
   },
   {
     "Region": "System",
-    "Function": "Win32LongPathSupport",
+    "Function": "Win32LongPathsSupport",
     "Arg": {
       "Zero": {
         "Tag": "Enable",
@@ -1082,20 +1128,6 @@
   },
   {
     "Region": "System",
-    "Function": "LatestInstalled.NET",
-    "Arg": {
-      "Zero": {
-        "Tag": "Enable",
-        "ToolTip": "Verwenden Sie die neueste installierte .NET-Laufzeitumgebung für alle Anwendungen."
-      },
-      "One": {
-        "Tag": "Disable",
-        "ToolTip": "Die zuletzt installierte .NET-Laufzeitumgebung nicht für alle Anwendungen verwenden (Standardwert)."
-      }
-    }
-  },
-  {
-    "Region": "System",
     "Function": "WinPrtScrFolder",
     "Arg": {
       "Zero": {
@@ -1317,45 +1349,31 @@
   },
   {
     "Region": "System",
-    "Function": "Install-VCRedist -Redistributables",
-    "ToolTip": "Installieren Sie die neueste Microsoft Visual C++ Redistributable Packages x86, x64",
+    "Function": "Install-VCRedist",
+    "ToolTip": "Installieren Sie die neueste Microsoft Visual C++ Redistributable Packages 2017–2026 (x86/x64)",
     "Arg": {
       "Zero": {
-        "Tag": "2015_2022_x86",
-        "ToolTip": "Installieren Sie die neueste unterstützte Microsoft Visual C++ Redistributable 2015–2022 x86. Internetverbindung erforderlich."
-      },
-      "One": {
-        "Tag": "2015_2022_x64",
-        "ToolTip": "Installieren Sie die neueste unterstützte Microsoft Visual C++ Redistributable 2015–2022 x64. Internetverbindung erforderlich."
+        "Tag": "",
+        "ToolTip": "Internetverbindung erforderlich."
       }
     }
   },
   {
     "Region": "System",
     "Function": "Install-DotNetRuntimes -Runtimes",
-    "ToolTip": "Installieren Sie die neueste .NET Runtime 8, 9.",
+    "ToolTip": "Installieren Sie die neueste .NET Desktop Runtime 8, 9, 10 x64. Internetverbindung erforderlich.",
     "Arg": {
       "Zero": {
         "Tag": "NET8",
-        "ToolTip": ".NET Runtime 8. Internetverbindung erforderlich. Internetverbindung erforderlich."
+        "ToolTip": ".NET Desktop Runtime 8. Internetverbindung erforderlich."
       },
       "One": {
         "Tag": "NET9",
-        "ToolTip": ".NET Runtime 9. Internetverbindung erforderlich. Internetverbindung erforderlich."
-      }
-    }
-  },
-  {
-    "Region": "System",
-    "Function": "RKNBypass",
-    "Arg": {
-      "Zero": {
-        "Tag": "Enable",
-        "ToolTip": "Aktivieren Sie das Proxying nur für gesperrte Websites aus der einheitlichen Registrierung von Roskomnadzor. Die Funktion ist nur für Russland anwendbar."
+        "ToolTip": ".NET Desktop Runtime 9. Internetverbindung erforderlich."
       },
-      "One": {
-        "Tag": "Disable",
-        "ToolTip": "Deaktivieren Sie das Proxying nur für gesperrte Websites aus dem einheitlichen Register von Roskomnadzor (Standardwert)."
+      "Two": {
+        "Tag": "NET10",
+        "ToolTip": ".NET Desktop Runtime 10. Internetverbindung erforderlich."
       }
     }
   },
@@ -1388,6 +1406,20 @@
     }
   },
   {
+    "Region": "System",
+    "Function": "WindowsAI",
+    "Arg": {
+      "Zero": {
+        "Tag": "Disable",
+        "ToolTip": "Windows-KI-Funktionen deaktivieren."
+      },
+      "One": {
+        "Tag": "Enable",
+        "ToolTip": "Windows-KI-Funktionen aktivieren (Standardwert)."
+      }
+    }
+  },
+  {
     "Region": "WSL",
     "Function": "Install-WSL",
     "Arg": {
@@ -1398,26 +1430,8 @@
     }
   },
   {
-    "Region": "Start menu",
-    "Function": "StartLayout",
-    "Arg": {
-      "Zero": {
-        "Tag": "Default",
-        "ToolTip": "Standard-Startlayout anzeigen (Standardwert)."
-      },
-      "One": {
-        "Tag": "ShowMorePins",
-        "ToolTip": "Mehr Pins auf Start anzeigen."
-      },
-      "Two": {
-        "Tag": "ShowMoreRecommendations",
-        "ToolTip": "Weitere Empfehlungen auf Start anzeigen."
-      }
-    }
-  },
-  {
     "Region": "UWP apps",
-    "Function": "UninstallUWPApps",
+    "Function": "Uninstall-UWPApps",
     "Arg": {
       "Zero": {
         "Tag": "",
@@ -1427,7 +1441,7 @@
   },
   {
     "Region": "UWP apps",
-    "Function": "UninstallUWPApps -ForAllUsers",
+    "Function": "Uninstall-UWPApps -ForAllUsers",
     "Arg": {
       "Zero": {
         "Tag": "",
@@ -1483,11 +1497,11 @@
     "Arg": {
       "Zero": {
         "Tag": "Register",
-        "ToolTip": "Erstellt eine geplante Aufgabe \"Windows Cleanup\", um nicht verwendete Windows-Dateien und Updates zu bereinigen. Alle 30 Tage wird eine interaktive Toast-Benachrichtigung angezeigt. Die Aufgabe wird alle 30 Tage ausgeführt."
+        "ToolTip": "Erstellen Sie die geplante Aufgabe \"Windows Cleanup\" zum Bereinigen von nicht verwendeten Windows-Dateien und Updates. Alle 30 Tage wird eine interaktive Toast-Benachrichtigung angezeigt. Sie müssen den Windows Script Host aktivieren, damit die Funktion funktioniert."
       },
       "One": {
         "Tag": "Delete",
-        "ToolTip": "Löscht geplante Aufgaben \"Windows-Bereinigung\" und \"Windows-Bereinigungsbenachrichtigung\", um nicht verwendeten Windows-Dateien und Updates zu bereinigen."
+        "ToolTip": "Löscht die geplanten Aufgaben \"Windows-Bereinigung\" und \"Windows-Bereinigungsbenachrichtigung\" zum Bereinigen von nicht verwendeten Windows-Dateien und Updates."
       }
     }
   },
@@ -1497,11 +1511,11 @@
     "Arg": {
       "Zero": {
         "Tag": "Register",
-        "ToolTip": "Erstellt eine geplante Aufgabe \"SoftwareDistribution\", um den Ordner \"%SystemRoot%\\SoftwareDistribution\\Download\" zu bereinigen. Die Aufgabe wartet, bis der Windows-Update-Dienst seine Ausführung beendet hat. Die Aufgabe wird alle 90 Tage ausgeführt."
+        "ToolTip": "Erstellen Sie die geplante Aufgabe \"SoftwareDistribution\" zum Bereinigen des Ordners %SystemRoot%\\SoftwareDistribution\\Download. Die Aufgabe wartet, bis der Windows-Update-Dienst seine Ausführung beendet hat. Die Aufgabe wird alle 90 Tage ausgeführt."
       },
       "One": {
         "Tag": "Delete",
-        "ToolTip": "Löscht die geplante Aufgabe \"SoftwareDistribution\", um den Ordner \"%SystemRoot%\\SoftwareDistribution\\Download\" zu bereinigen."
+        "ToolTip": "Löscht die geplante Aufgabe \"SoftwareDistribution\" zum Bereinigen des Ordners %SystemRoot%\\SoftwareDistribution\\Download."
       }
     }
   },
@@ -1511,11 +1525,11 @@
     "Arg": {
       "Zero": {
         "Tag": "Register",
-        "ToolTip": "Erstellt eine geplante Aufgabe \"Temp\", um den Ordner %TEMP% zu bereinigen. Die Aufgabe wird alle 60 Tage ausgeführt."
+        "ToolTip": "Erstellt die \"Temp\" geplante Aufgabe zum bereinigen des Ordners %TEMP%. Nur Dateien, die älter als ein Tag sind werden gelöscht. Die Aufgabe wird alles 60 Tage ausgeführt. Sie müssen Windows-Script-Host aktivieren, damit die Funktion funktioniert."
       },
       "One": {
         "Tag": "Delete",
-        "ToolTip": "Löscht die geplante Aufgabe \"Temp\", um den Ordner %TEMP% zu bereinigen."
+        "ToolTip": "Löscht die geplante Aufgabe \"Temp\" zum Bereinigen des Ordners %TEMP%."
       }
     }
   },
@@ -1525,11 +1539,11 @@
     "Arg": {
       "Zero": {
         "Tag": "Enable",
-        "ToolTip": "Netzwerkschutz von Microsoft Defender Exploit Guard aktivieren."
+        "ToolTip": "Aktivieren Sie den Netzwerkschutz von Microsoft Defender Exploit Guard."
       },
       "One": {
         "Tag": "Disable",
-        "ToolTip": "Netzwerkschutz von Microsoft Defender Exploit Guard deaktivieren (Standardwert)."
+        "ToolTip": "Deaktivieren Sie den Netzwerkschutz von Microsoft Defender Exploit Guard (Standardwert)."
       }
     }
   },
@@ -1539,11 +1553,11 @@
     "Arg": {
       "Zero": {
         "Tag": "Enable",
-        "ToolTip": "Erkennung potenziell unerwünschter Apps aktivieren und diese blockieren."
+        "ToolTip": "Aktivieren Sie die Erkennung potenziell unerwünschter Anwendungen und blockieren Sie diese."
       },
       "One": {
         "Tag": "Disable",
-        "ToolTip": "Erkennung potenziell unerwünschter Apps deaktivieren und diese blockieren (Standardwert)."
+        "ToolTip": "Erkennung von potenziell unerwünschten Anwendungen deaktivieren (Standardwert)."
       }
     }
   },
@@ -1558,26 +1572,6 @@
       "One": {
         "Tag": "Disable",
         "ToolTip": "Sandboxing für Microsoft Defender deaktivieren (Standardwert)."
-      }
-    }
-  },
-  {
-    "Region": "Microsoft Defender & Security",
-    "Function": "DismissMSAccount",
-    "Arg": {
-      "Zero": {
-        "Tag": "",
-        "ToolTip": "Microsoft Defender-Angebot in der Windows-Sicherheit über die Anmeldung im Microsoft-Konto ablehnen."
-      }
-    }
-  },
-  {
-    "Region": "Microsoft Defender & Security",
-    "Function": "DismissSmartScreenFilter",
-    "Arg": {
-      "Zero": {
-        "Tag": "",
-        "ToolTip": "Microsoft Defender-Angebot in der Windows-Sicherheit über die Aktivierung des SmartScreen-Filters für Microsoft Edge ablehnen."
       }
     }
   },
@@ -1615,11 +1609,11 @@
     "Arg": {
       "Zero": {
         "Tag": "Enable",
-        "ToolTip": "Aktiviert die Protokollierung für alle PowerShell-Skripte, die in das Windows PowerShell-Ereignisprotokoll eingegeben werden."
+        "ToolTip": "Aktivieren Sie die Protokollierung für alle PowerShell-Skripte, die in das Windows PowerShell-Ereignisprotokoll eingegeben werden."
       },
       "One": {
         "Tag": "Disable",
-        "ToolTip": "Deaktiviert die Protokollierung für alle PowerShell-Skripte, die in das Windows PowerShell-Ereignisprotokoll eingegeben werden (Standardwert)."
+        "ToolTip": "Deaktivieren Sie die Protokollierung für alle PowerShell-Skripte, die in das Windows PowerShell-Ereignisprotokoll eingegeben werden (Standardwert)."
       }
     }
   },
@@ -1643,25 +1637,11 @@
     "Arg": {
       "Zero": {
         "Tag": "Disable",
-        "ToolTip": "Deaktiviert den \"Attachment Manager\", der Dateien, die aus dem Internet heruntergeladen wurden, als unsicher markiert."
+        "ToolTip": "Deaktivieren Sie den Anhang-Manager, der aus dem Internet heruntergeladene Dateien als unsicher markiert.."
       },
       "One": {
         "Tag": "Enable",
-        "ToolTip": "Aktiviert den \"Attachment Manager\", der Dateien, die aus dem Internet heruntergeladen wurden, als unsicher markiert (Standardwert."
-      }
-    }
-  },
-  {
-    "Region": "Microsoft Defender & Security",
-    "Function": "WindowsScriptHost",
-    "Arg": {
-      "Zero": {
-        "Tag": "Disable",
-        "ToolTip": "Windows Script Host deaktivieren. Sperrt WSH für die Ausführung von .js und .vbs Dateien."
-      },
-      "One": {
-        "Tag": "Enable",
-        "ToolTip": "Windows Script Host aktivieren (Standardwert)."
+        "ToolTip": "Aktivieren Sie den Anhang-Manager, der aus dem Internet heruntergeladene Dateien als unsicher markiert (Standardwert)."
       }
     }
   },
@@ -1684,12 +1664,32 @@
     "Function": "DNSoverHTTPS",
     "Arg": {
       "Zero": {
-        "Tag": "Enable",
-        "ToolTip": "Aktiviert DNS-over-HTTPS für IPv4. Gültige IPv4-Adressen: 1.0.0.1, 1.1.1.1, 149.112.112.112, 8.8.4.4, 8.8.8.8, 9.9.9.91."
+        "Tag": "Cloudflare",
+        "ToolTip": "Richten Sie DNS von Cloudflare mithilfe von DNS-over-HTTPS ein."
       },
       "One": {
+        "Tag": "Google",
+        "ToolTip": "Richten Sie DNS von Google Public DNS mithilfe von DNS-over-HTTPS ein."
+      },
+      "Two": {
+        "Tag": "Quad9",
+        "ToolTip": "Richten Sie DNS von Quad9 mithilfe von DNS-over-HTTPS ein."
+      },
+      "Three": {
+        "Tag": "ComssOne",
+        "ToolTip": "Richten Sie DNS von ComssOne mithilfe von DNS-over-HTTPS ein."
+      },
+      "Four": {
+        "Tag": "AdGuard",
+        "ToolTip": "Richten Sie DNS von AdGuard mithilfe von DNS-over-HTTPS ein."
+      },
+      "Five": {
+        "Tag": "OpenDNS",
+        "ToolTip": "Richten Sie DNS von OpenDNS mithilfe von DNS-over-HTTPS ein."
+      },
+      "Six": {
         "Tag": "Disable",
-        "ToolTip": "Deaktiviert DNS-over-HTTPS für IPv4 (Standardwert)."
+        "ToolTip": "Standard-DNS-Einträge des Internetdienstanbieters festlegen (Standardwert)."
       }
     }
   },
@@ -1838,12 +1838,12 @@
     "Function": "OpenWindowsTerminalContext",
     "Arg": {
       "Zero": {
-        "Tag": "Hide",
-        "ToolTip": "Menüoption \"In Windows Terminal öffnen\" im Kontextmenü von Ordnern ausblenden."
+        "Tag": "Show",
+        "ToolTip": "Zeigen Sie den Eintrag \"In Windows Terminal öffnen\" im Kontextmenü des Ordners an (Standardwert)."
       },
       "One": {
-        "Tag": "Show",
-        "ToolTip": "Menüoption \"In Windows Terminal öffnen\" im Kontextmenü der Ordner anzeigen (Standardwert)."
+        "Tag": "Hide",
+        "ToolTip": "Das Element \"In Windows Terminal öffnen\" im Kontextmenü der Ordner ausblenden."
       }
     }
   },

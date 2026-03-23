@@ -1,6 +1,6 @@
 [
   {
-    "Region": "Protection",
+    "Region": "Initial Actions",
     "Function": "InitialActions",
     "Arg": {
       "Zero": {
@@ -244,34 +244,6 @@
     }
   },
   {
-    "Region": "Privacy & Telemetry",
-    "Function": "StartRecommendationsTips",
-    "Arg": {
-      "Zero": {
-        "Tag": "Hide",
-        "ToolTip": "Do not show recommendations for tips, shortcuts, new apps, and more in the Start menu."
-      },
-      "One": {
-        "Tag": "Show",
-        "ToolTip": "Show recommendations for tips, shortcuts, new apps, and more in the Start menu (default value)."
-      }
-    }
-  },
-  {
-    "Region": "Privacy & Telemetry",
-    "Function": "StartAccountNotifications",
-    "Arg": {
-      "Zero": {
-        "Tag": "Hide",
-        "ToolTip": "Do not show Microsoft account-related notifications on Start Menu in the Start menu."
-      },
-      "One": {
-        "Tag": "Show",
-        "ToolTip": "Show Microsoft account-related notifications on Start Menu in the Start menu (default value)."
-      }
-    }
-  },
-  {
     "Region": "UI & Personalization",
     "Function": "ThisPC",
     "Arg": {
@@ -375,7 +347,7 @@
     "Arg": {
       "Zero": {
         "Tag": "Hide",
-        "ToolTip": "Do not show sync provider notification within File Explorer."
+        "ToolTip": "Hide sync provider notification within File Explorer."
       },
       "One": {
         "Tag": "Show",
@@ -579,25 +551,6 @@
   },
   {
     "Region": "UI & Personalization",
-    "Function": "UnpinTaskbarShortcuts -Shortcuts",
-    "ToolTip": "Unpin Microsoft Edge, Microsoft Store, and Outlook shortcuts from the taskbar.",
-    "Arg": {
-      "Zero": {
-        "Tag": "Edge",
-        "ToolTip": "Unpin Microsoft Edge shortcut from the taskbar."
-      },
-      "One": {
-        "Tag": "Store",
-        "ToolTip": "Unpin Microsoft Store shortcut from the taskbar."
-      },
-      "Two": {
-        "Tag": "Outlook",
-        "ToolTip": "Unpin Outlook shortcut from the taskbar."
-      }
-    }
-  },
-  {
-    "Region": "UI & Personalization",
     "Function": "TaskbarEndTask",
     "Arg": {
       "Zero": {
@@ -788,15 +741,89 @@
   },
   {
     "Region": "UI & Personalization",
+    "Function": "RecentlyAddedStartApps",
+    "Arg": {
+      "Zero": {
+        "Tag": "Hide",
+        "ToolTip": "Hide recently added apps in Start."
+      },
+      "One": {
+        "Tag": "Show",
+        "ToolTip": "Show recently added apps in Start (default value)."
+      }
+    }
+  },
+  {
+    "Region": "UI & Personalization",
+    "Function": "MostUsedStartApps",
+    "Arg": {
+      "Zero": {
+        "Tag": "Hide",
+        "ToolTip": "Hide most used apps in Start (default value)."
+      },
+      "One": {
+        "Tag": "Show",
+        "ToolTip": "Show most used Apps in Start."
+      }
+    }
+  },
+  {
+    "Region": "UI & Personalization",
     "Function": "StartRecommendedSection",
     "Arg": {
       "Zero": {
         "Tag": "Hide",
-        "ToolTip": "Remove Recommended section in Start Menu. Not applicable to Home edition."
+        "ToolTip": "Remove Recommended section in Start."
       },
       "One": {
         "Tag": "Show",
-        "ToolTip": "Show Recommended section in Start Menu (default value). Not applicable to Home edition."
+        "ToolTip": "Show Recommended section in Start (default value)."
+      }
+    }
+  },
+  {
+    "Region": "UI & Personalization",
+    "Function": "StartRecommendationsTips",
+    "Arg": {
+      "Zero": {
+        "Tag": "Hide",
+        "ToolTip": "Hide recommendations for tips, shortcuts, new apps, and more in Start."
+      },
+      "One": {
+        "Tag": "Show",
+        "ToolTip": "Show recommendations for tips, shortcuts, new apps, and more in Start (default value)."
+      }
+    }
+  },
+  {
+    "Region": "UI & Personalization",
+    "Function": "StartAccountNotifications",
+    "Arg": {
+      "Zero": {
+        "Tag": "Hide",
+        "ToolTip": "Hide Microsoft account-related notifications on Start."
+      },
+      "One": {
+        "Tag": "Show",
+        "ToolTip": "Show Microsoft account-related notifications on Start (default value)."
+      }
+    }
+  },
+  {
+    "Region": "UI & Personalization",
+    "Function": "StartLayout",
+    "Arg": {
+      "Zero": {
+        "Tag": "Default",
+        "ToolTip": "Show default Start layout (default value)."
+      },
+      "One": {
+        "Tag": "ShowMorePins",
+        "ToolTip": "Show more pins on Start."
+      },
+      "Two": {
+        "Tag": "ShowMoreRecommendations",
+        "ToolTip": "Show more recommendations on Start."
       }
     }
   },
@@ -820,7 +847,7 @@
     "Arg": {
       "Zero": {
         "Tag": "",
-        "ToolTip": "Install OneDrive all users to %ProgramFiles% depending which installer is triggered. Internet connection required."
+        "ToolTip": "Install OneDrive all users to %ProgramFiles%. Internet connection required."
       }
     }
   },
@@ -854,7 +881,7 @@
   },
   {
     "Region": "System",
-    "Function": "Win32LongPathSupport",
+    "Function": "Win32LongPathsSupport",
     "Arg": {
       "Zero": {
         "Tag": "Enable",
@@ -1068,29 +1095,15 @@
     "Arg": {
       "Zero": {
         "Tag": "Root",
-        "ToolTip": "Change user folders location to the root of any drive using the interactive menu. User files or folders won't be moved to a new location. Move them manually. They're located in the %USERPROFILE% folder by default."
+        "ToolTip": "Change location of user folders to the root of any drive using the interactive menu. User files or folders won't be moved to a new location."
       },
       "One": {
         "Tag": "Custom",
-        "ToolTip": "Select folders for user folders location manually using a folder browser dialog. User files or folders won't be moved to a new location. Move them manually. They're located in the %USERPROFILE% folder by default."
+        "ToolTip": "Select location of user folders manually using a folder browser dialog. User files or folders won't be moved to a new location."
       },
       "Two": {
         "Tag": "Default",
-        "ToolTip": "Change user folders location to the default values. User files or folders won't be moved to a new location. Move them manually. They're located in the %USERPROFILE% folder by default (default value)."
-      }
-    }
-  },
-  {
-    "Region": "System",
-    "Function": "LatestInstalled.NET",
-    "Arg": {
-      "Zero": {
-        "Tag": "Enable",
-        "ToolTip": "Use .NET Framework 4.8.1 for old apps."
-      },
-      "One": {
-        "Tag": "Disable",
-        "ToolTip": "Do not use .NET Framework 4.8.1 for old apps (default value)."
+        "ToolTip": "Change user folders location to default values. User files or folders won't be moved to the new location (default value)."
       }
     }
   },
@@ -1184,11 +1197,11 @@
     "Arg": {
       "Zero": {
         "Tag": "Disable",
-        "ToolTip": "Turn off pressing the Shift key 5 times to turn Sticky keys."
+        "ToolTip": "Do not allow the shortcut key to Start Sticky Keys when pressing the the Shift key 5 times."
       },
       "One": {
         "Tag": "Enable",
-        "ToolTip": "Turn on pressing the Shift key 5 times to turn Sticky keys (default value)."
+        "ToolTip": "Allow the shortcut key to Start Sticky Keys when pressing the the Shift key 5 times (default value)."
       }
     }
   },
@@ -1318,7 +1331,7 @@
   {
     "Region": "System",
     "Function": "Install-VCRedist",
-    "ToolTip": "Install the latest Microsoft Visual C++ Redistributable Packages 2015–2022 (ARM64)",
+    "ToolTip": "Install the latest Microsoft Visual C++ Redistributable Packages 2017–2026 (ARM64)",
     "Arg": {
       "Zero": {
         "Tag": "",
@@ -1329,29 +1342,19 @@
   {
     "Region": "System",
     "Function": "Install-DotNetRuntimes -Runtimes",
-    "ToolTip": "Install the latest .NET Runtime 8, 9. Internet connection required",
+    "ToolTip": "Install the latest .NET Desktop Runtime 8, 9, 10 (ARM64). Internet connection required.",
     "Arg": {
       "Zero": {
         "Tag": "NET8",
-        "ToolTip": ".NET Runtime 8. Internet connection required."
+        "ToolTip": ".NET Desktop Runtime 8. Internet connection required."
       },
       "One": {
         "Tag": "NET9",
-        "ToolTip": ".NET Runtime 9. Internet connection required."
-      }
-    }
-  },
-  {
-    "Region": "System",
-    "Function": "RKNBypass",
-    "Arg": {
-      "Zero": {
-        "Tag": "Enable",
-        "ToolTip": "Enable proxying only blocked sites from the unified registry of Roskomnadzor. The function is applicable for Russia only."
+        "ToolTip": ".NET Desktop Runtime 9. Internet connection required."
       },
-      "One": {
-        "Tag": "Disable",
-        "ToolTip": "Disable proxying only blocked sites from the unified registry of Roskomnadzor (default value)."
+      "Two": {
+        "Tag": "NET10",
+        "ToolTip": ".NET Desktop Runtime 10. Internet connection required."
       }
     }
   },
@@ -1384,6 +1387,20 @@
     }
   },
   {
+    "Region": "System",
+    "Function": "WindowsAI",
+    "Arg": {
+      "Zero": {
+        "Tag": "Disable",
+        "ToolTip": "Disable Windows AI functions."
+      },
+      "One": {
+        "Tag": "Enable",
+        "ToolTip": "Enable Windows AI functions (default value)."
+      }
+    }
+  },
+  {
     "Region": "WSL",
     "Function": "Install-WSL",
     "Arg": {
@@ -1394,26 +1411,8 @@
     }
   },
   {
-    "Region": "Start menu",
-    "Function": "StartLayout",
-    "Arg": {
-      "Zero": {
-        "Tag": "Default",
-        "ToolTip": "Show default Start layout (default value)."
-      },
-      "One": {
-        "Tag": "ShowMorePins",
-        "ToolTip": "Show more pins on Start."
-      },
-      "Two": {
-        "Tag": "ShowMoreRecommendations",
-        "ToolTip": "Show more recommendations on Start."
-      }
-    }
-  },
-  {
     "Region": "UWP apps",
-    "Function": "UninstallUWPApps",
+    "Function": "Uninstall-UWPApps",
     "Arg": {
       "Zero": {
         "Tag": "",
@@ -1423,7 +1422,7 @@
   },
   {
     "Region": "UWP apps",
-    "Function": "UninstallUWPApps -ForAllUsers",
+    "Function": "Uninstall-UWPApps -ForAllUsers",
     "Arg": {
       "Zero": {
         "Tag": "",
@@ -1559,26 +1558,6 @@
   },
   {
     "Region": "Microsoft Defender & Security",
-    "Function": "DismissMSAccount",
-    "Arg": {
-      "Zero": {
-        "Tag": "",
-        "ToolTip": "Dismiss Microsoft Defender offer in the Windows Security about signing in Microsoft account."
-      }
-    }
-  },
-  {
-    "Region": "Microsoft Defender & Security",
-    "Function": "DismissSmartScreenFilter",
-    "Arg": {
-      "Zero": {
-        "Tag": "",
-        "ToolTip": "Dismiss Microsoft Defender offer in the Windows Security about turning on the SmartScreen filter for Microsoft Edge."
-      }
-    }
-  },
-  {
-    "Region": "Microsoft Defender & Security",
     "Function": "EventViewerCustomView",
     "Arg": {
       "Zero": {
@@ -1649,20 +1628,6 @@
   },
   {
     "Region": "Microsoft Defender & Security",
-    "Function": "WindowsScriptHost",
-    "Arg": {
-      "Zero": {
-        "Tag": "Disable",
-        "ToolTip": "Disable Windows Script Host. Blocks WSH from executing .js and .vbs files."
-      },
-      "One": {
-        "Tag": "Enable",
-        "ToolTip": "Enable Windows Script Host (default value)."
-      }
-    }
-  },
-  {
-    "Region": "Microsoft Defender & Security",
     "Function": "WindowsSandbox",
     "Arg": {
       "Zero": {
@@ -1680,12 +1645,32 @@
     "Function": "DNSoverHTTPS",
     "Arg": {
       "Zero": {
-        "Tag": "Enable",
-        "ToolTip": "Enable DNS-over-HTTPS for IPv4. The valid IPv4 addresses: 1.0.0.1, 1.1.1.1, 149.112.112.112, 8.8.4.4, 8.8.8.8, 9.9.9.9."
+        "Tag": "Cloudflare",
+        "ToolTip": "Set up DNS from Cloudflare using DNS-over-HTTPS."
       },
       "One": {
+        "Tag": "Google",
+        "ToolTip": "Set up DNS from Google Public DNS using DNS-over-HTTPS."
+      },
+      "Two": {
+        "Tag": "Quad9",
+        "ToolTip": "Set up DNS from Quad9 using DNS-over-HTTPS."
+      },
+      "Three": {
+        "Tag": "ComssOne",
+        "ToolTip": "Set up DNS from ComssOne using DNS-over-HTTPS."
+      },
+      "Four": {
+        "Tag": "AdGuard",
+        "ToolTip": "Set up DNS from AdGuard using DNS-over-HTTPS."
+      },
+      "Five": {
+        "Tag": "OpenDNS",
+        "ToolTip": "Set up DNS from OpenDNS using DNS-over-HTTPS."
+      },
+      "Six": {
         "Tag": "Disable",
-        "ToolTip": "Disable DNS-over-HTTPS for IPv4 (default value)."
+        "ToolTip": "Set default ISP's DNS records (default value)."
       }
     }
   },
@@ -1834,12 +1819,12 @@
     "Function": "OpenWindowsTerminalContext",
     "Arg": {
       "Zero": {
-        "Tag": "Hide",
-        "ToolTip": "Hide the \"Open in Windows Terminal\" item in the folders context menu."
+        "Tag": "Show",
+        "ToolTip": "Show the \"Open in Windows Terminal\" item in the folders context menu."
       },
       "One": {
-        "Tag": "Show",
-        "ToolTip": "Show the \"Open in Windows Terminal\" item in the folders context menu (default value)."
+        "Tag": "Hide",
+        "ToolTip": "Hide the \"Open in Windows Terminal\" item in the folders context menu (default value)."
       }
     }
   },

@@ -1,6 +1,7 @@
 name: Badge Lines
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - master
@@ -18,10 +19,10 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@main
 
-      - name: Get Sophia_Script_for_Windows_11 folder lines number
+      - name: Get src folder lines number
         run: |
           $Summary = 0
-          Get-ChildItem -Path src\Sophia_Script_for_Windows_11 -File -Recurse | ForEach-Object -Process {
+          Get-ChildItem -Path src -File -Recurse | ForEach-Object -Process {
               $Summary += ((Get-Content -Path $_.FullName).Count | Measure-Object -Sum).Sum
           }
           $Summary = "{0:N1}k" -f ($Summary/1000)
@@ -31,12 +32,37 @@ jobs:
           echo "CODE_LINES=$Summary" >> $env:GITHUB_ENV
 
       - name: Writing to Gist
-        uses: schneegans/dynamic-badges-action@master
-        with:
-          auth: ${{ secrets.GIST_SophiaScript }}
-          gistID: 9852d6b9569a91bf69ceba8a94cc97f4
-          filename: SophiaScript.json
-          label: Lines of Code
-          message: ${{ env.CODE_LINES }}
-          namedLogo: PowerShell
-          color: brightgreen
+        env:
+          GIST_TOKEN: ${{ secrets.GIST_SophiaScript_Lines }}
+        shell: pwsh
+        run: |
+          # https://gist.github.com/farag2/9852d6b9569a91bf69ceba8a94cc97f4
+
+          $GistContent = @{
+            schemaVersion = 1
+            label         = "Lines of Code"
+            message       = $env:CODE_LINES
+            color         = "brightgreen"
+            namedLogo     = "PowerShell"
+          } | ConvertTo-Json
+
+          $Body = @{
+            files = @{
+              "SophiaScript.json" = @{
+                content = $GistContent
+              }
+            }
+          } | ConvertTo-Json
+          $Headers = @{
+            Authorization = "Bearer $env:GIST_TOKEN"
+            Accept        = "application/vnd.github+json"
+          }
+          $Parameters = @{
+              Uri             = "https://api.github.com/gists/9852d6b9569a91bf69ceba8a94cc97f4"
+              Method          = "Patch"
+              Body            = $Body
+              Headers         = $Headers
+              UseBasicParsing = $true
+              Verbose         = $true
+          }
+          Invoke-RestMethod @Parameters

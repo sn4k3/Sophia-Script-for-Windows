@@ -15,35 +15,35 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@main
 
-        with:
-          ref: refs/heads/master
-          fetch-depth: 0
+      - name: Run Lint
+        run: |
+          . "Scripts\Lint.ps1"
 
-      - name: Dependencies
+      - name: Download Dependencies
         run: |
           . "Scripts\Dependencies.ps1"
 
-      - name: Sophia Script for Windows 10
+      - name: Windows 10
         run: |
           . "Scripts\Windows_10.ps1"
 
-      - name: Sophia Script for Windows 10 PowerShell 7
+      - name: Windows 10 PowerShell 7
         run: |
           . "Scripts\Windows_10_PS_7.ps1"
 
-      - name: Sophia Script for Windows 10 LTSC 2019
+      - name: Windows 10 LTSC 2019
         run: |
           . "Scripts\Windows_10_LTSC_2019.ps1"
 
-      - name: Sophia Script for Windows 10 LTSC 2021
+      - name: Windows 10 LTSC 2021
         run: |
           . "Scripts\Windows_10_LTSC_2021.ps1"
 
-      - name: Sophia Script for Windows 11
+      - name: Windows 11
         run: |
           . "Scripts\Windows_11.ps1"
 
-      - name: Sophia Script for Windows 11 PowerShell 7
+      - name: Windows 11 PowerShell 7
         run: |
           . "Scripts\Windows_11_PS_7.ps1"
 
@@ -51,11 +51,11 @@ jobs:
         run: |
           . "Scripts\Windows_11_Arm.ps1"
 
-      - name: Sophia Script for Windows 11 Arm PowerShell 7
+      - name: Windows 11 Arm PowerShell 7
         run: |
           . "Scripts\Windows_11_Arm_PS_7.ps1"
 
-      - name: Sophia Script for Windows 11 LTSC 2024
+      - name: Windows 11 LTSC 2024
         run: |
           . "Scripts\Windows_11_LTSC_2024.ps1"
 
@@ -63,7 +63,23 @@ jobs:
         run: |
           . "Scripts\Wrapper.ps1"
 
-      - name: ReleaseNotesTemplate
+      - name: Create SFX Archive
+        run: |
+          . "Scripts\WinGet_SFX.ps1"
+
+      - name: Defender Scan
+        run: |
+          # Get Defender path
+          $DefenderPath = (Get-ChildItem -Path "$env:ProgramData\Microsoft\Windows Defender\Platform" -Directory | Sort-Object Name -Descending | Select-Object -First 1).FullName
+          # Update Defender definitions
+          & "$DefenderPath\MpCmdRun.exe" -SignatureUpdate -Verbose
+          # Start scan
+          # We need to use absolute path
+          & "$DefenderPath\MpCmdRun.exe" -Scan -ScanType 3 -DisableRemediation -File $((Get-Item -Path Sophia_Script).FullName) | ForEach-Object {Write-Verbose -Message $_ -Verbose}
+
+          Get-Content -Path $env:TEMP\MpCmdRun.log
+
+      - name: Release Notes Template
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # Set $env:GITHUB_REF_NAME variable to use in ps1 file instead of ${{ github.ref_name }}
@@ -72,25 +88,6 @@ jobs:
         run: |
           . "Scripts\ReleaseNotesTemplate.ps1"
 
-      - name: Adding SHA256SUM.json
-        run: |
-          $JSON = @{}
-          Get-ChildItem -Path . -File | Where-Object -FilterScript {$_.Name -match "zip|exe"} | ForEach-Object -Process {
-            Write-Verbose -Message "$($_.Name) has $((Get-FileHash -LiteralPath $_.FullName -Algorithm SHA256).Hash) hashsum" -Verbose
-
-            $JSON += @{
-              "$($_.Name)" = "$((Get-FileHash -LiteralPath $_.FullName -Algorithm SHA256).Hash)"
-            }
-          }
-          $JSON | ConvertTo-Json | Set-Content -Path SHA256SUM.json -Encoding utf8 -Force
-
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "actions@github.com"
-          git add SHA256SUM.json
-          git commit -m "Update from ${{ github.ref_name }}"
-          # repository and branch to push to
-          git push origin HEAD:refs/heads/master
-
       - name: Uploading
         uses: softprops/action-gh-release@master
         with:
@@ -98,6 +95,6 @@ jobs:
           token: ${{ github.token }}
           # Use "/" in path to files
           files: |
-            Sophia*.zip
-            chocolatey/tools/chocolateyinstall.ps1
+            Sophia_Script/Sophia*.zip
+            Sophia_Script/Sophia*.exe
           body_path: ${{ steps.read_release.outputs.ReleaseBody }}

@@ -1,6 +1,6 @@
 [
   {
-    "Region": "Protection",
+    "Region": "Initial Actions",
     "Function": "InitialActions",
     "Arg": {
       "Zero": {
@@ -240,20 +240,6 @@
       "One": {
         "Tag": "Enable",
         "ToolTip": "Aktiviert die Bing-Suche im Startmenü (Standardwert)."
-      }
-    }
-  },
-  {
-    "Region": "Privacy & Telemetry",
-    "Function": "StartAccountNotifications",
-    "Arg": {
-      "Zero": {
-        "Tag": "Hide",
-        "ToolTip": "Keine Microsoft-Konto-Benachrichtigungen im Startmenü im Startmenü anzeigen."
-      },
-      "One": {
-        "Tag": "Show",
-        "ToolTip": "Anzeigen von Microsoft-Konto-Benachrichtigungen im Startmenü im Startmenü (Standardwert)."
       }
     }
   },
@@ -802,11 +788,92 @@
     "Arg": {
       "Zero": {
         "Tag": "Disable",
-        "ToolTip": "Den Navigatiosbereich des Explorers (Linker Abschnitt) nicht auf den aktuellen Ordner erweitern (Standardwert)."
+        "ToolTip": "Nicht erweitern, um Ordner im Navigationsbereich zu öffnen (Standardwert)."
       },
       "One": {
         "Tag": "Enable",
-        "ToolTip": "Der Navigationsbereich des Explorers (Linker Abschnitt) wird auf den aktuellen Ordner erweitert (aufgeklappt)."
+        "ToolTip": "Erweitern, um Ordner im Navigationsbereich zu öffnen."
+      }
+    }
+  },
+  {
+    "Region": "UI & Personalization",
+    "Function": "RecentlyAddedStartApps",
+    "Arg": {
+      "Zero": {
+        "Tag": "Hide",
+        "ToolTip": "Zuletzt hinzugefügte Anwendungen im Startmenü ausblenden."
+      },
+      "One": {
+        "Tag": "Show",
+        "ToolTip": "Zuletzt hinzugefügte Anwendungen im Startmenü anzeigen (Standardwert)."
+      }
+    }
+  },
+  {
+    "Region": "UI & Personalization",
+    "Function": "MostUsedStartApps",
+    "Arg": {
+      "Zero": {
+        "Tag": "Hide",
+        "ToolTip": "Die am häufigsten verwendeten Apps im Startmenü ausblenden (Standardwert)."
+      },
+      "One": {
+        "Tag": "Show",
+        "ToolTip": "Die am häufigsten verwendeten Apps in Start anzeigen."
+      }
+    }
+  },
+  {
+    "Region": "UI & Personalization",
+    "Function": "StartAccountNotifications",
+    "Arg": {
+      "Zero": {
+        "Tag": "Hide",
+        "ToolTip": "Zeige keine Benachrichtigungen zu Microsoft-Konten auf Start an."
+      },
+      "One": {
+        "Tag": "Show",
+        "ToolTip": "Benachrichtigungen zum Microsoft-Konto auf Start anzeigen (Standardwert)."
+      }
+    }
+  },
+  {
+    "Region": "UI & Personalization",
+    "Function": "AppSuggestions",
+    "Arg": {
+      "Zero": {
+        "Tag": "Hide",
+        "ToolTip": "Anwendungsvorschläge im Startmenü ausblenden."
+      },
+      "One": {
+        "Tag": "Show",
+        "ToolTip": "Anwendungsvorschläge im Startmenü anzeigen (Standardwert)."
+      }
+    }
+  },
+  {
+    "Region": "UI & Personalization",
+    "Function": "PinToStart -Tiles",
+    "ToolTip": "Folgende Verknüpfungen: Systemsteuerung, Geräte und Drucker an das Startmenü anheften.",
+    "Arg": {
+      "Zero": {
+        "Tag": "ControlPanel",
+        "ToolTip": "Die Verknüpfung \"Systemsteuerung\" an Start anheften."
+      },
+      "One": {
+        "Tag": "DevicesPrinters",
+        "ToolTip": "Die Verknüpfung \"Geräte & Drucker\" an Start anheften."
+      }
+    }
+  },
+  {
+    "Region": "UI & Personalization",
+    "Function": "PinToStart -UnpinAll",
+    "Arg": {
+      "Zero": {
+        "Tag": "",
+        "ToolTip": "Alle Start-Kacheln abheften."
       }
     }
   },
@@ -878,7 +945,7 @@
   },
   {
     "Region": "System",
-    "Function": "Win32LongPathSupport",
+    "Function": "Win32LongPathsSupport",
     "Arg": {
       "Zero": {
         "Tag": "Enable",
@@ -1106,20 +1173,6 @@
   },
   {
     "Region": "System",
-    "Function": "LatestInstalled.NET",
-    "Arg": {
-      "Zero": {
-        "Tag": "Enable",
-        "ToolTip": "Verwenden Sie die neueste installierte .NET-Laufzeitumgebung für alle Anwendungen."
-      },
-      "One": {
-        "Tag": "Disable",
-        "ToolTip": "Die zuletzt installierte .NET-Laufzeitumgebung nicht für alle Anwendungen verwenden (Standardwert)."
-      }
-    }
-  },
-  {
-    "Region": "System",
     "Function": "WinPrtScrFolder",
     "Arg": {
       "Zero": {
@@ -1289,22 +1342,19 @@
   {
     "Region": "System",
     "Function": "Set-Association",
+    "ToolTip": "App registrieren, Hash berechnen und mit einer Erweiterung verknüpfen, wobei das Popup-Fenster 'Wie möchten Sie dies öffnen?' ausgeblendet ist.",
     "Arg": {
       "Zero": {
-        "Tag": "",
-        "ToolTip": "Registrieren Sie die App, berechnen Sie den Hash und verknüpfen Sie sie mit einer Erweiterung, wobei das Popup 'Wie möchten Sie diese öffnen?' ausgeblendet ist."
-      },
-      "One": {
         "Tag": "ProgramPath",
         "ToolTip": "Pfad zur ausführbaren Datei."
       },
-      "Two": {
+      "One": {
         "Tag": "Extension",
         "ToolTip": "Erweiterung."
       },
-      "Three": {
+      "Two": {
         "Tag": "Icon",
-        "ToolTip": "Pfad zum Symbol."
+        "ToolTip": "Pfad zur Ikone."
       }
     }
   },
@@ -1330,7 +1380,7 @@
   },
   {
     "Region": "System",
-    "Function": "UninstallPCHealthCheck",
+    "Function": "Uninstall-PCHealthCheck",
     "Arg": {
       "Zero": {
         "Tag": "Block",
@@ -1340,45 +1390,31 @@
   },
   {
     "Region": "System",
-    "Function": "Install-VCRedist -Redistributables",
-    "ToolTip": "Installieren Sie die neueste Microsoft Visual C++ Redistributable Packages x86, x64",
+    "Function": "Install-VCRedist",
+    "ToolTip": "Installieren Sie die neueste Microsoft Visual C++ Redistributable Packages 2017–2026 (x86/x64)",
     "Arg": {
       "Zero": {
-        "Tag": "2015_2022_x86",
-        "ToolTip": "Installieren Sie die neueste unterstützte Microsoft Visual C++ Redistributable 2015–2022 x86. Internetverbindung erforderlich."
-      },
-      "One": {
-        "Tag": "2015_2022_x64",
-        "ToolTip": "Installieren Sie die neueste unterstützte Microsoft Visual C++ Redistributable 2015–2022 x64. Internetverbindung erforderlich."
+        "Tag": "",
+        "ToolTip": "Internetverbindung erforderlich."
       }
     }
   },
   {
     "Region": "System",
     "Function": "Install-DotNetRuntimes -Runtimes",
-    "ToolTip": "Installieren Sie die neueste .NET Runtime 8, 9.",
+    "ToolTip": "Installieren Sie die neueste .NET Desktop Runtime 8, 9, 10 x64.",
     "Arg": {
       "Zero": {
         "Tag": "NET8",
-        "ToolTip": ".NET Runtime 8. Internetverbindung erforderlich."
+        "ToolTip": ".NET Desktop Runtime 8. Internetverbindung erforderlich."
       },
       "One": {
         "Tag": "NET9",
-        "ToolTip": ".NET Runtime 9. Internetverbindung erforderlich."
-      }
-    }
-  },
-  {
-    "Region": "System",
-    "Function": "RKNBypass",
-    "Arg": {
-      "Zero": {
-        "Tag": "Enable",
-        "ToolTip": "Aktivieren Sie das Proxying nur für gesperrte Websites aus der einheitlichen Registrierung von Roskomnadzor. Die Funktion ist nur für Russland anwendbar."
+        "ToolTip": ".NET Desktop Runtime 9. Internetverbindung erforderlich."
       },
-      "One": {
-        "Tag": "Disable",
-        "ToolTip": "Deaktivieren Sie das Proxying nur für gesperrte Websites aus dem einheitlichen Register von Roskomnadzor (Standardwert)."
+      "Two": {
+        "Tag": "NET10",
+        "ToolTip": ".NET Desktop Runtime 10. Internetverbindung erforderlich."
       }
     }
   },
@@ -1421,65 +1457,8 @@
     }
   },
   {
-    "Region": "Start menu",
-    "Function": "RecentlyAddedApps",
-    "Arg": {
-      "Zero": {
-        "Tag": "Hide",
-        "ToolTip": "Zuletzt hinzugefügte Anwendungen im Startmenü ausblenden."
-      },
-      "One": {
-        "Tag": "Show",
-        "ToolTip": "Zuletzt hinzugefügte Anwendungen im Startmenü anzeigen (Standardwert)."
-      }
-    }
-  },
-  {
-    "Region": "Start menu",
-    "Function": "AppSuggestions",
-    "Arg": {
-      "Zero": {
-        "Tag": "Hide",
-        "ToolTip": "Anwendungsvorschläge im Startmenü ausblenden."
-      },
-      "One": {
-        "Tag": "Show",
-        "ToolTip": "Anwendungsvorschläge im Startmenü anzeigen (Standardwert)."
-      }
-    }
-  },
-  {
-    "Region": "Start menu",
-    "Function": "PinToStart -Tiles",
-    "ToolTip": "Folgende Verknüpfungen: Systemsteuerung, Geräte und Drucker, PowerShell an das Startmenü anheften.",
-    "Arg": {
-      "Zero": {
-        "Tag": "ControlPanel",
-        "ToolTip": "Die Verknüpfung \"Systemsteuerung\" an Start anheften."
-      },
-      "One": {
-        "Tag": "DevicesPrinters",
-        "ToolTip": "Die Verknüpfung \"Geräte & Drucker\" an Start anheften."
-      },
-      "Two": {
-        "Tag": "PowerShell",
-        "ToolTip": "Die Verknüpfung \"Windows PowerShell\" an Start anheften"
-      }
-    }
-  },
-  {
-    "Region": "Start menu",
-    "Function": "PinToStart -UnpinAll",
-    "Arg": {
-      "Zero": {
-        "Tag": "",
-        "ToolTip": "Alle Start-Kacheln abheften."
-      }
-    }
-  },
-  {
     "Region": "UWP apps",
-    "Function": "UninstallUWPApps",
+    "Function": "Uninstall-UWPApps",
     "Arg": {
       "Zero": {
         "Tag": "",
@@ -1489,7 +1468,7 @@
   },
   {
     "Region": "UWP apps",
-    "Function": "UninstallUWPApps -ForAllUsers",
+    "Function": "Uninstall-UWPApps -ForAllUsers",
     "Arg": {
       "Zero": {
         "Tag": "",
@@ -1499,14 +1478,10 @@
   },
   {
     "Region": "UWP apps",
-    "Function": "HEVC",
+    "Function": "Install-HEVC",
     "Arg": {
       "Zero": {
-        "Tag": "Manually",
-        "ToolTip": "Öffnet die Seite Microsoft Store \"HEVC Video Extensions from Device Manufacturer\", um diese Erweiterung manuell zu installieren und die Bildformate .heic und .heif öffnen zu können. Die Erweiterung kann ohne ein Microsoft-Konto installiert werden."
-      },
-      "One": {
-        "Tag": "Install",
+        "Tag": "",
         "ToolTip": "Lädt die \"HEVC Video Extensions from Device Manufacturer\" herunter und installiert es, um die Formate .heic und .heif öffnen zu können."
       }
     }
@@ -1629,11 +1604,11 @@
     "Arg": {
       "Zero": {
         "Tag": "Enable",
-        "ToolTip": "Aktiviert den Microsoft Defender Exploit Guard Netzwerkschutz."
+        "ToolTip": "Aktivieren Sie den Netzwerkschutz von Microsoft Defender Exploit Guard."
       },
       "One": {
         "Tag": "Disable",
-        "ToolTip": "Deaktiviert den Microsoft Defender Exploit Guard-Netzwerkschutz (Standardwert)."
+        "ToolTip": "Deaktivieren Sie den Netzwerkschutz von Microsoft Defender Exploit Guard (Standardwert)."
       }
     }
   },
@@ -1643,7 +1618,7 @@
     "Arg": {
       "Zero": {
         "Tag": "Enable",
-        "ToolTip": "Erkennung von potenziell unerwünschten Anwendungen aktivieren und diese blockieren."
+        "ToolTip": "Aktivieren Sie die Erkennung potenziell unerwünschter Anwendungen und blockieren Sie diese."
       },
       "One": {
         "Tag": "Disable",
@@ -1662,26 +1637,6 @@
       "One": {
         "Tag": "Disable",
         "ToolTip": "Sandboxing für Microsoft Defender deaktivieren (Standardwert)."
-      }
-    }
-  },
-  {
-    "Region": "Microsoft Defender & Security",
-    "Function": "DismissMSAccount",
-    "Arg": {
-      "Zero": {
-        "Tag": "",
-        "ToolTip": "Das Angebot von Microsoft Defender ablehnen, sich bei Ihrem Microsoft-Konto anzumelden."
-      }
-    }
-  },
-  {
-    "Region": "Microsoft Defender & Security",
-    "Function": "DismissSmartScreenFilter",
-    "Arg": {
-      "Zero": {
-        "Tag": "",
-        "ToolTip": "Ablehnen des Vorschlags von Microsoft Defender in \"Windows Security\", den SmartScreen-Filter für Microsoft Edge zu aktivieren."
       }
     }
   },
@@ -1719,11 +1674,11 @@
     "Arg": {
       "Zero": {
         "Tag": "Enable",
-        "ToolTip": "Aktivieren der Protokollierung für alle PowerShell-Skripte, die in das Windows PowerShell-Ereignisprotokoll eingegeben werden."
+        "ToolTip": "Aktivieren Sie die Protokollierung für alle PowerShell-Skripte, die in das Windows PowerShell-Ereignisprotokoll eingegeben werden."
       },
       "One": {
         "Tag": "Disable",
-        "ToolTip": "Deaktivieren der Protokollierung für alle PowerShell-Skripte, die in das Windows PowerShell-Ereignisprotokoll eingegeben werden (Standardwert)."
+        "ToolTip": "Deaktivieren Sie die Protokollierung für alle PowerShell-Skripte, die in das Windows PowerShell-Ereignisprotokoll eingegeben werden (Standardwert)."
       }
     }
   },
@@ -1747,25 +1702,11 @@
     "Arg": {
       "Zero": {
         "Tag": "Disable",
-        "ToolTip": "Deaktiviert die Überprüfung von aus dem Internet heruntergeladenen Dateien durch den Dateianlagen-Manager als unsicher."
+        "ToolTip": "Deaktivieren Sie den Anhang-Manager, der aus dem Internet heruntergeladene Dateien als unsicher markiert.."
       },
       "One": {
         "Tag": "Enable",
-        "ToolTip": "Aktiviert den Dateianhangsmanager, um aus dem Internet heruntergeladene Dateien als unsicher zu prüfen (Standardwert)."
-      }
-    }
-  },
-  {
-    "Region": "Microsoft Defender & Security",
-    "Function": "WindowsScriptHost",
-    "Arg": {
-      "Zero": {
-        "Tag": "Disable",
-        "ToolTip": "Windows Script Host deaktivieren. Sperrt WSH für die Ausführung von .js und .vbs Dateien."
-      },
-      "One": {
-        "Tag": "Enable",
-        "ToolTip": "Windows Script Host aktivieren (Standardwert)."
+        "ToolTip": "Aktivieren Sie den Anhang-Manager, der aus dem Internet heruntergeladene Dateien als unsicher markiert (Standardwert)."
       }
     }
   },
@@ -1780,20 +1721,6 @@
       "One": {
         "Tag": "Disable",
         "ToolTip": "Windows-Sandbox deaktivieren (Standardwert). Gilt nur für die Editionen Professional, Enterprise und Education."
-      }
-    }
-  },
-  {
-    "Region": "Microsoft Defender & Security",
-    "Function": "DNSoverHTTPS",
-    "Arg": {
-      "Zero": {
-        "Tag": "Enable",
-        "ToolTip": "Aktiviert DNS-over-HTTPS für IPv4. Gültige IPv4-Adressen: 1.0.0.1, 1.1.1.1, 149.112.112.112, 8.8.4.4, 8.8.8.8, 9.9.9.91."
-      },
-      "One": {
-        "Tag": "Disable",
-        "ToolTip": "Deaktiviert DNS-over-HTTPS für IPv4 (Standardwert)."
       }
     }
   },
@@ -1817,11 +1744,11 @@
     "Arg": {
       "Zero": {
         "Tag": "Show",
-        "ToolTip": "\"Installieren\" im Kontextmenü der .cab-Archive anzeigen."
+        "ToolTip": "Eintrag \"Installieren\" im Kontextmenü der Cabinet (.cab)-Dateinamenerweiterungen anzeigen."
       },
       "One": {
         "Tag": "Hide",
-        "ToolTip": "Ausblenden der Option \"Installieren\" im Kontextmenü der .cab-Archive (Standardwert)."
+        "ToolTip": "Eintrag \"Installieren\" im Kontextmenü der Cabinet (.cab)-Dateinamenerweiterungen ausblenden (Standardwert)."
       }
     }
   },

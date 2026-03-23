@@ -3,13 +3,13 @@
 	Default preset file for "Sophia Script for Windows 11"
 
 	.VERSION
-	6.9.2
+	7.1.4
 
 	.DATE
-	19.10.2025
+	24.02.2026
 
 	.COPYRIGHT
-	(c) 2014—2025 Team Sophia
+	(c) 2014—2026 Team Sophia
 
 	.DESCRIPTION
 	Place the "#" char before function if you don't want to run it
@@ -19,9 +19,6 @@
 	.EXAMPLE Run the whole script
 	.\Sophia.ps1
 
-	.EXAMPLE Run the script by specifying the module functions as an argument
-	.\Sophia.ps1 -Functions "DiagTrackService -Disable", "DiagnosticDataLevel -Minimal", UninstallUWPApps
-
 	.EXAMPLE Download and expand the latest Sophia Script version archive (without running) according which Windows and PowerShell versions it is run on
 	iwr script.sophia.team -useb | iex
 
@@ -29,7 +26,7 @@
 	iwr sl.sophia.team -useb | iex
 
 	.NOTES
-	Supports Windows 11 24H2+ for Arm
+	Supports Windows 11 24H2+ for ARM64
 
 	.NOTES
 	To use Enable tab completion to invoke for functions if you do not know function name dot source the Import-TabCompletion.ps1 script first:
@@ -53,7 +50,7 @@
 	.NOTES
 	https://forum.ru-board.com/topic.cgi?forum=62&topic=30617#15
 	https://habr.com/companies/skillfactory/articles/553800/
-	https://forums.mydigitallife.net/threads/powershell-sophia-script-for-windows-10-windows-11-5-17-8-6-5-8-x64-2023.81675/
+	https://forums.mydigitallife.net/threads/powershell-sophia-script-for-windows-6-0-4-7-0-4-2026.81675/page-21
 	https://www.reddit.com/r/PowerShell/comments/go2n5v/powershell_script_setup_windows_10/
 
 	.LINK
@@ -65,117 +62,32 @@
 #Requires -RunAsAdministrator
 #Requires -Version 5.1
 
-[CmdletBinding()]
-param
-(
-	[Parameter(Mandatory = $false)]
-	[string[]]
-	$Functions
-)
+#region Initial Actions
+$Global:Failed = $false
 
-Clear-Host
-$Global:Error.Clear()
-
-$Host.UI.RawUI.WindowTitle = "Sophia Script for Windows 11 v6.9.2 (Arm) | Made with $([System.Char]::ConvertFromUtf32(0x1F497)) of Windows | $([System.Char]0x00A9) Team Sophia, 2014$([System.Char]0x2013)2025"
-
-# Checking whether all files were expanded before running
-$ScriptFiles = [Array]::TrueForAll(@(
-	"$PSScriptRoot\Localizations\de-DE\Sophia.psd1",
-	"$PSScriptRoot\Localizations\en-US\Sophia.psd1",
-	"$PSScriptRoot\Localizations\es-ES\Sophia.psd1",
-	"$PSScriptRoot\Localizations\fr-FR\Sophia.psd1",
-	"$PSScriptRoot\Localizations\hu-HU\Sophia.psd1",
-	"$PSScriptRoot\Localizations\it-IT\Sophia.psd1",
-	"$PSScriptRoot\Localizations\pl-PL\Sophia.psd1",
-	"$PSScriptRoot\Localizations\pt-BR\Sophia.psd1",
-	"$PSScriptRoot\Localizations\ru-RU\Sophia.psd1",
-	"$PSScriptRoot\Localizations\tr-TR\Sophia.psd1",
-	"$PSScriptRoot\Localizations\uk-UA\Sophia.psd1",
-	"$PSScriptRoot\Localizations\zh-CN\Sophia.psd1",
-	"$PSScriptRoot\Module\Sophia.psm1",
-	"$PSScriptRoot\Manifest\SophiaScript.psd1",
-	"$PSScriptRoot\Import-TabCompletion.ps1"
-),
-[Predicate[string]]{
-	param($File)
-
-	Test-Path -Path $File
-})
-if (-not $ScriptFiles)
-{
-	Write-Information -MessageData "" -InformationAction Continue
-	Write-Warning -Message "There are no files in the script folder. Please, re-download the archive and follow the guide: https://github.com/farag2/Sophia-Script-for-Windows?tab=readme-ov-file#how-to-use."
-	Write-Information -MessageData "" -InformationAction Continue
-
-	Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
-	Write-Verbose -Message "https://discord.gg/sSryhaEv79" -Verbose
-
-	exit
-}
-
+# Unload and import private functions and module
+Get-ChildItem function: | Where-Object {$_.ScriptBlock.File -match "Sophia_Script_for_Windows"} | Remove-Item -Force
 Remove-Module -Name SophiaScript -Force -ErrorAction Ignore
-try
-{
-	Import-LocalizedData -BindingVariable Global:Localization -UICulture $PSUICulture -BaseDirectory $PSScriptRoot\Localizations -FileName Sophia -ErrorAction Stop
-}
-catch
-{
-	Import-LocalizedData -BindingVariable Global:Localization -UICulture en-US -BaseDirectory $PSScriptRoot\Localizations -FileName Sophia
-}
+Import-Module -Name $PSScriptRoot\Manifest\SophiaScript.psd1 -PassThru -Force
+Get-ChildItem -Path $PSScriptRoot\Module\private | Foreach-Object -Process {. $_.FullName}
 
-# Check CPU architecture
-$Caption = (Get-CimInstance -ClassName CIM_Processor).Caption
-if ($Caption -notmatch "Arm")
-{
-	Write-Information -MessageData "" -InformationAction Continue
-	Write-Warning -Message ($Localization.UnsupportedArchitecture -f $Caption)
-	Write-Information -MessageData "" -InformationAction Continue
-
-	Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
-	Write-Verbose -Message "https://discord.gg/sSryhaEv79" -Verbose
-
-	exit
-}
-
-Import-Module -Name $PSScriptRoot\Manifest\SophiaScript.psd1 -PassThru -Force -ErrorAction Stop
-
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-# Preset configuration starts here
-# Настройка пресет-файла начинается здесь
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
-<#
-	.SYNOPSIS
-	Run the script by specifying functions as an argument
-	Запустить скрипт, указав в качестве аргумента функции
-
-	.EXAMPLE
-	.\Sophia.ps1 -Functions "DiagTrackService -Disable", "DiagnosticDataLevel -Minimal", UninstallUWPApps
-
-	.NOTES
-	Use commas to separate funtions
-	Разделяйте функции запятыми
-#>
-if ($Functions)
-{
-	Invoke-Command -ScriptBlock {InitialActions}
-
-	foreach ($Function in $Functions)
-	{
-		Invoke-Expression -Command $Function
-	}
-
-	# The "PostActions" and "Errors" functions will be executed at the end
-	Invoke-Command -ScriptBlock {PostActions; Errors}
-
-	exit
-}
-
-#region Protection
-# The mandatory checks. If you want to disable a warning message about whether the preset file was customized, remove the "-Warning" argument
-# Обязательные проверки. Чтобы выключить предупреждение о необходимости настройки пресет-файла, удалите аргумент "-Warning"
+# "-Warning" argument enables and disables a warning message about whether the preset file was customized
+# Аргумент "-Warning" включает и выключает предупреждение о необходимости настройки пресет-файла
 InitialActions -Warning
 
+# Global variable if checks failed
+if ($Global:Failed)
+{
+	exit
+}
+#endregion Initial Actions
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+# Preset configuration starts here                                    #
+# Настройка пресет-файла начинается здесь                             #
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
+#region Protection
 # Enable script logging. Log will be recorded into the script folder. To stop logging just close console or type "Stop-Transcript"
 # Включить логирование работы скрипта. Лог будет записываться в папку скрипта. Чтобы остановить логгирование, закройте консоль или наберите "Stop-Transcript"
 # Logging
@@ -310,30 +222,14 @@ BingSearch -Disable
 # Enable Bing search in Start Menu (default value)
 # Включить поиск через Bing в меню "Пуск" (значение по умолчанию)
 # BingSearch -Enable
-
-# Do not show recommendations for tips, shortcuts, new apps, and more in Start menu
-# Не показать рекомендации с советами, сочетаниями клавиш, новыми приложениями и т. д. в меню "Пуск"
-StartRecommendationsTips -Hide
-
-# Show recommendations for tips, shortcuts, new apps, and more in Start menu (default value)
-# Показать рекомендации с советами, сочетаниями клавиш, новыми приложениями и т. д. в меню "Пуск" (значение по умолчанию)
-# StartRecommendationsTips -Show
-
-# Do not show Microsoft account-related notifications on Start Menu in Start menu
-# Не показывать в меню "Пуск" уведомления, связанные с учетной записью Microsoft
-StartAccountNotifications -Hide
-
-# Show Microsoft account-related notifications on Start Menu in Start menu (default value)
-# Переодически показывать в меню "Пуск" уведомления, связанные с учетной записью Microsoft (значение по умолчанию)
-# StartAccountNotifications -Show
 #endregion Privacy & Telemetry
 
 #region UI & Personalization
-# Show the "This PC" icon on Desktop
+# Show "This PC" icon on Desktop
 # Отобразить значок "Этот компьютер" на рабочем столе
 ThisPC -Show
 
-# Hide the "This PC" icon on Desktop (default value)
+# Hide "This PC" icon on Desktop (default value)
 # Скрыть "Этот компьютер" на рабочем столе (значение по умолчанию)
 # ThisPC -Hide
 
@@ -385,7 +281,7 @@ FileExplorerCompactMode -Disable
 # Включить компактный вид проводника
 # FileExplorerCompactMode -Enable
 
-# Do not show sync provider notification within File Explorer
+# Hide sync provider notification within File Explorer
 # Не показывать уведомления поставщика синхронизации в проводнике
 OneDriveFileExplorerAd -Hide
 
@@ -596,12 +492,12 @@ AeroShaking -Enable
 # Download and install free dark "Windows 11 Cursors Concept" cursors from Jepri Creations. Internet connection required
 # Скачать и установить бесплатные темные курсоры "Windows 11 Cursors Concept" от Jepri Creations. Требуется соединение с интернетом
 # https://www.deviantart.com/jepricreations/art/Windows-11-Cursors-Concept-886489356
-Cursors -Dark
+Install-Cursors -Dark
 
 # Download and install free light "Windows 11 Cursors Concept" cursors from Jepri Creations. Internet connection required
 # Скачать и установить бесплатные светлые курсоры "Windows 11 Cursors Concept" от Jepri Creations. Требуется соединение с интернетом
 # https://www.deviantart.com/jepricreations/art/Windows-11-Cursors-Concept-886489356
-# Cursors -Light
+# Install-Cursors -Light
 
 # Set default cursors
 # Установить курсоры по умолчанию
@@ -623,13 +519,57 @@ NavigationPaneExpand -Disable
 # Развернуть до открытой папки область навигации
 # NavigationPaneExpand -Enable
 
-# Remove Recommended section in Start Menu. Not applicable to Home edition
-# Удалить раздел "Рекомендуем" в меню "Пуск". Неприменимо к редакции Home
+# Hide recently added apps in Start
+# Не показывать недавно добавленные приложения на начальном экране
+RecentlyAddedStartApps -Hide
+
+# Show recently added apps in Start (default value)
+# Показывать недавно добавленные приложения на начальном экране (значение по умолчанию)
+# RecentlyAddedStartApps -Show
+
+# Hide most used apps in Start (default value)
+# Не показывать наиболее часто используемые приложения на начальном экране (значение по умолчанию)
+MostUsedStartApps -Hide
+
+# Show most used Apps in Start
+# Показывать наиболее часто используемые приложения на начальном экране
+# MostUsedStartApps -Show
+
+# Remove Recommended section in Start
+# Удалить раздел "Рекомендуем" на начальном экране
 StartRecommendedSection -Hide
 
-# Show Recommended section in Start Menu (default value). Not applicable to Home edition
-# Показывать раздел "Рекомендуем" в меню "Пуск" (значение по умолчанию). Неприменимо к редакции Home
+# Show Recommended section in Start (default value)
+# Показывать раздел "Рекомендуем" на начальном экране
 # StartRecommendedSection -Show
+
+# Hide recommendations for tips, shortcuts, new apps, and more in Start
+# Не показать рекомендации с советами, сочетаниями клавиш, новыми приложениями и т. д. на начальном экране
+StartRecommendationsTips -Hide
+
+# Show recommendations for tips, shortcuts, new apps, and more in Start (default value)
+# Показать рекомендации с советами, сочетаниями клавиш, новыми приложениями и т. д. на начальном экране (значение по умолчанию)
+# StartRecommendationsTips -Show
+
+# Hide Microsoft account-related notifications on Start
+# Не отображать на начальном экране уведомления, касающиеся учетной записи Microsoft
+StartAccountNotifications -Hide
+
+# Show Microsoft account-related notifications on Start (default value)
+# Отображать на начальном экране уведомления, касающиеся учетной записи Microsoft (значение по умолчанию)
+# StartAccountNotifications -Show
+
+# Show default Start layout (default value)
+# Отображать стандартный макет начального экрана (значение по умолчанию)
+# StartLayout -Default
+
+# Show more pins on Start
+# Отображать больше закреплений на начальном экране
+StartLayout -ShowMorePins
+
+# Show more recommendations on Start
+# Отображать больше рекомендаций на начальном экране
+# StartLayout -ShowMoreRecommendations
 #endregion UI & Personalization
 
 #region OneDrive
@@ -665,11 +605,11 @@ Hibernation -Disable
 
 # Enable Windows long paths support which is limited for 260 characters by default
 # Включить поддержку длинных путей, ограниченных по умолчанию 260 символами
-Win32LongPathSupport -Enable
+Win32LongPathsSupport -Enable
 
 # Disable Windows long paths support which is limited for 260 characters by default (default value)
 # Отключить поддержку длинных путей, ограниченных по умолчанию 260 символами (значение по умолчанию)
-# Win32LongPathSupport -Disable
+# Win32LongPathsSupport -Disable
 
 # Display Stop error code when BSoD occurs
 # Отображать код Stop-ошибки при появлении BSoD
@@ -704,28 +644,23 @@ WindowsManageDefaultPrinter -Disable
 # WindowsManageDefaultPrinter -Enable
 
 <#
-	Disable the Windows features using the pop-up dialog box
+	Disable the Windows features using pop-up dialog box
 	If you want to leave "Multimedia settings" element in the advanced settings of Power Options do not disable the "Media Features" feature
 
-	Если вы хотите оставить параметр "Параметры мультимедиа" в дополнительных параметрах схемы управления питанием, не отключайте "Компоненты для работы с медиа"
 	Отключить компоненты Windows, используя всплывающее диалоговое окно
+	Если вы хотите оставить параметр "Параметры мультимедиа" в дополнительных параметрах схемы управления питанием, не отключайте "Компоненты для работы с мультимедиа"
 #>
 WindowsFeatures -Disable
 
-# Enable the Windows features using the pop-up dialog box
+# Enable the Windows features using pop-up dialog box
 # Включить компоненты Windows, используя всплывающее диалоговое окно
 # WindowsFeatures -Enable
 
-<#
-	Uninstall optional features using the pop-up dialog box
-	If you want to leave "Multimedia settings" element in the advanced settings of Power Options do not uninstall the "Media Features" feature
-
-	Удалить дополнительные компоненты, используя всплывающее диалоговое окно
-	Если вы хотите оставить параметр "Параметры мультимедиа" в дополнительных параметрах схемы управления питанием, не удаляйте компонент "Компоненты для работы с медиа"
-#>
+# Uninstall optional features using pop-up dialog box
+# Удалить дополнительные компоненты, используя всплывающее диалоговое окно
 WindowsCapabilities -Uninstall
 
-# Install optional features using the pop-up dialog box
+# Install optional features using pop-up dialog box
 # Установить дополнительные компоненты, используя всплывающее диалоговое окно
 # WindowsCapabilities -Install
 
@@ -793,46 +728,17 @@ InputMethod -English
 # Переопределить метод ввода по умолчанию: использовать список языков (значение по умолчанию)
 # InputMethod -Default
 
-<#
-	Change user folders location to the root of any drive using an interactive menu
-	User files or folders won't be moved to a new location. Move them manually
-	They're located in the %USERPROFILE% folder by default
-
-	Переместить пользовательские папки в корень любого диска на выбор с помощью интерактивного меню
-	Пользовательские файлы и папки не будут перемещены в новое расположение. Переместите их вручную
-	По умолчанию они располагаются в папке %USERPROFILE%
-#>
+# Change location of user folders to the root of any drive using the interactive menu. User files or folders won't be moved to a new location
+# Изменить расположение пользовательских папки в корень любого диска на выбор с помощью интерактивного меню. Пользовательские файлы и папки не будут перемещены в новое расположение
 Set-UserShellFolderLocation -Root
 
-<#
-	Select folders for user folders location manually using a folder browser dialog
-	User files or folders won't be moved to a new location. Move them manually
-	They're located in the %USERPROFILE% folder by default
-
-	Выбрать папки для расположения пользовательских папок вручную, используя диалог "Обзор папок"
-	Пользовательские файлы и папки не будут перемещены в новое расположение. Переместите их вручную
-	По умолчанию они располагаются в папке %USERPROFILE%
-#>
+# Select location of user folders manually using a folder browser dialog. User files or folders won't be moved to a new location
+# Выбрать папки для расположения пользовательских папок вручную, используя диалог "Обзор папок". Пользовательские файлы и папки не будут перемещены в новое расположение
 # Set-UserShellFolderLocation -Custom
 
-<#
-	Change user folders location to the default values
-	User files or folders won't be moved to the new location. Move them manually
-	They're located in the %USERPROFILE% folder by default
-
-	Изменить расположение пользовательских папок на значения по умолчанию
-	Пользовательские файлы и папки не будут перемещены в новое расположение. Переместите их вручную
-	По умолчанию они располагаются в папке %USERPROFILE%
-#>
+# Change user folders location to default values. User files or folders won't be moved to the new location
+# Изменить расположение пользовательских папок на значения по умолчанию. Пользовательские файлы и папки не будут перемещены в новое расположение
 # Set-UserShellFolderLocation -Default
-
-# Use .NET Framework 4.8.1 for old apps
-# Использовать .NET Framework 4.8.1 для устаревших программ
-# LatestInstalled.NET -Enable
-
-# Do not use .NET Framework 4.8.1 for old apps (default value)
-# Не использовать .NET Framework 4.8.1 для устаревших программ (значение по умолчанию)
-# LatestInstalled.NET -Disable
 
 # Save screenshots on the Desktop when pressing Windows+PrtScr or using Windows+Shift+S
 # Сохранять скриншоты по нажатию Windows+PrtScr или Windows+Shift+S на рабочий стол
@@ -944,11 +850,11 @@ NetworkDiscovery -Enable
 	Register app, calculate hash, and associate with an extension with the "How do you want to open this" pop-up hidden
 	Зарегистрировать приложение, вычислить хэш и ассоциировать его с расширением без всплывающего окна "Каким образом вы хотите открыть этот файл?"
 
-	Set-Association -ProgramPath "C:\SumatraPDF.exe" -Extension .pdf -Icon "shell32.dll,100"
-	Set-Association -ProgramPath "%ProgramFiles%\Notepad++\notepad++.exe" -Extension .txt -Icon "%ProgramFiles%\Notepad++\notepad++.exe,0"
+	Set-Association -ProgramPath 'C:\SumatraPDF.exe' -Extension .pdf -Icon '%SystemRoot%\System32\shell32.dll,100'
+	Set-Association -ProgramPath '%ProgramFiles%\Notepad++\notepad++.exe' -Extension .txt -Icon '%ProgramFiles%\Notepad++\notepad++.exe,0'
 	Set-Association -ProgramPath MSEdgeMHT -Extension .html
 #>
-# Set-Association -ProgramPath "%ProgramFiles%\Notepad++\notepad++.exe" -Extension .txt -Icon "%ProgramFiles%\Notepad++\notepad++.exe,0"
+# Set-Association -ProgramPath '%ProgramFiles%\Notepad++\notepad++.exe' -Extension .txt -Icon '%ProgramFiles%\Notepad++\notepad++.exe,0'
 
 # Экспортировать все ассоциации в Windows в корень папки в виде файла Application_Associations.json
 # Export all Windows associations into Application_Associations.json file to script root folder
@@ -971,23 +877,13 @@ DefaultTerminalApp -WindowsTerminal
 # Установить Windows Console Host как приложение терминала по умолчанию для размещения пользовательского интерфейса для приложений командной строки (значение по умолчанию)
 # DefaultTerminalApp -ConsoleHost
 
-# Install the latest Microsoft Visual C++ Redistributable Packages 2015–2022 (ARM64). Internet connection required
-# Установить последнюю версию распространяемых пакетов Microsoft Visual C++ 2015–2022 (ARM64). Требуется соединение с интернетом
+# Install the latest Microsoft Visual C++ Redistributable Packages 2017–2026 (ARM64). Internet connection required
+# Установить последнюю версию распространяемых пакетов Microsoft Visual C++ 2017–2026 (ARM64). Требуется соединение с интернетом
 Install-VCRedist
 
-# Install the latest .NET Runtime 8, 9. Internet connection required
-# Установить последнюю версию .NET Runtime 8, 9. Требуется соединение с интернетом
-Install-DotNetRuntimes -Runtimes NET8, NET9
-
-# Enable proxying only blocked sites from the unified registry of Roskomnadzor. The function is applicable for Russia only
-# Включить проксирование только заблокированных сайтов из единого реестра Роскомнадзора. Функция применима только для России
-# https://antizapret.prostovpn.org
-RKNBypass -Enable
-
-# Disable proxying only blocked sites from the unified registry of Roskomnadzor (default value)
-# Выключить проксирование только заблокированных сайтов из единого реестра Роскомнадзора (значение по умолчанию)
-# https://antizapret.prostovpn.org
-# RKNBypass -Disable
+# Install the latest .NET Desktop Runtime 8, 9, 10 (ARM64). Internet connection required
+# Установить последнюю версию .NET Desktop Runtime 8, 9, 10 (ARM64). Требуется соединение с интернетом
+Install-DotNetRuntimes -Runtimes NET8, NET9, NET10
 
 # List Microsoft Edge channels to prevent desktop shortcut creation upon its update
 # Перечислите каналы Microsoft Edge для предотвращения создания ярлыков на рабочем столе после его обновления
@@ -1004,6 +900,14 @@ RegistryBackup -Enable
 # Do not back up the system registry to %SystemRoot%\System32\config\RegBack folder (default value)
 # Не создавать копии реестра при перезагрузке ПК (значение по умолчанию)
 # RegistryBackup -Disable
+
+# Disable Windows AI functions
+# Выключить функции, связанные с ИИ Windows
+WindowsAI -Disable
+
+# Enable Windows AI functions (default value)
+# Включить функции, связанные с ИИ Windows (значение по умолчанию)
+# WindowsAI -Enable
 #endregion System
 
 #region WSL
@@ -1012,33 +916,19 @@ RegistryBackup -Enable
 # Install-WSL
 #endregion WSL
 
-#region Start menu
-# Show default Start layout (default value)
-# Отображать стандартный макет начального экрана (значение по умолчанию)
-# StartLayout -Default
-
-# Show more pins on Start
-# Отображать больше закреплений на начальном экране
-StartLayout -ShowMorePins
-
-# Show more recommendations on Start
-# Отображать больше рекомендаций на начальном экране
-# StartLayout -ShowMoreRecommendations
-#endregion Start menu
-
 #region UWP apps
-# Uninstall UWP apps using the pop-up dialog box
+# Uninstall UWP apps using pop-up dialog box
 # Удалить UWP-приложения, используя всплывающее диалоговое окно
-UninstallUWPApps
+Uninstall-UWPApps
 
 <#
-	Uninstall UWP apps for all users using the pop-up dialog box
+	Uninstall UWP apps for all users using pop-up dialog box
 	If the "For All Users" is checked apps packages will not be installed for new users
 
 	Удалить UWP-приложения для всех пользователей, используя всплывающее диалоговое окно
 	Пакеты приложений не будут установлены для новых пользователей, если отмечена галочка "Для всех пользователей"
 #>
-# UninstallUWPApps -ForAllUsers
+# Uninstall-UWPApps -ForAllUsers
 #endregion UWP apps
 
 #region Gaming
@@ -1143,14 +1033,6 @@ DefenderSandbox -Enable
 # Выключить песочницу для Microsoft Defender (значение по умолчанию)
 # DefenderSandbox -Disable
 
-# Dismiss Microsoft Defender offer in the Windows Security about signing in Microsoft account
-# Отклонить предложение Microsoft Defender в "Безопасность Windows" о входе в аккаунт Microsoft
-DismissMSAccount
-
-# Dismiss Microsoft Defender offer in the Windows Security about turning on the SmartScreen filter for Microsoft Edge
-# Отклонить предложение Microsoft Defender в "Безопасность Windows" включить фильтр SmartScreen для Microsoft Edge
-DismissSmartScreenFilter
-
 # Create the "Process Creation" сustom view in the Event Viewer to log executed processes and their arguments
 # Создать настраиваемое представление "Создание процесса" в Просмотре событий для журналирования запускаемых процессов и их аргументов
 EventViewerCustomView -Enable
@@ -1175,13 +1057,13 @@ PowerShellScriptsLogging -Enable
 # Выключить ведение журнала для всех вводимых сценариев PowerShell в журнале событий Windows PowerShell (значение по умолчанию)
 # PowerShellScriptsLogging -Disable
 
-# Microsoft Defender SmartScreen doesn't marks downloaded files from the Internet as unsafe
-# Microsoft Defender SmartScreen не помечает скачанные файлы из интернета как небезопасные
-AppsSmartScreen -Disable
-
 # Microsoft Defender SmartScreen marks downloaded files from the Internet as unsafe (default value)
 # Microsoft Defender SmartScreen помечает скачанные файлы из интернета как небезопасные (значение по умолчанию)
-# AppsSmartScreen -Enable
+AppsSmartScreen -Enable
+
+# Microsoft Defender SmartScreen doesn't marks downloaded files from the Internet as unsafe
+# Microsoft Defender SmartScreen не помечает скачанные файлы из интернета как небезопасные
+# AppsSmartScreen -Disable
 
 # Disable the Attachment Manager marking files that have been downloaded from the Internet as unsafe
 # Выключить проверку Диспетчером вложений файлов, скачанных из интернета, как небезопасные
@@ -1191,14 +1073,6 @@ SaveZoneInformation -Disable
 # Включить проверку Диспетчера вложений файлов, скачанных из интернета как небезопасные (значение по умолчанию)
 # SaveZoneInformation -Enable
 
-# Disable Windows Script Host. Blocks WSH from executing .js and .vbs files
-# Отключить Windows Script Host. Блокирует запуск файлов .js и .vbs
-# WindowsScriptHost -Disable
-
-# Enable Windows Script Host (default value)
-# Включить Windows Script Host (значение по умолчанию)
-# WindowsScriptHost -Enable
-
 # Enable Windows Sandbox. Applicable only to Professional, Enterprise and Education editions
 # Включить Windows Sandbox. Применимо только к редакциям Professional, Enterprise и Education
 # WindowsSandbox -Enable
@@ -1207,22 +1081,33 @@ SaveZoneInformation -Disable
 # Выключить Windows Sandbox (значение по умолчанию). Применимо только к редакциям Professional, Enterprise и Education
 # WindowsSandbox -Disable
 
-<#
-	Enable DNS-over-HTTPS for IPv4
-	The valid IPv4 addresses: 1.0.0.1, 1.1.1.1, 149.112.112.112, 8.8.4.4, 8.8.8.8, 9.9.9.9
+# Set up DNS from Cloudflare DNS using DNS-over-HTTPS
+# Установить DNS от Cloudflare, используя DNS-over-HTTPS
+DNSoverHTTPS -Cloudflare
 
-	Включить DNS-over-HTTPS для IPv4
-	Действительные IPv4-адреса: 1.0.0.1, 1.1.1.1, 149.112.112.112, 8.8.4.4, 8.8.8.8, 9.9.9.9
-#>
-DNSoverHTTPS -Enable -PrimaryDNS 1.0.0.1 -SecondaryDNS 1.1.1.1
+# Set up DNS from Google Public DNS using DNS-over-HTTPS
+# Установить DNS от Google Public DNS, используя DNS-over-HTTPS
+# DNSoverHTTPS -Google
 
-# Disable DNS-over-HTTPS for IPv4 (default value)
-# Выключить DNS-over-HTTPS для IPv4 (значение по умолчанию)
+# Set up DNS from Quad9 DNS using DNS-over-HTTPS
+# Установить DNS от Quad9, используя DNS-over-HTTPS
+# DNSoverHTTPS -Quad9
+
+# Set up DNS from Comss.one DNS using DNS-over-HTTPS
+# Установить DNS от Comss.one, используя DNS-over-HTTPS
+# DNSoverHTTPS -ComssOne
+
+# Set up DNS from AdGuard DNS using DNS-over-HTTPS
+# Установить DNS от AdGuard, используя DNS-over-HTTPS
+# DNSoverHTTPS -AdGuard
+
+# Set up DNS from OpenDNS DNS using DNS-over-HTTPS
+# Установить DNS от OpenDNS, используя DNS-over-HTTPS
+# DNSoverHTTPS -OpenDNS
+
+# Set default ISP's DNS records (default value)
+# Установить DNS-записи вашего провайдера (значение по умолчанию)
 # DNSoverHTTPS -Disable
-
-# Enable DNS-over-HTTPS via Comss.one DNS server. Applicable for Russia only
-# Включить DNS-over-HTTPS для IPv4 через DNS-сервер Comss.one. Применимо только для России
-# DNSoverHTTPS -ComssOneDNS
 
 # Enable Local Security Authority protection to prevent code injection
 # Включить защиту локальной системы безопасности, чтобы предотвратить внедрение кода
@@ -1251,11 +1136,11 @@ CABInstallContext -Show
 # CABInstallContext -Hide
 
 # Hide the "Edit with Clipchamp" item from the media files context menu
-# Скрыть пункт "Редактировать в Climpchamp" из контекстного меню
+# Скрыть пункт "Редактировать в Clipchamp" из контекстного меню
 EditWithClipchampContext -Hide
 
 # Show the "Edit with Clipchamp" item in the media files context menu (default value)
-# Отобразить пункт "Редактировать в Climpchamp" в контекстном меню (значение по умолчанию)
+# Отобразить пункт "Редактировать в Clipchamp" в контекстном меню (значение по умолчанию)
 # EditWithClipchampContext -Show
 
 # Hide the "Edit with Photos" item from the media files context menu
@@ -1324,15 +1209,11 @@ OpenWindowsTerminalAdminContext -Enable
 #endregion Context menu
 
 #region Update Policies
-# Scan the Windows registry and display all policies (even created manually) in the Local Group Policy Editor snap-in (gpedit.msc)
-# Просканировать реестр и отобразить все политики (даже созданные вручную) в оснастке Редактора локальной групповой политики (gpedit.msc)
+# Scan the Windows registry and display applied registry policies in the Local Group Policy Editor snap-in (gpedit.msc)
+# Просканировать реестр и отобразить примененные политики реестра в оснастке редактирования групповых политик (gpedit.msc)
 # ScanRegistryPolicies
 #endregion Update Policies
 
-# Environment refresh and other neccessary post actions
-# Обновление окружения и прочие необходимые действия после выполнения основных функций
+# Post actions
+# Завершающие действия
 PostActions
-
-# Errors output
-# Вывод ошибок
-Errors

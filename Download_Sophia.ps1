@@ -8,26 +8,11 @@
 	.EXAMPLE
 	iwr script.sophia.team -useb | iex
 #>
+
 Clear-Host
+$Error.Clear()
 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-
-# Checking whether the logged-in user is an admin
-$CurrentUserName = (Get-CimInstance -ClassName Win32_Process -Filter ProcessId=$PID | Invoke-CimMethod -MethodName GetOwner | Select-Object -First 1).User
-$LoginUserName = (Get-CimInstance -ClassName Win32_Process -Filter "name='explorer.exe'" | Invoke-CimMethod -MethodName GetOwner | Select-Object -First 1).User
-
-if ($CurrentUserName -ne $LoginUserName)
-{
-	Write-Information -MessageData "" -InformationAction Continue
-	Write-Warning -Message "The logged-on user doesn't have admin rights."
-	Write-Information -MessageData "" -InformationAction Continue
-
-	Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
-	Write-Verbose -Message "https://discord.gg/sSryhaEv79" -Verbose
-
-	pause
-	exit
-}
 
 if ($Host.Version.Major -eq 5)
 {
@@ -37,30 +22,35 @@ if ($Host.Version.Major -eq 5)
 }
 
 # https://github.com/PowerShell/PowerShell/issues/21070
-$Script:CompilerParameters = [System.CodeDom.Compiler.CompilerParameters]::new("System.dll")
-$Script:CompilerParameters.TempFiles = [System.CodeDom.Compiler.TempFileCollection]::new($env:TEMP, $false)
+$Script:CompilerParameters                  = [System.CodeDom.Compiler.CompilerParameters]::new("System.dll")
+$Script:CompilerParameters.TempFiles        = [System.CodeDom.Compiler.TempFileCollection]::new($env:TEMP, $false)
 $Script:CompilerParameters.GenerateInMemory = $true
 
-$Parameters = @{
-	Uri             = "https://api.github.com/repos/farag2/Sophia-Script-for-Windows/releases/latest"
-	UseBasicParsing = $true
-}
-$LatestGitHubRelease = (Invoke-RestMethod @Parameters).tag_name
-
-if (-not $LatestGitHubRelease)
+try
 {
-	Write-Warning -Message "https://api.github.com/repos/farag2/Sophia-Script-for-Windows/releases/latest is unreachable. Please fix connection or change your DNS records."
+	$Parameters = @{
+		Uri             = "https://api.github.com/repos/farag2/Sophia-Script-for-Windows/releases/latest"
+		UseBasicParsing = $true
+	}
+	$LatestGitHubRelease = (Invoke-RestMethod @Parameters).tag_name
+}
+catch [System.Net.WebException]
+{
+	Write-Warning -Message "https://api.github.com is unreachable. Please fix connection or change your DNS records."
 	Write-Information -MessageData "" -InformationAction Continue
 
 	if ((Get-CimInstance -ClassName CIM_ComputerSystem).HypervisorPresent)
 	{
-		$DNS = (Get-NetRoute | Where-Object -FilterScript {$_.DestinationPrefix -eq "0.0.0.0/0"} | Get-NetAdapter | Get-DnsClientServerAddress -AddressFamily IPv4).ServerAddresses
+		$DNS = (Get-NetRoute | Where-Object -FilterScript {$_.DestinationPrefix -eq "0.0.0.0/0"} | Get-NetAdapter | Where-Object -FilterScript {$_.Status -eq "Up"} | Get-DnsClientServerAddress -AddressFamily IPv4).ServerAddresses
 	}
 	else
 	{
-		$DNS = (Get-NetAdapter -Physical | Get-NetIPInterface -AddressFamily IPv4 | Get-DnsClientServerAddress -AddressFamily IPv4).ServerAddresses
+		$DNS = (Get-NetAdapter -Physical | Where-Object -FilterScript {$_.Status -eq "Up"} | Get-NetIPInterface -AddressFamily IPv4 | Get-DnsClientServerAddress -AddressFamily IPv4).ServerAddresses
 	}
-	Write-Warning -Message "You're using DNS $(if ($DNS.Count -gt 1) {$DNS -join ', '} else {$DNS})"
+	Write-Warning -Message "You're using $(if ($DNS.Count -gt 1) {$DNS -join ', '} else {$DNS}) DNS records"
+
+	Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
+	Write-Verbose -Message "https://discord.gg/sSryhaEv79" -Verbose
 
 	pause
 	exit
@@ -94,16 +84,19 @@ switch ((Get-CimInstance -ClassName Win32_OperatingSystem).BuildNumber)
 		}
 		else
 		{
-			Write-Verbose -Message "Windows version is not supported. Update your Windows" -Verbose
+			Write-Verbose -Message "Windows version is not supported. Update your Windows and try again." -Verbose
 
 			# Receive updates for other Microsoft products when you update Windows
 			(New-Object -ComObject Microsoft.Update.ServiceManager).AddService2("7971f918-a847-4430-9279-4a52d1efe18d", 7, "")
 
 			# Check for updates
-			Start-Process -FilePath "$env:SystemRoot\System32\UsoClient.exe" -ArgumentList StartInteractiveScan
+			& "$env:SystemRoot\System32\UsoClient.exe" StartInteractiveScan
 
 			# Open the "Windows Update" page
 			Start-Process -FilePath "ms-settings:windowsupdate"
+
+			Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
+			Write-Verbose -Message "https://discord.gg/sSryhaEv79" -Verbose
 
 			pause
 			exit
@@ -127,16 +120,19 @@ switch ((Get-CimInstance -ClassName Win32_OperatingSystem).BuildNumber)
 		}
 		else
 		{
-			Write-Verbose -Message "Windows version is not supported. Update your Windows" -Verbose
+			Write-Verbose -Message "Windows version is not supported. Update your Windows and try again." -Verbose
 
 			# Receive updates for other Microsoft products when you update Windows
 			(New-Object -ComObject Microsoft.Update.ServiceManager).AddService2("7971f918-a847-4430-9279-4a52d1efe18d", 7, "")
 
 			# Check for updates
-			Start-Process -FilePath "$env:SystemRoot\System32\UsoClient.exe" -ArgumentList StartInteractiveScan
+			& "$env:SystemRoot\System32\UsoClient.exe" StartInteractiveScan
 
 			# Open the "Windows Update" page
 			Start-Process -FilePath "ms-settings:windowsupdate"
+
+			Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
+			Write-Verbose -Message "https://discord.gg/sSryhaEv79" -Verbose
 
 			pause
 			exit
@@ -253,20 +249,25 @@ switch ((Get-CimInstance -ClassName Win32_OperatingSystem).BuildNumber)
 			$Version = "Windows_11_LTSC2024"
 		}
 	}
-}
+	default
+	{
+		Write-Verbose -Message "Windows version is not supported. Update your Windows and try again." -Verbose
 
-if (-not (Test-Path -Path "$DownloadsFolder\Sophia.Script.zip"))
-{
-	Write-Verbose -Message "Your Windows build is unsupported. Run Windows Update and try again." -Verbose
+		# Receive updates for other Microsoft products when you update Windows
+		(New-Object -ComObject Microsoft.Update.ServiceManager).AddService2("7971f918-a847-4430-9279-4a52d1efe18d", 7, "")
 
-	# Check for updates
-	Start-Process -FilePath "$env:SystemRoot\System32\UsoClient.exe" -ArgumentList StartInteractiveScan
+		# Check for updates
+		& "$env:SystemRoot\System32\UsoClient.exe" StartInteractiveScan
 
-	# Open t"Windows Update" page
-	Start-Process -FilePath "ms-settings:windowsupdate"
+		# Open the "Windows Update" page
+		Start-Process -FilePath "ms-settings:windowsupdate"
 
-	pause
-	exit
+		Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
+		Write-Verbose -Message "https://discord.gg/sSryhaEv79" -Verbose
+
+		pause
+		exit
+	}
 }
 
 try
@@ -284,10 +285,13 @@ catch
 	Write-Verbose -Message "Archive cannot be expanded. Probably, this was caused by your antivirus. Please update its definitions and try again." -Verbose
 
 	# Check for updates
-	Start-Process -FilePath "$env:SystemRoot\System32\UsoClient.exe" -ArgumentList StartInteractiveScan
+	& "$env:SystemRoot\System32\UsoClient.exe" StartInteractiveScan
 
 	# Open t"Windows Update" page
 	Start-Process -FilePath "ms-settings:windowsupdate"
+
+	Write-Verbose -Message "https://t.me/sophia_chat" -Verbose
+	Write-Verbose -Message "https://discord.gg/sSryhaEv79" -Verbose
 
 	pause
 	exit

@@ -1,9 +1,9 @@
 ﻿@{
 	RootModule            = '..\Module\Sophia.psm1'
-	ModuleVersion         = '5.21.2'
+	ModuleVersion         = '6.1.4'
 	GUID                  = 'aa0b47a7-1770-4b5d-8c9f-cc6c505bcc7a'
 	Author                = 'Team Sophia'
-	Copyright             = '(c) 2014—2025 Team Sophia. All rights reserved'
+	Copyright             = '(c) 2014—2026 Team Sophia. All rights reserved'
 	Description           = 'Module for Windows fine-tuning and automating the routine tasks'
 	PowerShellVersion     = '7.5'
 	ProcessorArchitecture = 'AMD64'
